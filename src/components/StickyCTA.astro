@@ -71,7 +71,7 @@ const waHref = whatsapp
     if (!bar) return;
     var onScroll = function () {
       // Apparaît une fois passé ~60% de la hauteur d'écran (au-delà du hero)
-      if (window.scrollY > window.innerHeight * 0.6) {
+      if (window.scrollY > window.innerHeight * 0.4) {
         bar.setAttribute("data-show", "");
       } else {
         bar.removeAttribute("data-show");
