@@ -71,7 +71,7 @@ export const site: SiteConfig = {
   brandName: "Naviel", // Nom de la marque (verrouillé)
   tagline: "On crée votre site et on vous amène des clients.",
   city: "Paris", // Siège
-  coverage: "Partout en France", // Zone d'intervention
+  coverage: "Partout en France", // Zone couverte (clients à distance)
   areaServed: "France", // Pour le SEO / JSON-LD
   siteUrl: "https://naviel.fr", // URL de prod (SEO/sitemap) — synchroniser avec astro.config.mjs
   locale: "fr_FR",
@@ -176,7 +176,7 @@ export const site: SiteConfig = {
   // Tout champ vide n'affiche RIEN (aucun placeholder visible).
   // ⚠️ DÉMO — informations de démonstration à remplacer.
   founder: {
-    name: "Nathan Abib",
+    name: "Nathan",
     role: "Fondateur · Naviel",
     photo: "/founder.png", // déposer une vraie photo dans /public (remplace le placeholder)
     bio: "J'ai lancé Naviel après des années à concevoir des sites et piloter des campagnes d'acquisition pour des entreprises premium. Le constat : trop d'agences livrent un beau site et disparaissent. Chez Naviel, vous parlez directement à l'expert qui conçoit votre site, le référence et amène les clients — du premier appel jusqu'aux résultats.",
