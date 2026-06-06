@@ -190,7 +190,7 @@ export const site: SiteConfig = {
       quote:
         "Enfin un site à la hauteur de nos prestations, et surtout il travaille pour nous : les réservations arrivent toutes seules. Un seul interlocuteur, zéro prise de tête.",
       author: "Thomas R.",
-      role: "Detailing premium · Lyon",
+      role: "Detailing · Lyon",
     },
     {
       quote:
@@ -245,13 +245,13 @@ export const site: SiteConfig = {
     },
     { name: "Santé", slug: "sante", featured: false, desc: "" },
     {
-      name: "Artisanat & commerce premium",
+      name: "Artisanat & commerce",
       slug: "artisanat-premium",
       featured: false,
       desc: "",
     },
     {
-      name: "Immobilier premium",
+      name: "Immobilier",
       slug: "immobilier-premium",
       featured: false,
       desc: "",
@@ -263,7 +263,7 @@ export const site: SiteConfig = {
   founder: {
     name: "Nathan",
     role: "Fondateur · Naviel",
-    photo: "/founder.png", // déposer une vraie photo dans /public (remplace le placeholder)
+    photo: "/founder.webp", // déposer une vraie photo dans /public (remplace le placeholder)
     bio: "J'ai lancé Naviel après des années à concevoir des sites et piloter des campagnes d'acquisition pour des artisans et des commerces de service. Le constat : trop d'agences livrent un beau site et disparaissent. Chez Naviel, vous parlez directement à l'expert qui conçoit votre site, le référence et amène les clients — du premier appel jusqu'aux résultats.",
   },
 
@@ -273,7 +273,7 @@ export const site: SiteConfig = {
     "Habitat & rénovation",
     "Beauté & esthétique",
     "Santé",
-    "Artisanat premium",
+    "Artisanat",
     "Commerce local",
   ],
 };
