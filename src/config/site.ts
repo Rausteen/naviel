@@ -88,7 +88,7 @@ export const site: SiteConfig = {
   },
 
   nav: [
-    { label: "Méthode", href: "/#methode" },
+    { label: "Méthode", href: "/methode" },
     { label: "Secteurs", href: "/secteurs" },
     { label: "Réalisations", href: "/realisations" },
     { label: "Offre", href: "/offre" },

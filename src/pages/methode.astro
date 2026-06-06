@@ -1,0 +1,189 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Section from "@components/Section.astro";
+import Kicker from "@components/Kicker.astro";
+import Button from "@components/Button.astro";
+import Card from "@components/Card.astro";
+import Reveal from "@components/Reveal.astro";
+import MethodCard from "@components/MethodCard.astro";
+import CTASection from "@components/CTASection.astro";
+import { site } from "@config";
+
+const piliers = [
+  {
+    num: "01",
+    step: "Le socle",
+    title: "Conception sur-mesure",
+    text: "Un design premium qui inspire confiance dès la première seconde, un parcours clair vers la prise de rendez-vous, et le mobile en priorité. Rapide, soigné, sans friction — zéro template.",
+    tag: "Design · UX · Performance",
+  },
+  {
+    num: "02",
+    step: "La mise en ligne",
+    title: "Mise en ligne clé en main",
+    text: "Nom de domaine à votre nom, hébergement rapide et sécurisé, certificat SSL, e-mails professionnels. On s'occupe de toute la technique, vous n'avez rien à gérer.",
+    tag: "Domaine · Hébergement · SSL",
+  },
+  {
+    num: "03",
+    step: "La visibilité",
+    title: "Référencement SEO local",
+    text: "Une structure pensée pour les requêtes de votre métier et de votre zone, fiche Google Business, optimisations techniques et contenus. Vous captez la demande qui existe déjà.",
+    tag: "Recherche locale · Technique",
+  },
+];
+
+const process = [
+  {
+    num: "01",
+    title: "Appel découverte",
+    text: "15 minutes, sans engagement. On comprend votre activité, vos objectifs et votre marché.",
+  },
+  {
+    num: "02",
+    title: "Conception & validation",
+    text: "On conçoit le site sur-mesure, vous validez. On itère jusqu'à ce que ce soit parfait.",
+  },
+  {
+    num: "03",
+    title: "Mise en ligne & SEO",
+    text: "Domaine, hébergement, SSL, e-mails. Référencement local activé dès le lancement.",
+  },
+  {
+    num: "04",
+    title: "On amène les clients",
+    text: "SEO en continu, Google Ads en option, et suivi des résultats. On reste à vos côtés.",
+  },
+];
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Accueil", item: site.siteUrl },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Méthode",
+      item: `${site.siteUrl}/methode`,
+    },
+  ],
+};
+
+const serviceLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType: "Méthode d'acquisition : site sur-mesure, SEO local, publicité",
+  provider: { "@type": "Organization", name: site.brandName },
+  areaServed: { "@type": "Country", name: site.areaServed },
+  description:
+    "La méthode Naviel : un site sur-mesure orienté conversion, un référencement local solide, et de la publicité en option pour accélérer.",
+  url: `${site.siteUrl}/methode`,
+};
+---
+
+<Layout
+  title="Méthode"
+  description="La méthode Naviel pour transformer un site en canal d'acquisition : conception sur-mesure, mise en ligne clé en main, SEO local et publicité en option. Agence basée à Paris, partout en France."
+  jsonLd={[breadcrumb, serviceLd]}
+>
+  <!-- Hero -->
+  <Section spacing="md" class="pt-28 sm:pt-36">
+    <Reveal class="max-w-3xl">
+      <Kicker>La méthode</Kicker>
+      <h1 class="mt-4 text-4xl font-semibold sm:text-5xl lg:text-6xl">
+        Trois leviers, dans le bon ordre.
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-ink-soft">
+        On ne livre pas un site et on s'en va. On construit un canal : un site
+        rapide et orienté conversion, un référencement local solide, et de la
+        publicité quand c'est le bon moment pour accélérer.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <Button href={site.contact.bookingUrl} variant="primary" size="lg" external arrow>
+          Réserver un appel de 15 min
+        </Button>
+        <Button href="/realisations" variant="ghost" size="lg">
+          Voir nos réalisations
+        </Button>
+      </div>
+    </Reveal>
+  </Section>
+
+  <!-- 3 piliers -->
+  <Section spacing="sm">
+    <div class="grid gap-5 md:grid-cols-3">
+      {
+        piliers.map((p, i) => (
+          <Reveal delay={i * 90} class="h-full">
+            <MethodCard
+              num={p.num}
+              step={p.step}
+              title={p.title}
+              text={p.text}
+              tag={p.tag}
+              class="h-full"
+            />
+          </Reveal>
+        ))
+      }
+    </div>
+
+    <!-- Carte Google Ads — option / accélérateur -->
+    <Reveal delay={120} class="mt-5">
+      <Card accent class="overflow-hidden">
+        <div class="ambient-halo opacity-50"></div>
+        <div class="relative grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-center">
+          <div>
+            <span
+              class="inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-accent/40 bg-accent/10 px-3 py-1 text-xs font-medium uppercase tracking-wider text-accent"
+            >
+              Option · Accélérateur
+            </span>
+            <h2 class="mt-4 text-2xl font-semibold sm:text-3xl">
+              Google Ads : des appels qualifiés dès maintenant.
+            </h2>
+            <p class="mt-4 max-w-xl text-ink-soft">
+              Quand vous voulez accélérer, on lance la publicité. Piloté par un
+              media buyer, suivi sur le ROI, optimisé en continu. Vous payez le
+              budget pub directement à Google — nous, on gère la performance.
+            </p>
+          </div>
+          <div class="flex lg:justify-end">
+            <Button href={site.contact.bookingUrl} variant="primary" external arrow>
+              En parler
+            </Button>
+          </div>
+        </div>
+      </Card>
+    </Reveal>
+  </Section>
+
+  <!-- Process -->
+  <Section spacing="md" class="border-y border-line bg-bg-2">
+    <Reveal class="max-w-2xl">
+      <Kicker>Le déroulé</Kicker>
+      <h2 class="mt-4 text-3xl font-semibold sm:text-4xl lg:text-5xl">
+        De l'appel découverte aux premiers clients.
+      </h2>
+    </Reveal>
+
+    <ol class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        process.map((step, i) => (
+          <Reveal as="li" delay={i * 80}>
+            <Card class="h-full">
+              <span class="font-display text-3xl font-semibold text-accent">
+                {step.num}
+              </span>
+              <h3 class="mt-4 text-lg font-semibold">{step.title}</h3>
+              <p class="mt-2 text-sm text-ink-soft">{step.text}</p>
+            </Card>
+          </Reveal>
+        ))
+      }
+    </ol>
+  </Section>
+
+  <CTASection />
+</Layout>
