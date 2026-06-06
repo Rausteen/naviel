@@ -148,7 +148,7 @@ export const site: SiteConfig = {
   signals: [
     "Design + SEO + Ads sous un même toit",
     "Sur-mesure, zéro template",
-    "Basés à Paris, partout en France",
+    "Un seul interlocuteur, du design aux résultats",
     "Devis clair et ferme · le site vous appartient",
   ],
 

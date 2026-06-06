@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
-import strascleanCover from "../assets/case-studies/strasclean.png";
+import ppfCover from "../assets/case-studies/ppf-strasbourg.png";
 import Layout from "@layouts/Layout.astro";
 import Section from "@components/Section.astro";
 import Container from "@components/Container.astro";
@@ -145,7 +145,7 @@ const faqJsonLd = {
             class="inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-line-2 bg-surface/60 px-3.5 py-1.5 text-xs font-medium text-ink-soft backdrop-blur"
           >
             <span class="inline-block size-1.5 rounded-full bg-accent pulse-dot" aria-hidden="true"></span>
-            Agence d'acquisition · {site.coverage}
+            Agence d'acquisition · Entreprises premium
           </span>
         </p>
 
@@ -218,12 +218,12 @@ const faqJsonLd = {
                 <rect x="3" y="7" width="10" height="7" rx="1.5" stroke="currentColor" stroke-width="1.3"/>
                 <path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" stroke="currentColor" stroke-width="1.3"/>
               </svg>
-              strasclean.fr
+              ppf-strasbourg.fr
             </span>
           </div>
           <Image
-            src={strascleanCover}
-            alt="Aperçu du site strasclean.fr réalisé par Naviel"
+            src={ppfCover}
+            alt="Aperçu du site ppf-strasbourg.fr réalisé par Naviel"
             width={1100}
             height={688}
             loading="eager"
@@ -238,12 +238,12 @@ const faqJsonLd = {
           <span
             class="size-2 rotate-45 rounded-[2px] bg-accent shadow-[0_0_10px_-2px_rgba(200,242,78,0.7)]"
             aria-hidden="true"></span>
-          <span class="text-accent">300+</span> pages en première page
+          <span class="text-accent">×2,4</span> demandes de devis
         </div>
         <div
           class="absolute -top-3 right-3 hidden items-center gap-2 rounded-[var(--radius-pill)] border border-line-2 bg-bg/90 px-3.5 py-2 text-sm font-medium text-ink shadow-[0_12px_30px_-12px_rgba(0,0,0,0.85)] backdrop-blur sm:inline-flex"
         >
-          <span class="text-accent">★★★★★</span> Detailing premium
+          <span class="text-accent">Top 3</span> « PPF Strasbourg »
         </div>
       </div>
     </Container>
