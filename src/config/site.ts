@@ -251,12 +251,6 @@ export const site: SiteConfig = {
       desc: "",
     },
     {
-      name: "Immobilier",
-      slug: "immobilier-premium",
-      featured: false,
-      desc: "",
-    },
-    {
       name: "Restauration",
       slug: "restauration",
       featured: false,
