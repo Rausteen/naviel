@@ -140,7 +140,7 @@ export const site: SiteConfig = {
   stats: [
     { value: "12+", label: "sites livrés & en production" },
     { value: "×3,2", label: "de demandes après refonte" },
-    { value: "1ʳᵉ", label: "page Google sur les requêtes locales" },
+    { value: "Top 1", label: "sur des dizaines de requêtes locales" },
     { value: "48h", label: "pour lancer une première campagne" },
   ],
 

@@ -9,7 +9,7 @@ export interface Props {
 const { stats, class: className = "" } = Astro.props;
 
 // Sépare la valeur en préfixe / cœur numérique / suffixe pour mettre les
-// symboles (×, +, ʳᵉ, h…) en accent, le nombre en ink — comme la maquette.
+// symboles (×, +, h, Top…) en accent, le nombre en ink — comme la maquette.
 function splitValue(value: string): { prefix: string; core: string; suffix: string } {
   const match = value.match(/^(\D*)([\d.,\s]+)(.*)$/u);
   if (!match) return { prefix: "", core: value, suffix: "" };
