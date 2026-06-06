@@ -1,0 +1,505 @@
+---
+/**
+ * Landing page de campagne Google Ads Search — objectif unique : réserver un appel.
+ * Page focalisée : pas de header/nav du site (Layout `bare`), un seul CTA répété
+ * (smooth-scroll vers #reserver), embed Cal.com inline, capture gclid/utm,
+ * conversion Google Ads sur bookingSuccessfulV2.
+ *
+ * INDEXATION : laissée indexable (contenu unique → peut aussi capter de l'organique).
+ * Pour la réserver STRICTEMENT aux pubs, ajouter `noindex` au composant <Layout> ci-dessous.
+ *
+ * Réutilisable comme gabarit pour de futures /secteurs/[slug] (sections claires).
+ */
+import { Image } from "astro:assets";
+import ppfCover from "../assets/case-studies/ppf-strasbourg.png";
+import strascleanCover from "../assets/case-studies/strasclean.png";
+import Layout from "@layouts/Layout.astro";
+import Section from "@components/Section.astro";
+import Container from "@components/Container.astro";
+import Button from "@components/Button.astro";
+import Reveal from "@components/Reveal.astro";
+import Faq from "@components/Faq.astro";
+import { site } from "@config";
+
+// Lien Cal.com → calLink (ex. "naviel/appel-decouverte")
+const calLink = site.contact.bookingUrl.replace(/^https?:\/\/(app\.)?cal\.com\//, "");
+// Conversion Google Ads (déclenchée seulement si les 2 IDs sont en config)
+const sendTo =
+  site.analytics.adsId && site.analytics.adsConversionLabel
+    ? `${site.analytics.adsId}/${site.analytics.adsConversionLabel}`
+    : "";
+
+const prix = site.pricing.items[0]?.from ?? "2 499 €";
+
+const obtenez = [
+  {
+    num: "01",
+    title: "Un site sur-mesure orienté conversion",
+    text: "Design unique, mobile-first, pensé pour transformer les visiteurs en demandes de contact. Zéro template.",
+  },
+  {
+    num: "02",
+    title: "Le référencement SEO local",
+    text: "Pour apparaître en haut de Google (et sur la carte) quand un client cherche votre service près de chez lui.",
+  },
+  {
+    num: "03",
+    title: "La mise en ligne clé en main",
+    text: "Hébergement, nom de domaine, sécurisation. Vous n'avez rien à gérer.",
+  },
+];
+
+const pourquoi = [
+  "Sur-mesure, pas un site sorti d'un outil automatique.",
+  "On vous trouve des clients, on ne livre pas qu'une vitrine.",
+  "Un seul interlocuteur : vous parlez directement à l'expert.",
+  "Basés à Paris, on travaille partout en France.",
+];
+
+const process = [
+  {
+    num: "01",
+    title: "Appel découverte gratuit",
+    text: "15 minutes, sans engagement. On comprend votre activité et votre marché.",
+  },
+  {
+    num: "02",
+    title: "Conception & validation",
+    text: "On conçoit vos maquettes sur-mesure, vous validez.",
+  },
+  {
+    num: "03",
+    title: "Mise en ligne + référencement",
+    text: "On publie, on sécurise et on référence pour que ça vous amène des clients.",
+  },
+];
+
+const faq = [
+  {
+    q: "Combien de temps pour avoir mon site en ligne ?",
+    a: "Selon le périmètre, un site vitrine sur-mesure se livre généralement en quelques semaines. On vous donne un calendrier précis dès l'appel découverte.",
+  },
+  {
+    q: "Combien ça coûte ?",
+    a: `La création démarre à ${prix}, payable en 3 ou 4 fois. On vous donne un devis clair et ferme après l'appel — aucune surprise.`,
+  },
+  {
+    q: "Je n'ai pas de logo ni de textes, vous gérez ?",
+    a: "Oui. On vous accompagne sur l'identité visuelle et la rédaction. L'objectif est que le rendu soit à la hauteur de votre savoir-faire.",
+  },
+  {
+    q: "Le site m'appartient-il vraiment ?",
+    a: "Oui. Le nom de domaine est à votre nom et le site vous appartient. Aucune dépendance, vous n'êtes jamais pris en otage.",
+  },
+  {
+    q: "Vous pouvez refaire un site que j'ai déjà ?",
+    a: "Oui, on fait aussi la refonte : nouveau site plus performant, en conservant et améliorant votre référencement existant.",
+  },
+  {
+    q: "Vous travaillez partout en France ?",
+    a: `Oui. ${site.brandName} est basée à ${site.city} et accompagne ses clients partout en France, à distance — du premier appel jusqu'aux résultats.`,
+  },
+];
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+
+const serviceLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType: "Création de site internet & référencement SEO",
+  provider: { "@type": "Organization", name: site.brandName },
+  areaServed: { "@type": "Country", name: site.areaServed },
+  description:
+    "Création et refonte de site internet sur-mesure + référencement SEO local pour artisans et commerces de service.",
+  url: `${site.siteUrl}/creation-site-internet`,
+};
+
+const signals = [
+  "Sur-mesure, zéro template",
+  "Référencé sur Google",
+  "Partout en France",
+  "Devis gratuit sous 24h",
+  "Le site vous appartient",
+];
+---
+
+<Layout
+  bare
+  title="Création de site internet qui vous trouve des clients"
+  description="On conçoit votre site sur-mesure et on le référence pour qu'il vous trouve des clients sur Google. Artisans & commerces de service, partout en France. Devis gratuit."
+  jsonLd={[serviceLd, faqLd]}
+>
+  <!-- Barre haut : logo seul (non cliquable) + CTA unique -->
+  <div class="border-b border-line">
+    <Container class="flex h-16 items-center justify-between">
+      <span
+        class="inline-flex items-center gap-2.5 font-display text-lg font-semibold tracking-[-0.04em] text-ink"
+        aria-label={`${site.brandName}`}
+      >
+        <span
+          class="inline-block size-3 rotate-45 rounded-[3px] bg-accent shadow-[0_0_16px_-2px_rgba(200,242,78,0.7)]"
+          aria-hidden="true"></span>
+        {site.brandName}
+      </span>
+      <Button href="#reserver" variant="primary">Réserver un appel</Button>
+    </Container>
+  </div>
+
+  <!-- ============ HERO ============ -->
+  <section class="relative overflow-hidden pt-14 sm:pt-20">
+    <div class="ambient-halo"></div>
+    <Container class="relative">
+      <div class="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+        <div>
+          <span
+            class="inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-line-2 bg-surface/60 px-3.5 py-1.5 text-xs font-medium text-ink-soft backdrop-blur"
+          >
+            <span class="inline-block size-1.5 rounded-full bg-accent pulse-dot" aria-hidden="true"></span>
+            Agence basée à {site.city} · {site.coverage}
+          </span>
+
+          <h1 class="mt-6 text-[2.1rem] font-semibold leading-[1.05] sm:text-5xl lg:text-6xl">
+            Un site internet qui vous trouve des
+            <span class="text-accent">clients sur Google.</span>
+          </h1>
+
+          <p class="mt-5 max-w-xl text-base leading-relaxed text-ink-soft sm:text-lg">
+            On conçoit votre site sur-mesure et on le référence pour qu'il vous
+            amène des clients. Pas un simple site : un outil qui travaille pour
+            vous.
+          </p>
+
+          <div class="mt-7">
+            <Button href="#reserver" variant="primary" size="lg" arrow>
+              Réserver un appel gratuit
+            </Button>
+          </div>
+
+          <p class="mt-5 text-sm text-muted">
+            Déjà en ligne : <span class="text-ink-soft">ppf-strasbourg.fr</span>
+            <span aria-hidden="true"> · </span>
+            <span class="text-ink-soft">strasclean.fr</span>
+          </p>
+        </div>
+
+        <!-- Visuel -->
+        <div class="relative mx-auto w-full max-w-md lg:max-w-none">
+          <div
+            class="overflow-hidden rounded-[var(--radius-card)] border border-line-2 bg-surface shadow-[0_40px_120px_-50px_rgba(200,242,78,0.4)]"
+          >
+            <div class="flex items-center gap-2 border-b border-line bg-bg-2 px-4 py-2.5">
+              <span class="size-2.5 rounded-full bg-line-2" aria-hidden="true"></span>
+              <span class="size-2.5 rounded-full bg-line-2" aria-hidden="true"></span>
+              <span class="size-2.5 rounded-full bg-accent/70" aria-hidden="true"></span>
+              <span class="ml-2 truncate rounded-[var(--radius-pill)] border border-line bg-bg/60 px-3 py-1 text-xs text-muted">
+                ppf-strasbourg.fr
+              </span>
+            </div>
+            <Image
+              src={ppfCover}
+              alt="Exemple de site réalisé par Naviel"
+              width={900}
+              height={563}
+              loading="eager"
+              class="w-full"
+            />
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ============ RÉASSURANCE ============ -->
+  <Section spacing="sm">
+    <ul class="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm text-ink-soft">
+      {
+        signals.map((s) => (
+          <li class="inline-flex items-center gap-2">
+            <span class="size-1.5 rotate-45 rounded-[1px] bg-accent" aria-hidden="true" />
+            {s}
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <!-- ============ PROBLÈME → PROMESSE ============ -->
+  <Section spacing="sm" class="border-y border-line bg-bg-2">
+    <div class="mx-auto max-w-3xl text-center">
+      <h2 class="text-3xl font-semibold sm:text-4xl">
+        Un beau site que personne ne trouve ne sert à rien.
+      </h2>
+      <p class="mx-auto mt-5 max-w-2xl text-ink-soft sm:text-lg">
+        La plupart des sites — surtout ceux faits avec un outil tout fait — sont
+        invisibles sur Google. Nous, on fait le site <em class="not-italic text-accent">et</em>
+        le référencement local, pour que les gens qui cherchent votre service
+        vous trouvent — et vous contactent.
+      </p>
+      <div class="mt-7 flex justify-center">
+        <Button href="#reserver" variant="primary" size="lg" arrow>
+          Réserver un appel gratuit
+        </Button>
+      </div>
+    </div>
+  </Section>
+
+  <!-- ============ CE QUE VOUS OBTENEZ ============ -->
+  <Section spacing="md">
+    <div class="mx-auto mb-10 max-w-2xl text-center">
+      <h2 class="text-3xl font-semibold sm:text-4xl">Ce que vous obtenez.</h2>
+    </div>
+    <div class="grid gap-5 md:grid-cols-3">
+      {
+        obtenez.map((o, i) => (
+          <Reveal delay={i * 80}>
+            <div class="h-full rounded-[var(--radius-card)] border border-line bg-[linear-gradient(180deg,var(--color-surface),var(--color-bg-2))] p-7">
+              <span class="font-display text-sm font-semibold text-accent">{o.num}</span>
+              <h3 class="mt-4 text-xl font-semibold">{o.title}</h3>
+              <p class="mt-3 text-ink-soft">{o.text}</p>
+            </div>
+          </Reveal>
+        ))
+      }
+    </div>
+  </Section>
+
+  <!-- ============ RÉALISATIONS (preuve) ============ -->
+  <Section spacing="md" class="border-y border-line bg-bg-2">
+    <div class="mx-auto mb-10 max-w-2xl text-center">
+      <h2 class="text-3xl font-semibold sm:text-4xl">Des sites déjà en ligne.</h2>
+      <p class="mt-4 text-ink-soft">
+        Nos clients sont partout en France — nos références à Strasbourg le
+        prouvent : on travaille à distance.
+      </p>
+    </div>
+    <div class="mx-auto grid max-w-4xl gap-5 sm:grid-cols-2">
+      {
+        [
+          { cover: ppfCover, domain: "ppf-strasbourg.fr", secteur: "PPF · Covering" },
+          { cover: strascleanCover, domain: "strasclean.fr", secteur: "Detailing · Lavage" },
+        ].map((r, i) => (
+          <Reveal delay={i * 90}>
+            <figure class="overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface">
+              <div class="relative aspect-[16/10] overflow-hidden border-b border-line bg-bg-2">
+                <Image
+                  src={r.cover}
+                  alt={`Site ${r.domain} réalisé par Naviel`}
+                  width={760}
+                  height={475}
+                  loading="lazy"
+                  class="size-full object-cover"
+                />
+                <span class="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-[var(--radius-pill)] border border-line bg-bg/60 px-2.5 py-1 text-xs text-ink-soft backdrop-blur">
+                  <span class="size-1.5 rounded-full bg-accent" aria-hidden="true" />
+                  Client à Strasbourg
+                </span>
+              </div>
+              <figcaption class="flex items-center justify-between p-5">
+                <span class="text-xs font-semibold uppercase tracking-[0.1em] text-accent-deep">
+                  {r.secteur}
+                </span>
+                <span class="text-sm text-ink-soft">{r.domain}</span>
+              </figcaption>
+            </figure>
+          </Reveal>
+        ))
+      }
+    </div>
+  </Section>
+
+  <!-- ============ POURQUOI NAVIEL ============ -->
+  <Section spacing="md">
+    <div class="mx-auto mb-10 max-w-2xl text-center">
+      <h2 class="text-3xl font-semibold sm:text-4xl">Pourquoi {site.brandName}.</h2>
+    </div>
+    <div class="mx-auto grid max-w-3xl gap-px overflow-hidden rounded-[var(--radius-card)] border border-line bg-line sm:grid-cols-2">
+      {
+        pourquoi.map((p) => (
+          <div class="flex items-start gap-3 bg-bg-2 p-6">
+            <span class="mt-1 size-2 shrink-0 rotate-45 rounded-[2px] bg-accent shadow-[0_0_10px_-2px_rgba(200,242,78,0.7)]" aria-hidden="true" />
+            <p class="text-ink-soft">{p}</p>
+          </div>
+        ))
+      }
+    </div>
+  </Section>
+
+  <!-- ============ COMMENT ÇA SE PASSE ============ -->
+  <Section spacing="md" class="border-y border-line bg-bg-2">
+    <div class="mx-auto mb-10 max-w-2xl text-center">
+      <h2 class="text-3xl font-semibold sm:text-4xl">Comment ça se passe.</h2>
+    </div>
+    <ol class="grid gap-5 md:grid-cols-3">
+      {
+        process.map((s, i) => (
+          <Reveal as="li" delay={i * 80}>
+            <div class="h-full rounded-[var(--radius-card)] border border-line bg-surface p-7">
+              <span class="font-display text-3xl font-semibold text-accent">{s.num}</span>
+              <h3 class="mt-4 text-lg font-semibold">{s.title}</h3>
+              <p class="mt-2 text-sm text-ink-soft">{s.text}</p>
+            </div>
+          </Reveal>
+        ))
+      }
+    </ol>
+    <div class="mt-9 flex justify-center">
+      <Button href="#reserver" variant="primary" size="lg" arrow>
+        Réserver un appel gratuit
+      </Button>
+    </div>
+  </Section>
+
+  <!-- ============ TRANSPARENCE TARIFAIRE ============ -->
+  <Section spacing="sm">
+    <div class="mx-auto max-w-2xl rounded-[var(--radius-card)] border border-line bg-surface p-7 text-center">
+      <p class="text-lg text-ink-soft">
+        Création <span class="text-ink">à partir de {prix}</span>, payable en 3 ou
+        4 fois. <span class="text-ink">Devis clair et ferme après l'appel</span> —
+        aucune surprise.
+      </p>
+    </div>
+  </Section>
+
+  <!-- ============ FAQ ============ -->
+  <Section spacing="md" class="border-t border-line bg-bg-2">
+    <div class="mx-auto max-w-3xl">
+      <h2 class="mb-8 text-center text-3xl font-semibold sm:text-4xl">
+        Vos questions.
+      </h2>
+      <Faq items={faq} />
+    </div>
+  </Section>
+
+  <!-- ============ RÉSERVATION ============ -->
+  <section id="reserver" class="relative overflow-hidden py-16 sm:py-24">
+    <div class="ambient-halo opacity-60"></div>
+    <Container class="relative">
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="text-3xl font-semibold sm:text-5xl">
+          Réservez votre appel <span class="text-accent">gratuit.</span>
+        </h2>
+        <p class="mx-auto mt-4 max-w-xl text-ink-soft sm:text-lg">
+          15 minutes, sans engagement. On regarde ensemble votre marché et ce
+          qui peut vous amener des clients.
+        </p>
+      </div>
+
+      <!-- Embed Cal.com inline (thème sombre) -->
+      <div class="mx-auto mt-10 max-w-3xl">
+        <div
+          id="cal-inline"
+          class="overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface"
+          style="min-height:600px"
+        >
+        </div>
+        <p class="mt-5 text-center text-sm text-muted">
+          Un souci pour réserver ? Écrivez-nous à
+          <a
+            href={`mailto:${site.contact.email}`}
+            class="text-accent underline underline-offset-4 hover:text-accent-deep"
+          >
+            {site.contact.email}
+          </a>
+        </p>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ============ FOOTER SLIM ============ -->
+  <footer class="border-t border-line bg-bg-2">
+    <Container class="flex flex-col items-center gap-4 py-8 text-sm text-muted sm:flex-row sm:justify-between">
+      <span class="inline-flex items-center gap-2.5 font-display text-base font-semibold tracking-[-0.04em] text-ink">
+        <span class="inline-block size-2.5 rotate-45 rounded-[2px] bg-accent" aria-hidden="true"></span>
+        {site.brandName}
+        <span class="ml-1 font-sans text-sm font-normal text-muted">
+          · Basés à {site.city}, partout en France
+        </span>
+      </span>
+      <div class="flex items-center gap-5">
+        <a href="/mentions-legales" class="transition-colors hover:text-ink-soft">
+          Mentions légales
+        </a>
+        <a
+          href={`mailto:${site.contact.email}`}
+          class="transition-colors hover:text-ink-soft"
+        >
+          {site.contact.email}
+        </a>
+      </div>
+    </Container>
+  </footer>
+
+  <!-- Capture gclid / utm (cookie first-party 90 j) -->
+  <script is:inline>
+    (function () {
+      try {
+        var p = new URLSearchParams(location.search);
+        ["gclid", "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"].forEach(
+          function (k) {
+            var v = p.get(k);
+            if (v)
+              document.cookie =
+                k + "=" + encodeURIComponent(v) + ";max-age=" + 90 * 24 * 3600 + ";path=/;SameSite=Lax";
+          },
+        );
+      } catch (e) {}
+    })();
+  </script>
+
+  <!-- Embed Cal.com inline + prefill gclid + conversion Google Ads -->
+  <script is:inline define:vars={{ calLink, sendTo }}>
+    function navielCookie(n) {
+      return (document.cookie.match("(^|;)\\s*" + n + "\\s*=\\s*([^;]+)") || [])[2] || "";
+    }
+    (function (C, A, L) {
+      let p = function (a, ar) { a.q.push(ar); };
+      let d = C.document;
+      C.Cal = C.Cal || function () {
+        let cal = C.Cal; let ar = arguments;
+        if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; }
+        if (ar[0] === L) {
+          const api = /** @type {any} */ (function () { p(api, arguments); });
+          const namespace = ar[1];
+          api.q = api.q || [];
+          if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); }
+          else p(cal, ar);
+          return;
+        }
+        p(cal, ar);
+      };
+    })(window, "https://app.cal.com/embed/embed.js", "init");
+
+    Cal("init", { origin: "https://cal.com" });
+
+    var gclid = navielCookie("gclid");
+    Cal("inline", {
+      elementOrSelector: "#cal-inline",
+      calLink: calLink,
+      config: Object.assign({ theme: "dark", layout: "month_view" }, gclid ? { gclid: gclid } : {}),
+    });
+
+    Cal("ui", {
+      theme: "dark",
+      hideEventTypeDetails: false,
+      cssVarsPerTheme: { dark: { "cal-brand": "#c8f24e" } },
+    });
+
+    // Conversion sur réservation réussie (le consentement est géré par Consent Mode v2).
+    Cal("on", {
+      action: "bookingSuccessfulV2",
+      callback: function () {
+        if (sendTo && window.gtag) {
+          window.gtag("event", "conversion", { send_to: sendTo });
+        }
+      },
+    });
+  </script>
+</Layout>
