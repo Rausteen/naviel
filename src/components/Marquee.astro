@@ -8,19 +8,19 @@ const { items, class: className = "" } = Astro.props;
 
 <div
   class:list={[
-    "marquee relative overflow-hidden border-y border-line bg-bg-2 py-6",
+    "marquee relative overflow-hidden border-y border-line bg-bg-2 py-3.5",
     className,
   ]}
   aria-hidden="true"
 >
-  <div class="marquee-track flex w-max gap-14">
+  <div class="marquee-track flex w-max gap-8">
     {
       [0, 1].map(() => (
-        <span class="inline-flex items-center gap-14 whitespace-nowrap font-display text-[clamp(1.4rem,2.6vw,2.1rem)] font-medium tracking-[-0.03em] text-ink-soft">
+        <span class="inline-flex items-center gap-8 whitespace-nowrap font-display text-[clamp(0.9rem,1.6vw,1.15rem)] font-medium tracking-[-0.02em] text-ink-soft">
           {items.map((item) => (
-            <span class="inline-flex items-center gap-14">
+            <span class="inline-flex items-center gap-8">
               {item}
-              <span class="text-[0.7em] text-accent" aria-hidden="true">◆</span>
+              <span class="text-[0.65em] text-accent" aria-hidden="true">◆</span>
             </span>
           ))}
         </span>
