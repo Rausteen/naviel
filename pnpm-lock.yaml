@@ -20,12 +20,12 @@ importers:
       '@astrojs/sitemap':
         specifier: ^3.4.0
         version: 3.7.3
-      '@fontsource-variable/bricolage-grotesque':
-        specifier: ^5.2.5
-        version: 5.2.10
-      '@fontsource-variable/hanken-grotesk':
+      '@fontsource-variable/manrope':
         specifier: ^5.2.5
         version: 5.2.8
+      '@fontsource-variable/space-grotesk':
+        specifier: ^5.2.5
+        version: 5.2.10
       '@tailwindcss/vite':
         specifier: ^4.1.7
         version: 4.3.0(vite@6.4.3(@types/node@24.13.1)(jiti@2.7.0)(lightningcss@1.32.0)(yaml@2.9.0))
@@ -451,11 +451,11 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@fontsource-variable/bricolage-grotesque@5.2.10':
-    resolution: {integrity: sha512-5EDsCqgGpKVcJWE4sg9ydli+t5WM97mISYw5lla/Ev4z71FwXh1oN0YUU8xjkRW9+wBCGD9R+ntAvI8G4bUFJg==}
+  '@fontsource-variable/manrope@5.2.8':
+    resolution: {integrity: sha512-nc9lOuCRz73UHnovDE2bwXUdghE2SEOc7Aii0qGe3CLyE03W1a7VnY5Z6euRiapiKbCkGS+eXbY3s/kvWeGeSw==}
 
-  '@fontsource-variable/hanken-grotesk@5.2.8':
-    resolution: {integrity: sha512-K7hu09ZKReBc7EifRLeM4K94NZBrxFEg0nGcISmVwlFQOJo4EmYkLXTWEwr5JcNW4z2hr5zy8vLS2sxC8JDmrQ==}
+  '@fontsource-variable/space-grotesk@5.2.10':
+    resolution: {integrity: sha512-yJQO/o35/hAP3CFnpdFTwQku2yzJOae2HIpBmqkOVoxhhXJaQP3g+b6Jrz7u+eI7A5ZdCIf88uMWpBJdFiGr5w==}
 
   '@img/colour@1.1.0':
     resolution: {integrity: sha512-Td76q7j57o/tLVdgS746cYARfSyxk8iEfRxewL9h4OMzYhbW4TAcppl0mT4eyqXddh6L/jwoM75mo7ixa/pCeQ==}
@@ -2719,9 +2719,9 @@ snapshots:
   '@esbuild/win32-x64@0.27.7':
     optional: true
 
-  '@fontsource-variable/bricolage-grotesque@5.2.10': {}
+  '@fontsource-variable/manrope@5.2.8': {}
 
-  '@fontsource-variable/hanken-grotesk@5.2.8': {}
+  '@fontsource-variable/space-grotesk@5.2.10': {}
 
   '@img/colour@1.1.0': {}
 

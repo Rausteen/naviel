@@ -2,8 +2,8 @@
 
 /* Polices auto-hébergées (perf + RGPD : pas d'appel Google Fonts).
    On n'importe que l'axe `wght` (poids variable) pour limiter le payload. */
-@import "@fontsource-variable/bricolage-grotesque/wght.css";
-@import "@fontsource-variable/hanken-grotesk/wght.css";
+@import "@fontsource-variable/space-grotesk/wght.css";
+@import "@fontsource-variable/manrope/wght.css";
 
 /* ------------------------------------------------------------------ */
 /* Design tokens — Tailwind v4 @theme (génère aussi les variables CSS) */
@@ -26,8 +26,8 @@
   --color-accent-deep: #a9d62f;
 
   /* Typographie */
-  --font-display: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Hanken Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Manrope Variable", ui-sans-serif, system-ui, sans-serif;
 
   /* Rayons */
   --radius-card: 18px;

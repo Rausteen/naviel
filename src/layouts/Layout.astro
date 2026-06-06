@@ -7,9 +7,9 @@ import StickyCTA from "@components/StickyCTA.astro";
 import Analytics from "@components/Analytics.astro";
 import { site } from "@config";
 
-// Préchargement du woff2 du hero (Bricolage Grotesque, axe wght) → LCP rapide
-import displayFont from "@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2?url";
-import bodyFont from "@fontsource-variable/hanken-grotesk/files/hanken-grotesk-latin-wght-normal.woff2?url";
+// Préchargement du woff2 du hero (Space Grotesk + Manrope, axe wght) → LCP rapide
+import displayFont from "@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2?url";
+import bodyFont from "@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url";
 
 export interface Props {
   title?: string;
