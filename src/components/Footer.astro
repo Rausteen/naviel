@@ -20,14 +20,21 @@ const year = new Date().getFullYear();
         </p>
       </div>
 
-      <!-- Agence -->
-      <nav aria-label="Liens agence">
+      <!-- Plan du site (liens complets pour le maillage) -->
+      <nav aria-label="Plan du site">
         <h2 class="text-xs font-semibold uppercase tracking-[0.18em] text-muted">
-          Agence
+          Explorer
         </h2>
         <ul class="mt-4 space-y-3 text-sm">
           {
-            site.nav.map((item) => (
+            [
+              { label: "Méthode", href: "/methode" },
+              { label: "Secteurs", href: "/secteurs" },
+              { label: "Réalisations", href: "/realisations" },
+              { label: "Offre & tarifs", href: "/offre" },
+              { label: "Agence", href: "/agence" },
+              { label: "Blog", href: "/blog" },
+            ].map((item) => (
               <li>
                 <a
                   href={item.href}
@@ -38,11 +45,6 @@ const year = new Date().getFullYear();
               </li>
             ))
           }
-          <li>
-            <a href="/blog" class="text-ink-soft transition-colors hover:text-ink">
-              Blog
-            </a>
-          </li>
         </ul>
       </nav>
 

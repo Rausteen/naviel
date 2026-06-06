@@ -129,9 +129,9 @@ export const site: SiteConfig = {
     gscVerification: "",
   },
 
+  // Navigation principale — volontairement réduite à l'essentiel.
+  // Les autres pages (Méthode, Secteurs, Blog) restent accessibles via le footer.
   nav: [
-    { label: "Méthode", href: "/methode" },
-    { label: "Secteurs", href: "/secteurs" },
     { label: "Réalisations", href: "/realisations" },
     { label: "Offre & tarifs", href: "/offre" },
     { label: "Agence", href: "/agence" },
