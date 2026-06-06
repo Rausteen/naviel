@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "private": true,
   "description": "Site marketing de l'agence Naviel — acquisition de clients pour l'automobile premium.",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
