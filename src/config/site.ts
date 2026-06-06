@@ -23,6 +23,11 @@ export interface Product {
   desc: string; // 1 ligne. Si vide → seul le nom est affiché.
 }
 
+export interface Stat {
+  value: string;
+  label: string;
+}
+
 export interface Sector {
   name: string;
   slug: string;
@@ -53,6 +58,7 @@ export interface SiteConfig {
     phone: string;
   };
   nav: NavItem[];
+  stats: Stat[];
   signals: string[];
   social: SocialLink[];
   products: Product[];
@@ -90,8 +96,17 @@ export const site: SiteConfig = {
     { label: "Contact", href: "/contact" },
   ],
 
-  // Signaux honnêtes (NON chiffrés). Remplacer par de vrais chiffres seulement
-  // quand ils existent — ne jamais inventer de statistiques.
+  // Chiffres clés affichés sur l'accueil.
+  // ⚠️ DÉMO — valeurs de démonstration à remplacer par de vrais chiffres
+  // mesurés avant d'attirer du trafic réel.
+  stats: [
+    { value: "12+", label: "sites livrés & en production" },
+    { value: "×3,2", label: "de demandes après refonte" },
+    { value: "1ʳᵉ", label: "page Google sur les requêtes locales" },
+    { value: "48h", label: "pour lancer une première campagne" },
+  ],
+
+  // Signaux honnêtes (NON chiffrés) — disponibles si tu veux les réafficher.
   signals: [
     "Design + SEO + Ads sous un même toit",
     "Sur-mesure, zéro template",
@@ -153,11 +168,12 @@ export const site: SiteConfig = {
 
   // Fondateur (section « Derrière Naviel » sur /agence).
   // Tout champ vide n'affiche RIEN (aucun placeholder visible).
+  // ⚠️ DÉMO — informations de démonstration à remplacer.
   founder: {
-    name: "",
-    role: "",
-    photo: "", // ex. "/founder.jpg" (déposer le fichier dans /public)
-    bio: "",
+    name: "Nathan Abib",
+    role: "Fondateur · Naviel",
+    photo: "/founder.png", // déposer une vraie photo dans /public (remplace le placeholder)
+    bio: "J'ai lancé Naviel après des années à concevoir des sites et piloter des campagnes d'acquisition pour des entreprises premium. Le constat : trop d'agences livrent un beau site et disparaissent. Chez Naviel, vous parlez directement à l'expert qui conçoit votre site, le référence et amène les clients — du premier appel jusqu'aux résultats.",
   },
 
   // Mots-clés (secteurs) affichés dans le marquee
