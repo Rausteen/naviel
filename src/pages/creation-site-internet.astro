@@ -21,13 +21,8 @@ import Reveal from "@components/Reveal.astro";
 import Faq from "@components/Faq.astro";
 import { site } from "@config";
 
-// Lien Cal.com → calLink (ex. "naviel/appel-decouverte")
+// Lien Cal.com → calLink (ex. "naviel/appel-decouverte") pour les boutons popup
 const calLink = site.contact.bookingUrl.replace(/^https?:\/\/(app\.)?cal\.com\//, "");
-// Conversion Google Ads (déclenchée seulement si les 2 IDs sont en config)
-const sendTo =
-  site.analytics.adsId && site.analytics.adsConversionLabel
-    ? `${site.analytics.adsId}/${site.analytics.adsConversionLabel}`
-    : "";
 
 const prix = site.pricing.items[0]?.from ?? "2 499 €";
 
@@ -438,45 +433,5 @@ const signals = [
       </div>
     </Container>
   </footer>
-
-  <!-- Embed Cal.com (popup) + conversion Google Ads à la réservation.
-       L'attribution au clic est gérée automatiquement par le tag Google
-       (auto-tagging + conversion linker) — aucun gclid à manipuler ici. -->
-  <script is:inline define:vars={{ sendTo }}>
-    (function (C, A, L) {
-      let p = function (a, ar) { a.q.push(ar); };
-      let d = C.document;
-      C.Cal = C.Cal || function () {
-        let cal = C.Cal; let ar = arguments;
-        if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; }
-        if (ar[0] === L) {
-          const api = /** @type {any} */ (function () { p(api, arguments); });
-          const namespace = ar[1];
-          api.q = api.q || [];
-          if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); }
-          else p(cal, ar);
-          return;
-        }
-        p(cal, ar);
-      };
-    })(window, "https://app.cal.com/embed/embed.js", "init");
-
-    Cal("init", { origin: "https://cal.com" });
-
-    Cal("ui", {
-      theme: "dark",
-      hideEventTypeDetails: false,
-      cssVarsPerTheme: { dark: { "cal-brand": "#c8f24e" } },
-    });
-
-    // Conversion à la réservation réussie (consentement géré par Consent Mode v2).
-    Cal("on", {
-      action: "bookingSuccessfulV2",
-      callback: function () {
-        if (sendTo && window.gtag) {
-          window.gtag("event", "conversion", { send_to: sendTo });
-        }
-      },
-    });
-  </script>
+  {/* L'init Cal.com (popup) + la conversion sont gérés globalement (CalEmbed dans le Layout). */}
 </Layout>

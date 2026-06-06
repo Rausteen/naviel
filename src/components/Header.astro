@@ -29,7 +29,7 @@ import { site } from "@config";
     </nav>
 
     <div class="hidden md:block">
-      <Button href={site.contact.bookingUrl} variant="primary" external>
+      <Button booking variant="primary" >
         Réserver un appel
       </Button>
     </div>
@@ -92,13 +92,7 @@ import { site } from "@config";
         ))
       }
       <div class="mt-3">
-        <Button
-          href={site.contact.bookingUrl}
-          variant="primary"
-          size="lg"
-          external
-          class="w-full"
-        >
+        <Button booking variant="primary" size="lg" class="w-full">
           Réserver un appel
         </Button>
       </div>

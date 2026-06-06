@@ -2,6 +2,7 @@
 import { site } from "@config";
 
 const { phone, whatsapp, bookingUrl } = site.contact;
+const calLink = bookingUrl.replace(/^https?:\/\/(app\.)?cal\.com\//, "");
 const telHref = phone ? `tel:${phone.replace(/[^+\d]/g, "")}` : null;
 const waHref = whatsapp
   ? `https://wa.me/${whatsapp.replace(/[^\d]/g, "")}?text=${encodeURIComponent(
@@ -17,10 +18,10 @@ const waHref = whatsapp
   style="padding-bottom:env(safe-area-inset-bottom)"
 >
   <div class="flex items-stretch gap-2 px-3 py-2.5">
-    <a
-      href={bookingUrl}
-      target="_blank"
-      rel="noopener noreferrer"
+    <button
+      type="button"
+      data-cal-link={calLink}
+      data-cal-config='{"layout":"month_view","theme":"dark"}'
       class="flex flex-1 items-center justify-center gap-2 rounded-[var(--radius-pill)] bg-accent px-4 py-3 text-sm font-semibold text-[#10110a]"
     >
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -28,7 +29,7 @@ const waHref = whatsapp
         <path d="M2 6h12M5 1.5v3M11 1.5v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
       </svg>
       Réserver un appel
-    </a>
+    </button>
 
     {
       telHref && (

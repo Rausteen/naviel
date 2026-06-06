@@ -1,4 +1,6 @@
 ---
+import { site } from "@config";
+
 export interface Props {
   href?: string;
   variant?: "primary" | "ghost";
@@ -12,6 +14,8 @@ export interface Props {
   arrow?: boolean;
   /** Ouvre le calendrier Cal.com en popup (ex. "naviel/appel-decouverte") */
   calLink?: string;
+  /** Raccourci : popup de réservation Cal.com depuis site.contact.bookingUrl */
+  booking?: boolean;
 }
 
 const {
@@ -24,7 +28,15 @@ const {
   ariaLabel,
   arrow = false,
   calLink,
+  booking = false,
 } = Astro.props;
+
+// Lien Cal.com effectif (slug sans le domaine)
+const cal =
+  calLink ||
+  (booking
+    ? site.contact.bookingUrl.replace(/^https?:\/\/(app\.)?cal\.com\//, "")
+    : "");
 
 const base =
   "group relative inline-flex items-center justify-center gap-2 rounded-[var(--radius-pill)] font-medium transition-all duration-300 ease-out focus-visible:outline-2 focus-visible:outline-offset-3 motion-reduce:transition-none";
@@ -48,10 +60,10 @@ const externalAttrs = external
 ---
 
 {
-  calLink ? (
+  cal ? (
     <button
       type="button"
-      data-cal-link={calLink}
+      data-cal-link={cal}
       data-cal-config='{"layout":"month_view","theme":"dark"}'
       class:list={cls}
       aria-label={ariaLabel}

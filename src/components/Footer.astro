@@ -4,6 +4,7 @@ import Logo from "./Logo.astro";
 import { site } from "@config";
 
 const year = new Date().getFullYear();
+const calLink = site.contact.bookingUrl.replace(/^https?:\/\/(app\.)?cal\.com\//, "");
 
 const services = [
   { label: "Création de site", href: "/creation-site" },
@@ -97,14 +98,14 @@ const explorer = [
             )
           }
           <li>
-            <a
-              href={site.contact.bookingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-accent transition-colors hover:text-accent-deep"
+            <button
+              type="button"
+              data-cal-link={calLink}
+              data-cal-config='{"layout":"month_view","theme":"dark"}'
+              class="text-left text-accent transition-colors hover:text-accent-deep"
             >
-              Réserver un appel ↗
-            </a>
+              Réserver un appel
+            </button>
           </li>
           <li>
             <a

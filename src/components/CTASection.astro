@@ -31,13 +31,7 @@ const {
         <div
           class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row"
         >
-          <Button
-            href={site.contact.bookingUrl}
-            variant="primary"
-            size="lg"
-            external
-            arrow
-          >
+          <Button booking variant="primary" size="lg" arrow>
             {ctaLabel}
           </Button>
           <Button href={`mailto:${site.contact.email}`} variant="ghost" size="lg">
