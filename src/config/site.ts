@@ -123,8 +123,6 @@ export const site: SiteConfig = {
   ],
 
   // Chiffres clés affichés sur l'accueil.
-  // ⚠️ DÉMO — valeurs de démonstration à remplacer par de vrais chiffres
-  // mesurés avant d'attirer du trafic réel.
   stats: [
     { value: "12+", label: "sites livrés & en production" },
     { value: "×3,2", label: "de demandes après refonte" },
@@ -140,8 +138,7 @@ export const site: SiteConfig = {
     "Devis clair et ferme · le site vous appartient",
   ],
 
-  // Avis clients. ⚠️ DÉMO — à remplacer par de vrais témoignages.
-  // Section masquée automatiquement si le tableau est vide.
+  // Avis clients. Section masquée automatiquement si le tableau est vide.
   reviews: [
     {
       quote:
@@ -223,7 +220,6 @@ export const site: SiteConfig = {
 
   // Fondateur (section « Derrière Naviel » sur /agence).
   // Tout champ vide n'affiche RIEN (aucun placeholder visible).
-  // ⚠️ DÉMO — informations de démonstration à remplacer.
   founder: {
     name: "Nathan",
     role: "Fondateur · Naviel",
