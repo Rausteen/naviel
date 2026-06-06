@@ -96,8 +96,8 @@ const faq = [
     a: "Oui, on fait aussi la refonte : nouveau site plus performant, en conservant et améliorant votre référencement existant.",
   },
   {
-    q: "Vous travaillez partout en France ?",
-    a: `Oui. ${site.brandName} est basée à ${site.city} et accompagne ses clients partout en France, à distance — du premier appel jusqu'aux résultats.`,
+    q: "L'accompagnement se fait à distance ?",
+    a: "Oui : visio, téléphone et e-mail. Simple et efficace, du premier appel jusqu'à la mise en ligne et aux résultats.",
   },
 ];
 
@@ -163,7 +163,7 @@ const signals = [
             class="inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-line-2 bg-surface/60 px-3.5 py-1.5 text-xs font-medium text-ink-soft backdrop-blur"
           >
             <span class="inline-block size-1.5 rounded-full bg-accent pulse-dot" aria-hidden="true"></span>
-            Agence basée à {site.city} · {site.coverage}
+            Pour les artisans & commerces de service
           </span>
 
           <h1 class="mt-6 text-[2.1rem] font-semibold leading-[1.05] sm:text-5xl lg:text-6xl">
@@ -419,9 +419,6 @@ const signals = [
       <span class="inline-flex items-center gap-2.5 font-display text-base font-semibold tracking-[-0.04em] text-ink">
         <span class="inline-block size-2.5 rotate-45 rounded-[2px] bg-accent" aria-hidden="true"></span>
         {site.brandName}
-        <span class="ml-1 font-sans text-sm font-normal text-muted">
-          · Basés à {site.city}, partout en France
-        </span>
       </span>
       <div class="flex items-center gap-5">
         <a href="/mentions-legales" class="transition-colors hover:text-ink-soft">
