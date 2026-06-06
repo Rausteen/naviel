@@ -109,7 +109,7 @@ export const site: SiteConfig = {
 
   // Description SEO par défaut (utilisée si une page n'en fournit pas)
   description:
-    "Agence d'acquisition pour les entreprises de service premium, basée à Paris, partout en France : sites sur-mesure, SEO local et Google Ads. On crée votre site et on vous amène des clients.",
+    "Agence d'acquisition pour les artisans et commerces de service, basée à Paris, partout en France : sites sur-mesure, SEO local et Google Ads. On crée votre site et on vous amène des clients.",
 
   contact: {
     email: "contact@naviel.fr", // Remplacer si autre adresse
@@ -262,7 +262,7 @@ export const site: SiteConfig = {
     name: "Nathan",
     role: "Fondateur · Naviel",
     photo: "/founder.png", // déposer une vraie photo dans /public (remplace le placeholder)
-    bio: "J'ai lancé Naviel après des années à concevoir des sites et piloter des campagnes d'acquisition pour des entreprises premium. Le constat : trop d'agences livrent un beau site et disparaissent. Chez Naviel, vous parlez directement à l'expert qui conçoit votre site, le référence et amène les clients — du premier appel jusqu'aux résultats.",
+    bio: "J'ai lancé Naviel après des années à concevoir des sites et piloter des campagnes d'acquisition pour des artisans et des commerces de service. Le constat : trop d'agences livrent un beau site et disparaissent. Chez Naviel, vous parlez directement à l'expert qui conçoit votre site, le référence et amène les clients — du premier appel jusqu'aux résultats.",
   },
 
   // Mots-clés (secteurs) affichés dans le marquee
