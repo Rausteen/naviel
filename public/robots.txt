@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://naviel.fr/sitemap-index.xml

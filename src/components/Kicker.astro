@@ -1,0 +1,30 @@
+---
+export interface Props {
+  class?: string;
+  /** Affiche un point d'accent avant le texte */
+  dot?: boolean;
+  /** Anime le point (pulsation) */
+  pulse?: boolean;
+}
+const { class: className = "", dot = true, pulse = false } = Astro.props;
+---
+
+<span
+  class:list={[
+    "inline-flex items-center gap-2.5 text-xs sm:text-sm font-medium uppercase tracking-[0.18em] text-muted",
+    className,
+  ]}
+>
+  {
+    dot && (
+      <span
+        class:list={[
+          "inline-block size-1.5 rounded-full bg-accent",
+          pulse && "pulse-dot",
+        ]}
+        aria-hidden="true"
+      />
+    )
+  }
+  <slot />
+</span>

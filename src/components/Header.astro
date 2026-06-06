@@ -1,0 +1,164 @@
+---
+import Container from "./Container.astro";
+import Button from "./Button.astro";
+import { site } from "@config";
+---
+
+<header
+  id="site-header"
+  class="fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300 motion-reduce:transition-none"
+  data-header
+>
+  <Container class="flex h-16 items-center justify-between sm:h-20">
+    <!-- Logo -->
+    <a
+      href="/"
+      class="group inline-flex items-center gap-1 font-display text-xl font-semibold tracking-tight text-ink"
+      aria-label={`${site.brandName} — accueil`}
+    >
+      <span>{site.brandName}</span>
+      <span
+        class="mb-2 inline-block size-1.5 rounded-full bg-accent transition-transform duration-300 group-hover:scale-125 motion-reduce:transition-none"
+        aria-hidden="true"></span>
+    </a>
+
+    <!-- Nav desktop -->
+    <nav class="hidden items-center gap-8 md:flex" aria-label="Navigation principale">
+      {
+        site.nav.map((item) => (
+          <a
+            href={item.href}
+            class="text-sm font-medium text-ink-soft transition-colors hover:text-ink"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="hidden md:block">
+      <Button href={site.contact.calendlyUrl} variant="primary" external>
+        Réserver un appel
+      </Button>
+    </div>
+
+    <!-- Burger mobile -->
+    <button
+      type="button"
+      id="menu-toggle"
+      class="inline-flex size-10 items-center justify-center rounded-lg border border-line text-ink md:hidden"
+      aria-label="Ouvrir le menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <svg
+        class="menu-icon-open"
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path
+          d="M3 6h18M3 12h18M3 18h18"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="round"></path>
+      </svg>
+      <svg
+        class="menu-icon-close hidden"
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path
+          d="M6 6l12 12M18 6L6 18"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="round"></path>
+      </svg>
+    </button>
+  </Container>
+
+  <!-- Menu mobile -->
+  <div
+    id="mobile-menu"
+    class="hidden border-t border-line bg-bg/95 backdrop-blur-xl md:hidden"
+  >
+    <Container class="flex flex-col gap-1 py-5">
+      {
+        site.nav.map((item) => (
+          <a
+            href={item.href}
+            class="rounded-lg px-3 py-3 text-base font-medium text-ink-soft transition-colors hover:bg-surface hover:text-ink"
+            data-mobile-link
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <div class="mt-3">
+        <Button
+          href={site.contact.calendlyUrl}
+          variant="primary"
+          size="lg"
+          external
+          class="w-full"
+        >
+          Réserver un appel
+        </Button>
+      </div>
+    </Container>
+  </div>
+</header>
+
+<script>
+  // Header : fond flouté au scroll
+  const header = document.querySelector<HTMLElement>("[data-header]");
+  const onScroll = () => {
+    if (!header) return;
+    if (window.scrollY > 12) header.setAttribute("data-scrolled", "");
+    else header.removeAttribute("data-scrolled");
+  };
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  // Menu mobile (aria-expanded + verrou du scroll)
+  const toggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("mobile-menu");
+  const iconOpen = document.querySelector<HTMLElement>(".menu-icon-open");
+  const iconClose = document.querySelector<HTMLElement>(".menu-icon-close");
+
+  const setMenu = (open: boolean) => {
+    if (!toggle || !menu) return;
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Fermer le menu" : "Ouvrir le menu");
+    menu.classList.toggle("hidden", !open);
+    iconOpen?.classList.toggle("hidden", open);
+    iconClose?.classList.toggle("hidden", !open);
+  };
+
+  toggle?.addEventListener("click", () => {
+    const open = toggle.getAttribute("aria-expanded") === "true";
+    setMenu(!open);
+  });
+
+  document
+    .querySelectorAll("[data-mobile-link]")
+    .forEach((link) => link.addEventListener("click", () => setMenu(false)));
+
+  // Échap ferme le menu
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setMenu(false);
+  });
+</script>
+
+<style>
+  [data-header][data-scrolled] {
+    background-color: color-mix(in srgb, var(--color-bg) 80%, transparent);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--color-line);
+  }
+</style>

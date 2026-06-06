@@ -1,0 +1,83 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Section from "@components/Section.astro";
+import Kicker from "@components/Kicker.astro";
+import Reveal from "@components/Reveal.astro";
+import CaseStudyCard from "@components/CaseStudyCard.astro";
+import CTASection from "@components/CTASection.astro";
+import { site } from "@config";
+
+const cases = (await getCollection("caseStudies")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Accueil",
+      item: site.siteUrl,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Réalisations",
+      item: `${site.siteUrl}/realisations`,
+    },
+  ],
+};
+---
+
+<Layout
+  title="Réalisations"
+  description="Nos études de cas : des sites en production pour des professionnels de l'automobile premium à Strasbourg — detailing, PPF, covering, lavage premium."
+  jsonLd={[breadcrumb]}
+>
+  <Section spacing="md" class="pt-28 sm:pt-36">
+    <Reveal class="max-w-3xl">
+      <Kicker>Réalisations</Kicker>
+      <h1 class="mt-4 text-4xl font-semibold sm:text-5xl lg:text-6xl">
+        Des sites pensés pour amener des clients.
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-ink-soft">
+        Chaque projet est conçu sur-mesure, mis en ligne clé en main et
+        référencé localement. Voici comment on transforme un site en canal
+        d'acquisition.
+      </p>
+    </Reveal>
+  </Section>
+
+  <Section spacing="sm">
+    {
+      cases.length === 0 ? (
+        <p class="text-ink-soft">
+          {/* À REMPLACER : ajouter des études de cas dans src/content/caseStudies/ */}
+          Les premières études de cas arrivent bientôt.
+        </p>
+      ) : (
+        <div class="grid gap-5 sm:grid-cols-2">
+          {cases.map((cs, i) => (
+            <Reveal delay={i * 80}>
+              <CaseStudyCard
+                href={`/realisations/${cs.slug}`}
+                title={cs.data.title}
+                client={cs.data.client}
+                secteur={cs.data.secteur}
+                summary={cs.data.summary}
+                cover={cs.data.cover}
+                url={cs.data.url}
+                eager={i < 2}
+              />
+            </Reveal>
+          ))}
+        </div>
+      )
+    }
+  </Section>
+
+  <CTASection />
+</Layout>

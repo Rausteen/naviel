@@ -1,0 +1,22 @@
+---
+/**
+ * Wrapper de reveal au scroll.
+ * Ajoute la classe `.reveal` ; un IntersectionObserver (dans Layout) ajoute
+ * `.is-visible` quand l'élément entre dans le viewport.
+ * Respecte prefers-reduced-motion (neutralisé en CSS).
+ */
+export interface Props {
+  as?: keyof HTMLElementTagNameMap;
+  class?: string;
+  /** Délai d'apparition en ms (effet échelonné) */
+  delay?: number;
+}
+const { as: Tag = "div", class: className = "", delay = 0 } = Astro.props;
+---
+
+<Tag
+  class:list={["reveal", className]}
+  style={delay ? `--reveal-delay:${delay}ms` : undefined}
+>
+  <slot />
+</Tag>

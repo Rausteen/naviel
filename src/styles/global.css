@@ -1,0 +1,257 @@
+@import "tailwindcss";
+
+/* Polices auto-hébergées (perf + RGPD : pas d'appel Google Fonts).
+   On n'importe que l'axe `wght` (poids variable) pour limiter le payload. */
+@import "@fontsource-variable/bricolage-grotesque/wght.css";
+@import "@fontsource-variable/hanken-grotesk/wght.css";
+
+/* ------------------------------------------------------------------ */
+/* Design tokens — Tailwind v4 @theme (génère aussi les variables CSS) */
+/* ------------------------------------------------------------------ */
+@theme {
+  /* Couleurs — direction sombre, premium, "performance auto" */
+  --color-bg: #0a0a0b;
+  --color-bg-2: #0e0e10;
+  --color-surface: #151517;
+  --color-surface-2: #1b1b1e;
+
+  --color-line: rgba(255, 255, 255, 0.09);
+  --color-line-2: rgba(255, 255, 255, 0.16);
+
+  --color-ink: #f4f3ee;
+  --color-ink-soft: #c9c8c1;
+  --color-muted: #86857e;
+
+  --color-accent: #c8f24e; /* acid / chartreuse — usage chirurgical */
+  --color-accent-deep: #a9d62f;
+
+  /* Typographie */
+  --font-display: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Hanken Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+
+  /* Rayons */
+  --radius-card: 18px;
+  --radius-pill: 999px;
+
+  /* Largeur de conteneur */
+  --container-page: 76rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Base                                                                */
+/* ------------------------------------------------------------------ */
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem; /* compense le header sticky pour les ancres */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+    font-weight: 600;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Focus visible — accessibilité clavier (WCAG AA) */
+  :where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Sélection */
+  ::selection {
+    background: var(--color-accent);
+    color: #10110a;
+  }
+
+  /* Liens d'ancrage sans soulignement par défaut */
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Composants utilitaires (lisibles depuis le markup)                  */
+/* ------------------------------------------------------------------ */
+@layer components {
+  /* Halo radial d'ambiance derrière le hero */
+  .ambient-halo {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .ambient-halo::before,
+  .ambient-halo::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.5;
+  }
+  .ambient-halo::before {
+    width: 46rem;
+    height: 46rem;
+    top: -22rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(
+      circle,
+      rgba(200, 242, 78, 0.14),
+      transparent 62%
+    );
+  }
+  .ambient-halo::after {
+    width: 34rem;
+    height: 34rem;
+    bottom: -20rem;
+    right: -8rem;
+    background: radial-gradient(
+      circle,
+      rgba(120, 130, 110, 0.1),
+      transparent 65%
+    );
+  }
+
+  /* Bordure hairline réutilisable */
+  .hairline {
+    border: 1px solid var(--color-line);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Grain SVG overlay — très subtil                                     */
+/* ------------------------------------------------------------------ */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ------------------------------------------------------------------ */
+/* Animations — hero orchestré + reveal au scroll                      */
+/* ------------------------------------------------------------------ */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-dot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.78);
+  }
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Reveal orchestré du hero : éléments avec [data-rise] */
+[data-rise] {
+  opacity: 0;
+  animation: rise-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(var(--rise-delay, 0) * 1ms);
+}
+
+/* Point pulsant (eyebrow) */
+.pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* Reveal au scroll (IntersectionObserver ajoute .is-visible) */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Marquee */
+.marquee-track {
+  animation: marquee-scroll 32s linear infinite;
+}
+
+/* ------------------------------------------------------------------ */
+/* prefers-reduced-motion → tout neutralisé                            */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  [data-rise],
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

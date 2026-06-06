@@ -1,0 +1,53 @@
+---
+import Section from "./Section.astro";
+import Button from "./Button.astro";
+import Reveal from "./Reveal.astro";
+import { site } from "@config";
+
+export interface Props {
+  title?: string;
+  text?: string;
+  ctaLabel?: string;
+  id?: string;
+}
+const {
+  title = "Prêt à transformer votre site en machine à rendez-vous ?",
+  text = "Un appel de 15 minutes, sans engagement. On regarde votre situation, on vous dit franchement ce qui peut être amélioré — et ce qu'on peut faire pour vous amener plus de clients.",
+  ctaLabel = "Réserver un appel de 15 min",
+  id,
+} = Astro.props;
+---
+
+<Section id={id} spacing="md">
+  <Reveal>
+    <div
+      class="relative overflow-hidden rounded-[var(--radius-card)] border border-accent/25 bg-[linear-gradient(135deg,rgba(200,242,78,0.12),rgba(200,242,78,0.02))] px-6 py-14 text-center sm:px-12 sm:py-20"
+    >
+      <div class="ambient-halo opacity-60"></div>
+      <div class="relative mx-auto max-w-2xl">
+        <h2 class="text-3xl font-semibold sm:text-4xl lg:text-5xl">{title}</h2>
+        <p class="mx-auto mt-5 max-w-xl text-base text-ink-soft sm:text-lg">
+          {text}
+        </p>
+        <div
+          class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row"
+        >
+          <Button
+            href={site.contact.calendlyUrl}
+            variant="primary"
+            size="lg"
+            external
+          >
+            {ctaLabel}
+          </Button>
+          <Button href={`mailto:${site.contact.email}`} variant="ghost" size="lg">
+            Écrire un e-mail
+          </Button>
+        </div>
+        <p class="mt-5 text-sm text-muted">
+          Réponse rapide · Devis clair · Sans engagement
+        </p>
+      </div>
+    </div>
+  </Reveal>
+</Section>

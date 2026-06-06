@@ -1,0 +1,393 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Section from "@components/Section.astro";
+import Container from "@components/Container.astro";
+import Kicker from "@components/Kicker.astro";
+import Button from "@components/Button.astro";
+import Card from "@components/Card.astro";
+import Reveal from "@components/Reveal.astro";
+import Marquee from "@components/Marquee.astro";
+import StatGrid from "@components/StatGrid.astro";
+import CaseStudyCard from "@components/CaseStudyCard.astro";
+import Faq from "@components/Faq.astro";
+import CTASection from "@components/CTASection.astro";
+import { site } from "@config";
+
+// Teaser réalisations — 100 % focus auto premium (jamais les produits maison)
+const allCases = await getCollection("caseStudies");
+const teaserCases = allCases
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+
+const piliers = [
+  {
+    num: "01",
+    title: "Conception sur-mesure",
+    text: "UI/UX orientée conversion, mobile-first, zéro template. Un site qui reflète votre niveau et pousse au passage à l'action.",
+  },
+  {
+    num: "02",
+    title: "Mise en ligne clé en main",
+    text: "Nom de domaine, hébergement rapide et sécurisé, certificat SSL, e-mails professionnels. Vous n'avez rien à gérer.",
+  },
+  {
+    num: "03",
+    title: "Référencement SEO local",
+    text: "« PPF Strasbourg », fiche Google, optimisations techniques et contenus. On vous rend visible là où vos clients cherchent.",
+  },
+];
+
+const pourquoi = [
+  {
+    title: "Spécialistes de votre secteur",
+    text: "Detailing, PPF, covering, lavage premium : on connaît votre marché, vos clients et vos mots-clés.",
+  },
+  {
+    title: "Un seul interlocuteur",
+    text: "Design, mise en ligne, SEO, pub : un seul contact, pas de ping-pong entre prestataires.",
+  },
+  {
+    title: "Orientés résultats, pas « joli »",
+    text: "Un beau site qui ne convertit pas ne sert à rien. On mesure ce qui compte : les rendez-vous.",
+  },
+  {
+    title: "On s'applique nos méthodes",
+    text: "Ce site est notre propre vitrine. La qualité que vous voyez ici, c'est celle qu'on vous livre.",
+  },
+];
+
+const process = [
+  {
+    num: "01",
+    title: "Appel découverte",
+    text: "15 minutes, sans engagement. On comprend votre activité, vos objectifs et votre marché.",
+  },
+  {
+    num: "02",
+    title: "Conception & validation",
+    text: "On conçoit le site sur-mesure, vous validez. Itérations jusqu'à ce que ce soit parfait.",
+  },
+  {
+    num: "03",
+    title: "Mise en ligne & SEO",
+    text: "Domaine, hébergement, SSL, e-mails. Référencement local activé dès le lancement.",
+  },
+  {
+    num: "04",
+    title: "On amène les clients",
+    text: "SEO en continu, Google Ads en option, et suivi des résultats. On reste à vos côtés.",
+  },
+];
+
+const faq = [
+  {
+    q: "Combien de temps pour avoir mon site en ligne ?",
+    a: "Cela dépend du périmètre, mais un site vitrine sur-mesure se livre généralement en quelques semaines. On vous donne un calendrier précis dès l'appel découverte. À REMPLACER : préciser un délai indicatif réaliste.",
+  },
+  {
+    q: "Combien ça coûte ?",
+    a: "Chaque projet est sur devis, car le périmètre varie (nombre de pages, contenus, options pub). On vous donne un prix clair et ferme avant de démarrer, sans surprise. À REMPLACER : indiquer une fourchette si vous le souhaitez.",
+  },
+  {
+    q: "Qui gère le budget de publicité Google Ads ?",
+    a: "Vous payez le budget publicitaire directement à Google, sur votre propre compte. Nous, on gère la performance : ciblage, annonces, optimisation et suivi du ROI. C'est transparent et vous gardez la main sur votre budget.",
+  },
+  {
+    q: "Et si je n'ai pas de logo ni de photos ?",
+    a: "Ce n'est pas bloquant. On vous accompagne sur l'identité visuelle et on peut vous orienter pour des photos de qualité. L'objectif est que le rendu soit à la hauteur de votre savoir-faire.",
+  },
+  {
+    q: "À qui appartient le site une fois livré ?",
+    a: "Le site vous appartient. Le nom de domaine est à votre nom, et vous n'êtes pas pris en otage. On travaille en confiance, pas par dépendance.",
+  },
+  {
+    q: "Vous travaillez uniquement à Strasbourg ?",
+    a: "On est basés à Strasbourg et spécialisés sur le marché local de l'automobile premium, mais on peut accompagner des professionnels au-delà. Parlons-en lors de l'appel.",
+  },
+];
+
+// JSON-LD : FAQPage (riches résultats Google)
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<Layout
+  title={undefined}
+  description={site.description}
+  jsonLd={[faqJsonLd]}
+>
+  <!-- ============================ HERO ============================ -->
+  <section class="relative overflow-hidden pt-28 sm:pt-36 lg:pt-44">
+    <div class="ambient-halo"></div>
+    <Container class="relative">
+      <div class="mx-auto max-w-3xl text-center">
+        <p data-rise style="--rise-delay:0">
+          <Kicker pulse>Agence d'acquisition · Auto premium · {site.city}</Kicker>
+        </p>
+
+        <h1
+          data-rise
+          style="--rise-delay:90"
+          class="mt-7 text-4xl font-semibold leading-[1.02] sm:text-6xl lg:text-7xl"
+        >
+          On crée votre site <span class="italic font-normal">et</span> on vous
+          amène <span class="text-accent">les clients.</span>
+        </h1>
+
+        <p
+          data-rise
+          style="--rise-delay:180"
+          class="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-ink-soft sm:text-xl"
+        >
+          Spécialistes du detailing, du PPF et du covering. Un site sur-mesure
+          pensé pour transformer les visiteurs en rendez-vous — référencé sur
+          Google, et boosté par la pub quand vous voulez accélérer.
+        </p>
+
+        <div
+          data-rise
+          style="--rise-delay:270"
+          class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row"
+        >
+          <Button href={site.contact.calendlyUrl} variant="primary" size="lg" external>
+            Réserver un appel de 15 min
+          </Button>
+          <Button href="/realisations" variant="ghost" size="lg">
+            Voir nos réalisations
+          </Button>
+        </div>
+
+        <p
+          data-rise
+          style="--rise-delay:360"
+          class="mt-8 text-sm text-muted"
+        >
+          Déjà en ligne :
+          <a
+            href="https://ppf-strasbourg.fr"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-ink-soft underline decoration-accent/40 underline-offset-4 transition-colors hover:text-ink"
+            >ppf-strasbourg.fr</a
+          >
+          <span aria-hidden="true">·</span>
+          <a
+            href="https://strasclean.fr"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-ink-soft underline decoration-accent/40 underline-offset-4 transition-colors hover:text-ink"
+            >strasclean.fr</a
+          >
+        </p>
+      </div>
+    </Container>
+
+    <!-- Marquee mots-clés -->
+    <div data-rise style="--rise-delay:450" class="mt-16 sm:mt-20">
+      <Marquee items={site.keywords} />
+    </div>
+  </section>
+
+  <!-- ============================ STATS ============================ -->
+  <Section spacing="md">
+    <StatGrid stats={site.stats} />
+    <p class="mt-4 text-center text-xs text-muted">
+      {/* À REMPLACER par de vrais chiffres avant la mise en ligne. */}
+      Chiffres indicatifs — à remplacer par vos résultats réels.
+    </p>
+  </Section>
+
+  <!-- ===================== PROBLÈME / REFRAME ===================== -->
+  <Section spacing="md">
+    <div class="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
+      <Reveal>
+        <h2 class="text-3xl font-semibold sm:text-4xl lg:text-[2.75rem]">
+          Un beau site sans visiteurs, c'est une carte de visite oubliée dans un
+          tiroir.
+        </h2>
+      </Reveal>
+      <Reveal delay={100} class="space-y-5 text-base text-ink-soft sm:text-lg">
+        <p>
+          Le problème n'a jamais été le design. La plupart des sites
+          d'artisans premium sont corrects — mais personne ne les voit. Sans
+          trafic qualifié, le plus beau des sites ne génère aucun
+          rendez-vous.
+        </p>
+        <p>
+          Notre métier commence exactement là où s'arrête celui des autres :
+          amener les bonnes personnes sur votre site, et les transformer en
+          clients. Le design est un moyen, pas une fin.
+        </p>
+      </Reveal>
+    </div>
+  </Section>
+
+  <!-- ===================== OFFRE / MÉTHODE ===================== -->
+  <Section id="methode">
+    <Reveal class="max-w-2xl">
+      <Kicker>Notre méthode</Kicker>
+      <h2 class="mt-4 text-3xl font-semibold sm:text-4xl lg:text-5xl">
+        Trois piliers pour un site qui travaille pour vous.
+      </h2>
+    </Reveal>
+
+    <div class="mt-12 grid gap-5 md:grid-cols-3">
+      {
+        piliers.map((p, i) => (
+          <Reveal delay={i * 90}>
+            <Card hover class="h-full">
+              <span class="font-display text-sm font-semibold text-accent">
+                {p.num}
+              </span>
+              <h3 class="mt-4 text-xl font-semibold">{p.title}</h3>
+              <p class="mt-3 text-ink-soft">{p.text}</p>
+            </Card>
+          </Reveal>
+        ))
+      }
+    </div>
+
+    <!-- Carte Google Ads — option / accélérateur, mise en valeur -->
+    <Reveal delay={120} class="mt-5">
+      <Card accent class="overflow-hidden">
+        <div class="ambient-halo opacity-50"></div>
+        <div class="relative grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-center">
+          <div>
+            <span
+              class="inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-accent/40 bg-accent/10 px-3 py-1 text-xs font-medium uppercase tracking-wider text-accent"
+            >
+              Option · Accélérateur
+            </span>
+            <h3 class="mt-4 text-2xl font-semibold sm:text-3xl">
+              Google Ads : des appels qualifiés dès maintenant.
+            </h3>
+            <p class="mt-4 max-w-xl text-ink-soft">
+              Quand vous voulez accélérer, on lance la publicité. Piloté par un
+              media buyer, suivi sur le ROI, optimisé en continu. Vous payez le
+              budget pub directement à Google — nous, on gère la performance.
+            </p>
+          </div>
+          <div class="flex lg:justify-end">
+            <Button href={site.contact.calendlyUrl} variant="primary" external>
+              En parler
+            </Button>
+          </div>
+        </div>
+      </Card>
+    </Reveal>
+  </Section>
+
+  <!-- ===================== POURQUOI NOUS ===================== -->
+  <Section spacing="md" class="border-y border-line bg-bg-2">
+    <Reveal class="max-w-2xl">
+      <Kicker>Pourquoi nous</Kicker>
+      <h2 class="mt-4 text-3xl font-semibold sm:text-4xl lg:text-5xl">
+        On ne livre pas un site. On livre des clients.
+      </h2>
+    </Reveal>
+
+    <div class="mt-12 grid gap-px overflow-hidden rounded-[var(--radius-card)] border border-line bg-line sm:grid-cols-2">
+      {
+        pourquoi.map((p, i) => (
+          <Reveal delay={i * 80} class="bg-bg-2 p-7 sm:p-9">
+            <h3 class="flex items-start gap-3 text-lg font-semibold">
+              <span class="mt-1 size-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+              {p.title}
+            </h3>
+            <p class="mt-3 pl-[calc(0.375rem+0.75rem)] text-ink-soft">{p.text}</p>
+          </Reveal>
+        ))
+      }
+    </div>
+  </Section>
+
+  <!-- ===================== RÉALISATIONS (teaser) ===================== -->
+  <Section>
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <Reveal class="max-w-2xl">
+        <Kicker>Réalisations</Kicker>
+        <h2 class="mt-4 text-3xl font-semibold sm:text-4xl lg:text-5xl">
+          Des sites en production, pas des maquettes.
+        </h2>
+      </Reveal>
+      <Reveal delay={80}>
+        <Button href="/realisations" variant="ghost">
+          Toutes les réalisations
+        </Button>
+      </Reveal>
+    </div>
+
+    <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        teaserCases.map((cs, i) => (
+          <Reveal delay={i * 90}>
+            <CaseStudyCard
+              href={`/realisations/${cs.slug}`}
+              title={cs.data.title}
+              client={cs.data.client}
+              secteur={cs.data.secteur}
+              summary={cs.data.summary}
+              cover={cs.data.cover}
+              url={cs.data.url}
+            />
+          </Reveal>
+        ))
+      }
+    </div>
+  </Section>
+
+  <!-- ===================== PROCESS ===================== -->
+  <Section spacing="md" class="border-y border-line bg-bg-2">
+    <Reveal class="max-w-2xl">
+      <Kicker>Process</Kicker>
+      <h2 class="mt-4 text-3xl font-semibold sm:text-4xl lg:text-5xl">
+        De l'appel découverte aux premiers clients.
+      </h2>
+    </Reveal>
+
+    <ol class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        process.map((step, i) => (
+          <Reveal as="li" delay={i * 80}>
+            <Card class="h-full">
+              <span class="font-display text-3xl font-semibold text-accent">
+                {step.num}
+              </span>
+              <h3 class="mt-4 text-lg font-semibold">{step.title}</h3>
+              <p class="mt-2 text-sm text-ink-soft">{step.text}</p>
+            </Card>
+          </Reveal>
+        ))
+      }
+    </ol>
+  </Section>
+
+  <!-- ===================== FAQ ===================== -->
+  <Section>
+    <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+      <Reveal>
+        <Kicker>FAQ</Kicker>
+        <h2 class="mt-4 text-3xl font-semibold sm:text-4xl">
+          Les questions qu'on nous pose souvent.
+        </h2>
+        <p class="mt-4 text-ink-soft">
+          Une autre question ? Posez-la directement lors de l'appel découverte.
+        </p>
+      </Reveal>
+      <Reveal delay={100}>
+        <Faq items={faq} />
+      </Reveal>
+    </div>
+  </Section>
+
+  <!-- ===================== CTA FINAL ===================== -->
+  <CTASection />
+</Layout>

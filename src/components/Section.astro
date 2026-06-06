@@ -1,0 +1,40 @@
+---
+import Container from "./Container.astro";
+
+export interface Props {
+  id?: string;
+  class?: string;
+  /** Conteneur interne (largeur de page) activé par défaut */
+  container?: boolean;
+  /** Espacement vertical */
+  spacing?: "sm" | "md" | "lg";
+  as?: keyof HTMLElementTagNameMap;
+}
+
+const {
+  id,
+  class: className = "",
+  container = true,
+  spacing = "lg",
+  as: Tag = "section",
+} = Astro.props;
+
+const spacingMap: Record<NonNullable<Props["spacing"]>, string> = {
+  sm: "py-12 sm:py-16",
+  md: "py-16 sm:py-24",
+  lg: "py-20 sm:py-28 lg:py-32",
+};
+const pad = spacingMap[spacing];
+---
+
+<Tag id={id} class:list={["relative", pad, className]}>
+  {
+    container ? (
+      <Container>
+        <slot />
+      </Container>
+    ) : (
+      <slot />
+    )
+  }
+</Tag>

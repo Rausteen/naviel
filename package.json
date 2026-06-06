@@ -1,0 +1,30 @@
+{
+  "name": "naviel",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site marketing de l'agence Naviel — acquisition de clients pour l'automobile premium.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/mdx": "^4.3.0",
+    "@astrojs/rss": "^4.0.11",
+    "@astrojs/sitemap": "^3.4.0",
+    "@fontsource-variable/bricolage-grotesque": "^5.2.5",
+    "@fontsource-variable/hanken-grotesk": "^5.2.5",
+    "@tailwindcss/vite": "^4.1.7",
+    "astro": "^5.8.0",
+    "sharp": "^0.34.1",
+    "tailwindcss": "^4.1.7",
+    "typescript": "^5.8.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["sharp", "esbuild"]
+  }
+}

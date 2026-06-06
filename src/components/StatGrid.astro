@@ -1,0 +1,28 @@
+---
+import Reveal from "./Reveal.astro";
+import type { Stat } from "@config";
+
+export interface Props {
+  stats: readonly Stat[];
+  class?: string;
+}
+const { stats, class: className = "" } = Astro.props;
+---
+
+<dl
+  class:list={[
+    "grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius-card)] border border-line bg-line lg:grid-cols-4",
+    className,
+  ]}
+>
+  {
+    stats.map((stat, i) => (
+      <Reveal as="div" delay={i * 80} class="bg-bg-2 p-6 sm:p-8">
+        <dt class="font-display text-4xl font-semibold tracking-tight text-accent sm:text-5xl">
+          {stat.value}
+        </dt>
+        <dd class="mt-2 text-sm leading-snug text-ink-soft">{stat.label}</dd>
+      </Reveal>
+    ))
+  }
+</dl>

@@ -1,0 +1,142 @@
+---
+import Container from "./Container.astro";
+import { site } from "@config";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="relative border-t border-line bg-bg-2">
+  <Container class="py-14 sm:py-16">
+    <div class="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr]">
+      <!-- Marque -->
+      <div>
+        <a
+          href="/"
+          class="inline-flex items-center gap-1 font-display text-xl font-semibold tracking-tight text-ink"
+        >
+          <span>{site.brandName}</span>
+          <span class="mb-2 inline-block size-1.5 rounded-full bg-accent" aria-hidden="true"></span>
+        </a>
+        <p class="mt-4 max-w-xs text-sm leading-relaxed text-ink-soft">
+          {site.tagline}
+        </p>
+        <p class="mt-3 text-sm text-muted">
+          Acquisition pour l'automobile premium · {site.city}
+        </p>
+      </div>
+
+      <!-- Agence -->
+      <nav aria-label="Liens agence">
+        <h2 class="text-xs font-semibold uppercase tracking-[0.18em] text-muted">
+          Agence
+        </h2>
+        <ul class="mt-4 space-y-3 text-sm">
+          {
+            site.nav.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class="text-ink-soft transition-colors hover:text-ink"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+          <li>
+            <a href="/blog" class="text-ink-soft transition-colors hover:text-ink">
+              Blog
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Contact -->
+      <nav aria-label="Contact">
+        <h2 class="text-xs font-semibold uppercase tracking-[0.18em] text-muted">
+          Contact
+        </h2>
+        <ul class="mt-4 space-y-3 text-sm">
+          <li>
+            <a
+              href={`mailto:${site.contact.email}`}
+              class="text-ink-soft transition-colors hover:text-ink"
+            >
+              {site.contact.email}
+            </a>
+          </li>
+          {
+            site.contact.phone && (
+              <li>
+                <a
+                  href={`tel:${site.contact.phone.replace(/\s/g, "")}`}
+                  class="text-ink-soft transition-colors hover:text-ink"
+                >
+                  {site.contact.phone}
+                </a>
+              </li>
+            )
+          }
+          <li>
+            <a
+              href={site.contact.calendlyUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-accent transition-colors hover:text-accent-deep"
+            >
+              Réserver un appel ↗
+            </a>
+          </li>
+          {
+            site.social.map((s) => (
+              <li>
+                <a
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-ink-soft transition-colors hover:text-ink"
+                >
+                  {s.label} ↗
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+
+    <div
+      class="mt-12 flex flex-col gap-4 border-t border-line pt-7 text-sm text-muted sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p>© {year} {site.brandName}. Tous droits réservés.</p>
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+        <a href="/mentions-legales" class="transition-colors hover:text-ink-soft">
+          Mentions légales
+        </a>
+        <a href="/confidentialite" class="transition-colors hover:text-ink-soft">
+          Confidentialité
+        </a>
+      </div>
+    </div>
+
+    <!-- Clin d'œil discret aux produits maison -->
+    <p class="mt-6 text-xs text-muted/70">
+      Nos produits :
+      {
+        site.products.map((p, i) => (
+          <>
+            {i > 0 && <span aria-hidden="true"> · </span>}
+            <a
+              href={p.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="transition-colors hover:text-ink-soft"
+            >
+              {p.name}
+            </a>
+          </>
+        ))
+      }
+    </p>
+  </Container>
+</footer>

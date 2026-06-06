@@ -1,0 +1,116 @@
+---
+import "../styles/global.css";
+import SEO from "@components/SEO.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import { site } from "@config";
+
+// Préchargement du woff2 du hero (Bricolage Grotesque, axe wght) → LCP rapide
+import displayFont from "@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2?url";
+import bodyFont from "@fontsource-variable/hanken-grotesk/files/hanken-grotesk-latin-wght-normal.woff2?url";
+
+export interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  image?: string;
+  type?: "website" | "article";
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown>[];
+  /** Masquer le header/footer (ex. page 404 minimale) — false par défaut */
+  bare?: boolean;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  image,
+  type,
+  noindex,
+  jsonLd,
+  bare = false,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={site.lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#0a0a0b" />
+    <link rel="alternate" hreflang="fr" href={new URL(canonical ?? Astro.url.pathname, site.siteUrl).href} />
+
+    <!-- Préchargement des polices (zéro layout shift, LCP) -->
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href={displayFont}
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href={bodyFont}
+      crossorigin
+    />
+
+    <SEO
+      title={title}
+      description={description}
+      canonical={canonical}
+      image={image}
+      type={type}
+      noindex={noindex}
+      jsonLd={jsonLd}
+    />
+  </head>
+  <body class="min-h-dvh antialiased">
+    <!-- Lien d'évitement (accessibilité clavier) -->
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-[#10110a]"
+    >
+      Aller au contenu
+    </a>
+
+    {!bare && <Header />}
+
+    <main id="main">
+      <slot />
+    </main>
+
+    {!bare && <Footer />}
+
+    <!-- Overlay de grain subtil -->
+    <div class="grain-overlay" aria-hidden="true"></div>
+
+    <!-- Reveal au scroll (respecte prefers-reduced-motion) -->
+    <script>
+      const prefersReduced = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      const els = document.querySelectorAll<HTMLElement>(".reveal");
+
+      if (prefersReduced || !("IntersectionObserver" in window)) {
+        els.forEach((el) => el.classList.add("is-visible"));
+      } else {
+        const io = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                obs.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: "0px 0px -10% 0px", threshold: 0.1 },
+        );
+        els.forEach((el) => io.observe(el));
+      }
+    </script>
+  </body>
+</html>

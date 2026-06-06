@@ -1,0 +1,29 @@
+---
+export interface Props {
+  as?: keyof HTMLElementTagNameMap;
+  class?: string;
+  /** Carte interactive (élévation au survol) */
+  hover?: boolean;
+  /** Fond teinté accent (cartes mises en valeur) */
+  accent?: boolean;
+}
+const {
+  as: Tag = "div",
+  class: className = "",
+  hover = false,
+  accent = false,
+} = Astro.props;
+
+const base =
+  "rounded-[var(--radius-card)] border p-6 sm:p-8 transition-all duration-300 ease-out motion-reduce:transition-none";
+const tone = accent
+  ? "border-accent/25 bg-[linear-gradient(135deg,rgba(200,242,78,0.10),rgba(200,242,78,0.02))]"
+  : "border-line bg-surface";
+const interactive = hover
+  ? "hover:-translate-y-1 hover:border-line-2 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.8)] motion-reduce:hover:translate-y-0"
+  : "";
+---
+
+<Tag class:list={[base, tone, interactive, className]}>
+  <slot />
+</Tag>
