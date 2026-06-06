@@ -10,9 +10,10 @@ const waHref = whatsapp
   : null;
 ---
 
-<!-- Barre CTA persistante (mobile uniquement) -->
+<!-- Barre CTA persistante (mobile uniquement) — apparaît au scroll -->
 <div
-  class="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-bg/90 backdrop-blur-xl md:hidden"
+  id="sticky-cta"
+  class="fixed inset-x-0 bottom-0 z-40 translate-y-full border-t border-line bg-bg/90 opacity-0 backdrop-blur-xl transition-[transform,opacity] duration-300 ease-out [&[data-show]]:translate-y-0 [&[data-show]]:opacity-100 motion-reduce:transition-none md:hidden"
   style="padding-bottom:env(safe-area-inset-bottom)"
 >
   <div class="flex items-stretch gap-2 px-3 py-2.5">
@@ -63,3 +64,21 @@ const waHref = whatsapp
 
 <!-- Espace pour ne pas masquer le bas de page sous la barre -->
 <div class="h-[68px] md:hidden" aria-hidden="true"></div>
+
+<script is:inline>
+  (function () {
+    var bar = document.getElementById("sticky-cta");
+    if (!bar) return;
+    var onScroll = function () {
+      // Apparaît une fois passé ~60% de la hauteur d'écran (au-delà du hero)
+      if (window.scrollY > window.innerHeight * 0.6) {
+        bar.setAttribute("data-show", "");
+      } else {
+        bar.removeAttribute("data-show");
+      }
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+  })();
+</script>
