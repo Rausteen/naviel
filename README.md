@@ -53,7 +53,7 @@ pnpm preview      # prévisualiser le build de production
 **Le fichier le plus important.** Tout ce qui est éditable s'y trouve :
 
 - `brandName`, `tagline`, `city` (siège), `coverage` (« Partout en France »), `areaServed` (SEO), `siteUrl`, `locale`
-- `contact` : **e-mail**, **lien Calendly** (`calendlyUrl`), téléphone (optionnel)
+- `contact` : **e-mail**, **lien de réservation** (`bookingUrl`, ex. Cal.com), téléphone (optionnel)
 - `nav` : entrées de navigation (dont **Contact**)
 - `signals` : signaux honnêtes (non chiffrés) affichés sur l'accueil
 - `social` : réseaux sociaux (vide par défaut)
@@ -223,7 +223,7 @@ Sortie statique (`output: 'static'`) → déployable partout.
 
 ## Checklist avant mise en ligne
 
-- [x] Lien **Calendly** branché (`contact.calendlyUrl`).
+- [x] Lien de **réservation** branché (`contact.bookingUrl` — Cal.com).
 - [x] **Captures réelles** des réalisations intégrées.
 - [ ] Remplacer l'**e-mail** de contact si besoin.
 - [ ] Renseigner de vrais **chiffres** (remplaceront les `signals`) + **métriques** des études de cas.

@@ -54,7 +54,7 @@ export interface SiteConfig {
   description: string;
   contact: {
     email: string;
-    calendlyUrl: string;
+    bookingUrl: string;
     phone: string;
   };
   nav: NavItem[];
@@ -83,7 +83,7 @@ export const site: SiteConfig = {
 
   contact: {
     email: "contact@naviel.fr", // Remplacer si autre adresse
-    calendlyUrl: "https://calendly.com/nathanabib07/30min", // Lien de réservation
+    bookingUrl: "https://cal.com/naviel/appel-decouverte", // Lien de réservation (Cal.com)
     phone: "", // optionnel — laisser vide si non utilisé
   },
 
