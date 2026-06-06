@@ -8,28 +8,8 @@ import { createServer } from "node:http";
 import { stat, readFile } from "node:fs/promises";
 import { join, normalize, extname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { handleCalWebhook } from "./server/cal-webhook.mjs";
 
 const ROOT = fileURLToPath(new URL("./dist", import.meta.url));
-
-/** Lit le corps brut d'une requête (limité à 1 Mo). */
-function readBody(req, limit = 1_000_000) {
-  return new Promise((resolve, reject) => {
-    let data = "";
-    let size = 0;
-    req.on("data", (chunk) => {
-      size += chunk.length;
-      if (size > limit) {
-        reject(new Error("payload too large"));
-        req.destroy();
-        return;
-      }
-      data += chunk;
-    });
-    req.on("end", () => resolve(data));
-    req.on("error", reject);
-  });
-}
 const PORT = Number(process.env.PORT) || 3000;
 const HOST = process.env.HOST || "0.0.0.0";
 
@@ -90,26 +70,6 @@ async function resolveTarget(urlPath) {
 
 const server = createServer(async (req, res) => {
   try {
-    const pathname = (req.url || "/").split("?")[0];
-
-    // Webhook Cal.com (méthode C : import de conversion hors-ligne)
-    if (req.method === "POST" && pathname === "/api/cal/webhook") {
-      let raw;
-      try {
-        raw = await readBody(req);
-      } catch {
-        res.writeHead(413, { "Content-Type": "text/plain" });
-        res.end("payload too large");
-        return;
-      }
-      const headers = {};
-      for (const [k, v] of Object.entries(req.headers)) headers[k.toLowerCase()] = v;
-      const result = await handleCalWebhook(raw, headers);
-      res.writeHead(result.status, { "Content-Type": "text/plain; charset=utf-8" });
-      res.end(result.body);
-      return;
-    }
-
     if (req.method !== "GET" && req.method !== "HEAD") {
       res.writeHead(405, { Allow: "GET, HEAD" });
       res.end("Method Not Allowed");

@@ -439,28 +439,10 @@ const signals = [
     </Container>
   </footer>
 
-  <!-- Capture gclid / utm (cookie first-party 90 j) -->
-  <script is:inline>
-    (function () {
-      try {
-        var p = new URLSearchParams(location.search);
-        ["gclid", "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"].forEach(
-          function (k) {
-            var v = p.get(k);
-            if (v)
-              document.cookie =
-                k + "=" + encodeURIComponent(v) + ";max-age=" + 90 * 24 * 3600 + ";path=/;SameSite=Lax";
-          },
-        );
-      } catch (e) {}
-    })();
-  </script>
-
-  <!-- Embed Cal.com inline + prefill gclid + conversion Google Ads -->
-  <script is:inline define:vars={{ calLink, sendTo }}>
-    function navielCookie(n) {
-      return (document.cookie.match("(^|;)\\s*" + n + "\\s*=\\s*([^;]+)") || [])[2] || "";
-    }
+  <!-- Embed Cal.com (popup) + conversion Google Ads à la réservation.
+       L'attribution au clic est gérée automatiquement par le tag Google
+       (auto-tagging + conversion linker) — aucun gclid à manipuler ici. -->
+  <script is:inline define:vars={{ sendTo }}>
     (function (C, A, L) {
       let p = function (a, ar) { a.q.push(ar); };
       let d = C.document;
@@ -481,21 +463,13 @@ const signals = [
 
     Cal("init", { origin: "https://cal.com" });
 
-    // Le calendrier s'ouvre en popup au clic sur les boutons [data-cal-link].
-    // On injecte le gclid (s'il existe) dans la config du popup pour le prefill.
-    var gclid = navielCookie("gclid");
-    var calConfig = Object.assign({ layout: "month_view", theme: "dark" }, gclid ? { gclid: gclid } : {});
-    document.querySelectorAll("[data-cal-link]").forEach(function (el) {
-      el.setAttribute("data-cal-config", JSON.stringify(calConfig));
-    });
-
     Cal("ui", {
       theme: "dark",
       hideEventTypeDetails: false,
       cssVarsPerTheme: { dark: { "cal-brand": "#c8f24e" } },
     });
 
-    // Conversion sur réservation réussie (le consentement est géré par Consent Mode v2).
+    // Conversion à la réservation réussie (consentement géré par Consent Mode v2).
     Cal("on", {
       action: "bookingSuccessfulV2",
       callback: function () {
