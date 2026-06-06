@@ -191,67 +191,57 @@ const serviceLd = {
   </Section>
 
   <!-- Tarifs — ancrage « à partir de » -->
-  <Section spacing="sm" class="border-t border-line bg-bg-2">
-    <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
-      <Reveal>
-        <Kicker>Tarifs</Kicker>
-        <h2 class="mt-4 text-3xl font-semibold sm:text-4xl">
-          Transparent, sans surprise.
-        </h2>
-        <p class="mt-4 text-ink-soft">
-          {site.pricing.note}
-        </p>
-      </Reveal>
+  {
+    site.pricing.enabled && (
+      <Section spacing="md" class="border-t border-line bg-bg-2">
+        <Reveal class="max-w-2xl">
+          <Kicker>Tarifs</Kicker>
+          <h2 class="mt-4 text-3xl font-semibold sm:text-4xl lg:text-5xl">
+            Transparent, sans surprise.
+          </h2>
+          <p class="mt-4 text-ink-soft">{site.pricing.note}</p>
+        </Reveal>
 
-      <Reveal delay={100}>
-        {
-          site.pricing.enabled &&
-          (site.pricing.oneOffFrom || site.pricing.recurringFrom) ? (
-            <div class="grid gap-4 sm:grid-cols-2">
-              {site.pricing.oneOffFrom && (
-                <div class="rounded-[var(--radius-card)] border border-line bg-surface p-6 sm:p-7">
-                  <p class="text-sm text-muted">{site.pricing.oneOffLabel}</p>
-                  <p class="mt-2 text-sm text-ink-soft">à partir de</p>
+        <div class="mt-10 grid gap-5 sm:mt-12 md:grid-cols-3">
+          {site.pricing.items
+            .filter((item) => item.from)
+            .map((item, i) => (
+              <Reveal delay={i * 80}>
+                <div
+                  class:list={[
+                    "flex h-full flex-col rounded-[var(--radius-card)] border p-6 sm:p-7",
+                    item.badge
+                      ? "border-accent/25 bg-[linear-gradient(135deg,rgba(200,242,78,0.08),rgba(200,242,78,0.02))]"
+                      : "border-line bg-surface",
+                  ]}
+                >
+                  <div class="flex items-center justify-between gap-3">
+                    <p class="text-sm font-medium text-ink">{item.label}</p>
+                    {item.badge && (
+                      <span class="rounded-[var(--radius-pill)] border border-accent/40 bg-accent/10 px-2.5 py-0.5 text-xs font-medium uppercase tracking-wider text-accent">
+                        {item.badge}
+                      </span>
+                    )}
+                  </div>
+                  <p class="mt-4 text-sm text-muted">à partir de</p>
                   <p class="mt-1 font-display text-4xl font-semibold tracking-tight text-accent">
-                    {site.pricing.oneOffFrom}
+                    {item.from}
                   </p>
-                  <p class="mt-3 text-sm text-ink-soft">
-                    Conception, mise en ligne et SEO inclus. Le site vous
-                    appartient.
+                  <p class="mt-3 text-sm leading-relaxed text-ink-soft">
+                    {item.note}
                   </p>
                 </div>
-              )}
-              {site.pricing.recurringFrom && (
-                <div class="rounded-[var(--radius-card)] border border-line bg-surface p-6 sm:p-7">
-                  <p class="text-sm text-muted">{site.pricing.recurringLabel}</p>
-                  <p class="mt-2 text-sm text-ink-soft">à partir de</p>
-                  <p class="mt-1 font-display text-4xl font-semibold tracking-tight text-accent">
-                    {site.pricing.recurringFrom}
-                  </p>
-                  <p class="mt-3 text-sm text-ink-soft">
-                    Option : suivi du référencement et pilotage des campagnes,
-                    sans engagement de durée.
-                  </p>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div class="space-y-5 text-ink-soft">
-              <p>
-                Chaque projet est sur devis : le périmètre dépend du nombre de
-                pages, des contenus et des options choisies. Un prix clair et
-                ferme avant de démarrer, sans surprise.
-              </p>
-            </div>
-          )
-        }
-        <p class="mt-4 text-sm text-muted">
+              </Reveal>
+            ))}
+        </div>
+
+        <p class="mt-6 text-sm text-muted">
           Pas d'abonnement opaque ni de coûts cachés. Devis détaillé après
           l'appel découverte.
         </p>
-      </Reveal>
-    </div>
-  </Section>
+      </Section>
+    )
+  }
 
   <CTASection />
 </Layout>

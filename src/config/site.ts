@@ -34,13 +34,17 @@ export interface Review {
   role: string; // ex. "Atelier PPF · Strasbourg"
 }
 
+export interface PriceItem {
+  label: string;
+  from: string; // ex. "2 500 €" ou "99 €/mois" — vide = ligne masquée
+  note: string; // précision sous le montant
+  badge?: string; // ex. "Option" (facultatif)
+}
+
 export interface Pricing {
   enabled: boolean; // false → section masquée (retour au « sur devis »)
-  oneOffLabel: string;
-  oneOffFrom: string; // ex. "1 500 €" — vide = masqué
-  recurringLabel: string;
-  recurringFrom: string; // ex. "500 €/mois" — vide = masqué
-  note: string;
+  items: PriceItem[];
+  note: string; // texte d'intro de la section
 }
 
 export interface Sector {
@@ -151,11 +155,25 @@ export const site: SiteConfig = {
   // Tarifs — ancrage « à partir de » (ajuste les montants ou passe enabled à false).
   pricing: {
     enabled: true,
-    oneOffLabel: "Site sur-mesure",
-    oneOffFrom: "1 500 €",
-    recurringLabel: "Référencement & Google Ads",
-    recurringFrom: "500 €/mois",
-    note: "Le prix final dépend du nombre de pages, des contenus et des options choisies. On vous donne un devis clair et ferme avant de démarrer — sans surprise.",
+    note: "Le prix final dépend du périmètre (pages, contenus, options). On vous donne un devis clair et ferme avant de démarrer — sans surprise, et le site vous appartient.",
+    items: [
+      {
+        label: "Création du site",
+        from: "2 500 €",
+        note: "Payable en 3 ou 4 fois (env. 625 à 835 €/mois). La plupart des projets se situent entre 3 000 € et 4 500 € selon le périmètre.",
+      },
+      {
+        label: "Suivi mensuel",
+        from: "99 €/mois",
+        note: "Hébergement, maintenance et référencement. L'abonnement de base, sans engagement de durée.",
+      },
+      {
+        label: "Gestion Google Ads",
+        from: "400 €/mois",
+        badge: "Option",
+        note: "En option, hors budget publicitaire (versé directement à Google). Pour ceux qui veulent lancer de la pub — jamais imposé.",
+      },
+    ],
   },
 
   // Avis clients. Section masquée automatiquement si le tableau est vide.
