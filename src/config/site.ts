@@ -28,6 +28,12 @@ export interface Stat {
   label: string;
 }
 
+export interface Review {
+  quote: string;
+  author: string;
+  role: string; // ex. "Atelier PPF · Strasbourg"
+}
+
 export interface Sector {
   name: string;
   slug: string;
@@ -69,6 +75,7 @@ export interface SiteConfig {
   nav: NavItem[];
   stats: Stat[];
   signals: string[];
+  reviews: Review[];
   social: SocialLink[];
   products: Product[];
   sectors: Sector[];
@@ -131,6 +138,29 @@ export const site: SiteConfig = {
     "Sur-mesure, zéro template",
     "Basés à Paris, partout en France",
     "Devis clair et ferme · le site vous appartient",
+  ],
+
+  // Avis clients. ⚠️ DÉMO — à remplacer par de vrais témoignages.
+  // Section masquée automatiquement si le tableau est vide.
+  reviews: [
+    {
+      quote:
+        "Mon ancien site ne m'amenait rien. Trois mois après la refonte, je reçois des demandes de devis qualifiées chaque semaine — exactement le type de clients que je vise.",
+      author: "Karim B.",
+      role: "Atelier PPF & covering · Strasbourg",
+    },
+    {
+      quote:
+        "Enfin un site à la hauteur de nos prestations, et surtout il travaille pour nous : les réservations arrivent toutes seules. Un seul interlocuteur, zéro prise de tête.",
+      author: "Thomas R.",
+      role: "Detailing premium · Lyon",
+    },
+    {
+      quote:
+        "Naviel a tout géré, du design à la mise en ligne et au référencement. En quelques semaines on était en première page Google sur nos recherches locales.",
+      author: "Julie M.",
+      role: "Institut & esthétique · Paris",
+    },
   ],
 
   social: [], // ex. { label: "Instagram", href: "..." }

@@ -1,0 +1,58 @@
+---
+import Section from "./Section.astro";
+import Kicker from "./Kicker.astro";
+import Reveal from "./Reveal.astro";
+import type { Review } from "@config";
+
+export interface Props {
+  reviews: readonly Review[];
+  title?: string;
+}
+const {
+  reviews,
+  title = "Ce qu'en disent nos clients.",
+} = Astro.props;
+---
+
+{
+  reviews.length > 0 && (
+    <Section spacing="md">
+      <Reveal class="max-w-2xl">
+        <Kicker>Avis clients</Kicker>
+        <h2 class="mt-4 text-3xl font-semibold sm:text-4xl lg:text-5xl">
+          {title}
+        </h2>
+      </Reveal>
+
+      <div class="mt-10 grid gap-5 sm:mt-12 sm:grid-cols-2 lg:grid-cols-3">
+        {reviews.map((r, i) => (
+          <Reveal delay={i * 80}>
+            <figure class="flex h-full flex-col rounded-[var(--radius-card)] border border-line bg-surface p-6 sm:p-7">
+              <div class="flex gap-1" aria-label="Note : 5 sur 5">
+                {Array.from({ length: 5 }).map(() => (
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    class="text-accent"
+                    aria-hidden="true"
+                  >
+                    <path d="M10 1.5l2.47 5 5.53.8-4 3.9.94 5.5L10 14.1 5.06 16.7 6 11.2l-4-3.9 5.53-.8L10 1.5Z" />
+                  </svg>
+                ))}
+              </div>
+              <blockquote class="mt-4 flex-1 text-ink-soft">
+                « {r.quote} »
+              </blockquote>
+              <figcaption class="mt-5 border-t border-line pt-4">
+                <span class="block font-medium text-ink">{r.author}</span>
+                <span class="mt-0.5 block text-sm text-muted">{r.role}</span>
+              </figcaption>
+            </figure>
+          </Reveal>
+        ))}
+      </div>
+    </Section>
+  )
+}
