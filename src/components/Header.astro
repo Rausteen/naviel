@@ -1,6 +1,7 @@
 ---
 import Container from "./Container.astro";
 import Button from "./Button.astro";
+import Logo from "./Logo.astro";
 import { site } from "@config";
 ---
 
@@ -9,18 +10,9 @@ import { site } from "@config";
   class="fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300 motion-reduce:transition-none"
   data-header
 >
-  <Container class="flex h-16 items-center justify-between sm:h-20">
+  <Container class="flex h-[4.5rem] items-center justify-between">
     <!-- Logo -->
-    <a
-      href="/"
-      class="group inline-flex items-center gap-1 font-display text-xl font-semibold tracking-tight text-ink"
-      aria-label={`${site.brandName} — accueil`}
-    >
-      <span>{site.brandName}</span>
-      <span
-        class="mb-2 inline-block size-1.5 rounded-full bg-accent transition-transform duration-300 group-hover:scale-125 motion-reduce:transition-none"
-        aria-hidden="true"></span>
-    </a>
+    <Logo class="text-[1.18rem]" />
 
     <!-- Nav desktop -->
     <nav class="hidden items-center gap-8 md:flex" aria-label="Navigation principale">
@@ -36,7 +28,8 @@ import { site } from "@config";
       }
     </nav>
 
-    <div class="hidden md:block">
+    <div class="hidden items-center gap-3 md:flex">
+      <Button href="/realisations" variant="ghost">Voir les réalisations</Button>
       <Button href={site.contact.calendlyUrl} variant="primary" external>
         Réserver un appel
       </Button>
@@ -156,9 +149,12 @@ import { site } from "@config";
 </script>
 
 <style>
+  [data-header] {
+    background-color: color-mix(in srgb, var(--color-bg) 72%, transparent);
+    backdrop-filter: blur(14px) saturate(140%);
+    border-bottom: 1px solid transparent;
+  }
   [data-header][data-scrolled] {
-    background-color: color-mix(in srgb, var(--color-bg) 80%, transparent);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--color-line);
+    border-bottom-color: var(--color-line);
   }
 </style>

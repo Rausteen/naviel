@@ -21,9 +21,8 @@ const {
 <Section id={id} spacing="md">
   <Reveal>
     <div
-      class="relative overflow-hidden rounded-[var(--radius-card)] border border-accent/25 bg-[linear-gradient(135deg,rgba(200,242,78,0.12),rgba(200,242,78,0.02))] px-6 py-14 text-center sm:px-12 sm:py-20"
+      class="relative overflow-hidden rounded-[28px] border border-line-2 bg-[radial-gradient(120%_140%_at_50%_-20%,rgba(200,242,78,0.10),transparent_55%),linear-gradient(180deg,var(--color-surface),var(--color-bg-2))] px-6 py-14 text-center sm:px-12 sm:py-20"
     >
-      <div class="ambient-halo opacity-60"></div>
       <div class="relative mx-auto max-w-2xl">
         <h2 class="text-3xl font-semibold sm:text-4xl lg:text-5xl">{title}</h2>
         <p class="mx-auto mt-5 max-w-xl text-base text-ink-soft sm:text-lg">
@@ -37,6 +36,7 @@ const {
             variant="primary"
             size="lg"
             external
+            arrow
           >
             {ctaLabel}
           </Button>

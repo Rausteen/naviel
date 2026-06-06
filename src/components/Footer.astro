@@ -1,5 +1,6 @@
 ---
 import Container from "./Container.astro";
+import Logo from "./Logo.astro";
 import { site } from "@config";
 
 const year = new Date().getFullYear();
@@ -10,13 +11,7 @@ const year = new Date().getFullYear();
     <div class="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr]">
       <!-- Marque -->
       <div>
-        <a
-          href="/"
-          class="inline-flex items-center gap-1 font-display text-xl font-semibold tracking-tight text-ink"
-        >
-          <span>{site.brandName}</span>
-          <span class="mb-2 inline-block size-1.5 rounded-full bg-accent" aria-hidden="true"></span>
-        </a>
+        <Logo class="text-[1.4rem]" />
         <p class="mt-4 max-w-xs text-sm leading-relaxed text-ink-soft">
           {site.tagline}
         </p>
@@ -87,6 +82,7 @@ const year = new Date().getFullYear();
               Réserver un appel ↗
             </a>
           </li>
+          <li class="text-muted">{site.city}, France</li>
           {
             site.social.map((s) => (
               <li>
@@ -116,6 +112,12 @@ const year = new Date().getFullYear();
         <a href="/confidentialite" class="transition-colors hover:text-ink-soft">
           Confidentialité
         </a>
+        <span class="inline-flex items-center gap-2">
+          <span
+            class="inline-block size-[9px] rotate-45 rounded-[2px] bg-accent shadow-[0_0_12px_-2px_rgba(200,242,78,0.7)]"
+            aria-hidden="true"></span>
+          Conçu &amp; développé à {site.city}
+        </span>
       </div>
     </div>
 

@@ -1,0 +1,24 @@
+---
+import { site } from "@config";
+
+export interface Props {
+  href?: string;
+  class?: string;
+}
+const { href = "/", class: className = "" } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={[
+    "group inline-flex items-center gap-2.5 font-display font-semibold tracking-[-0.04em] text-ink",
+    className,
+  ]}
+  aria-label={`${site.brandName} — accueil`}
+>
+  <!-- Mark losange chartreuse (motif de marque) -->
+  <span
+    class="inline-block size-3 rotate-45 rounded-[3px] bg-accent shadow-[0_0_16px_-2px_rgba(200,242,78,0.7)] transition-transform duration-300 group-hover:rotate-[135deg] motion-reduce:transition-none"
+    aria-hidden="true"></span>
+  <span>{site.brandName}</span>
+</a>
