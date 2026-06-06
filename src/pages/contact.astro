@@ -4,11 +4,14 @@ import Section from "@components/Section.astro";
 import Kicker from "@components/Kicker.astro";
 import Reveal from "@components/Reveal.astro";
 import Button from "@components/Button.astro";
+import ContactForm from "@components/ContactForm.astro";
 import { site } from "@config";
 
 // L'embed s'affiche si l'URL de réservation pointe vers une page précise
 // (un chemin après le domaine), pas seulement vers la racine d'un outil.
 const bookingConfigured = /^https?:\/\/[^/]+\/.+/.test(site.contact.bookingUrl);
+// Si une clé Web3Forms est configurée, on privilégie le formulaire de lead.
+const hasForm = Boolean(site.contact.formAccessKey);
 
 const breadcrumb = {
   "@context": "https://schema.org",
@@ -84,10 +87,25 @@ const breadcrumb = {
         </div>
       </Reveal>
 
-      <!-- Embed de réservation (Cal.com) ou fallback si non configuré -->
+      <!-- Formulaire de lead (si configuré), sinon embed de réservation Cal.com -->
       <Reveal delay={120}>
         {
-          bookingConfigured ? (
+          hasForm ? (
+            <div>
+              <ContactForm />
+              <p class="mt-4 text-center text-sm text-muted">
+                Vous préférez réserver directement ?{" "}
+                <a
+                  href={site.contact.bookingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-accent underline underline-offset-2 hover:text-accent-deep"
+                >
+                  Ouvrir l'agenda
+                </a>
+              </p>
+            </div>
+          ) : bookingConfigured ? (
             <div
               class="overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface"
             >

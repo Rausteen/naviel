@@ -15,6 +15,9 @@ export default defineConfig({
   integrations: [
     mdx(),
     sitemap({
+      // Exclut les pages noindex (merci, légales) du sitemap
+      filter: (page) =>
+        !/\/(merci|mentions-legales|confidentialite)\/?$/.test(page),
       i18n: {
         defaultLocale: "fr",
         locales: { fr: "fr-FR" },

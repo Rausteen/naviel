@@ -1,0 +1,121 @@
+---
+/**
+ * Tracking conforme RGPD (Consent Mode v2).
+ * - Ne s'active QUE si un ID est renseigné dans site.analytics (sinon : rien).
+ * - Par défaut, tous les consentements sont REFUSÉS (denied).
+ * - Le bandeau permet d'accepter/refuser ; le choix est mémorisé (localStorage).
+ * - Sur accept, le consentement passe à « granted » et le tracking démarre.
+ */
+import { site } from "@config";
+
+const { ga4Id, adsId } = site.analytics;
+const enabled = Boolean(ga4Id || adsId);
+const loaderId = ga4Id || adsId; // un seul script gtag suffit pour les 2
+---
+
+{
+  enabled && (
+    <>
+      <script is:inline define:vars={{ ga4Id, adsId, loaderId }}>
+        {`
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag;
+
+        // Consent Mode v2 — tout refusé par défaut (UE)
+        gtag('consent', 'default', {
+          ad_storage: 'denied',
+          ad_user_data: 'denied',
+          ad_personalization: 'denied',
+          analytics_storage: 'denied',
+          wait_for_update: 500,
+        });
+
+        // Si l'utilisateur a déjà accepté lors d'une visite précédente
+        try {
+          if (localStorage.getItem('naviel-consent') === 'granted') {
+            gtag('consent', 'update', {
+              ad_storage: 'granted',
+              ad_user_data: 'granted',
+              ad_personalization: 'granted',
+              analytics_storage: 'granted',
+            });
+          }
+        } catch (e) {}
+
+        // Chargement de gtag.js
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + loaderId;
+        document.head.appendChild(s);
+
+        gtag('js', new Date());
+        if (ga4Id) gtag('config', ga4Id);
+        if (adsId) gtag('config', adsId);
+        `}
+      </script>
+
+      <div
+        id="consent-banner"
+        class="fixed inset-x-3 bottom-[84px] z-50 hidden rounded-[var(--radius-card)] border border-line-2 bg-surface/95 p-5 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.9)] backdrop-blur-xl md:inset-x-auto md:bottom-4 md:right-4 md:max-w-sm"
+        role="dialog"
+        aria-label="Consentement aux cookies"
+        aria-live="polite"
+      >
+        <p class="text-sm text-ink-soft">
+          On utilise des cookies de mesure d'audience et publicitaires pour
+          améliorer le site et nos campagnes. Vous pouvez accepter ou refuser.
+          <a href="/confidentialite" class="text-accent underline underline-offset-2">
+            En savoir plus
+          </a>
+          .
+        </p>
+        <div class="mt-4 flex gap-2">
+          <button
+            id="consent-accept"
+            type="button"
+            class="flex-1 rounded-[var(--radius-pill)] bg-accent px-4 py-2.5 text-sm font-semibold text-[#10110a]"
+          >
+            Accepter
+          </button>
+          <button
+            id="consent-refuse"
+            type="button"
+            class="flex-1 rounded-[var(--radius-pill)] border border-line-2 px-4 py-2.5 text-sm font-medium text-ink"
+          >
+            Refuser
+          </button>
+        </div>
+      </div>
+
+      <script is:inline>
+        {`
+        (function () {
+          var banner = document.getElementById('consent-banner');
+          if (!banner) return;
+          var stored = null;
+          try { stored = localStorage.getItem('naviel-consent'); } catch (e) {}
+          if (!stored) banner.classList.remove('hidden');
+
+          function set(choice) {
+            try { localStorage.setItem('naviel-consent', choice); } catch (e) {}
+            if (choice === 'granted' && window.gtag) {
+              window.gtag('consent', 'update', {
+                ad_storage: 'granted',
+                ad_user_data: 'granted',
+                ad_personalization: 'granted',
+                analytics_storage: 'granted',
+              });
+            }
+            banner.classList.add('hidden');
+          }
+          var a = document.getElementById('consent-accept');
+          var r = document.getElementById('consent-refuse');
+          a && a.addEventListener('click', function () { set('granted'); });
+          r && r.addEventListener('click', function () { set('denied'); });
+        })();
+        `}
+      </script>
+    </>
+  )
+}

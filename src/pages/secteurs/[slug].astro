@@ -7,6 +7,7 @@ import Button from "@components/Button.astro";
 import Reveal from "@components/Reveal.astro";
 import CaseStudyCard from "@components/CaseStudyCard.astro";
 import CTASection from "@components/CTASection.astro";
+import Faq from "@components/Faq.astro";
 import { site } from "@config";
 
 export async function getStaticPaths() {
@@ -49,16 +50,46 @@ const serviceLd = {
   "@type": "Service",
   serviceType: `Acquisition de clients — ${data.name}`,
   provider: { "@type": "Organization", name: site.brandName },
-  areaServed: { "@type": "Country", name: "France" },
+  areaServed: { "@type": "Country", name: site.areaServed },
   description: data.summary,
   url: pageUrl,
+};
+
+// Mini-FAQ d'objections (commune aux secteurs) — bon pour la conversion + le SEO
+const faq = [
+  {
+    q: "Combien de temps pour être en ligne ?",
+    a: "Selon le périmètre, un site vitrine sur-mesure se livre en quelques semaines. On vous donne un calendrier précis dès l'appel découverte.",
+  },
+  {
+    q: "Combien ça coûte ?",
+    a: "Sur devis, car le périmètre varie. On vous donne un prix clair et ferme avant de démarrer, sans surprise ni coûts cachés.",
+  },
+  {
+    q: "Vous travaillez à distance ?",
+    a: `Oui. ${site.brandName} est basée à ${site.city} et accompagne ses clients partout en France, à distance — du premier appel jusqu'aux résultats.`,
+  },
+  {
+    q: "À qui appartient le site ?",
+    a: "À vous. Le nom de domaine est à votre nom, et vous n'êtes jamais pris en otage.",
+  },
+];
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
 };
 ---
 
 <Layout
   title={data.name}
   description={data.summary}
-  jsonLd={[breadcrumb, serviceLd]}
+  jsonLd={[breadcrumb, serviceLd, faqLd]}
 >
   <Section spacing="md" class="pt-28 sm:pt-36">
     <nav aria-label="Fil d'Ariane" class="text-sm text-muted">
@@ -97,6 +128,32 @@ const serviceLd = {
     </article>
   </Section>
 
+  <!-- Réassurance -->
+  <Section spacing="sm">
+    <ul
+      class="grid grid-cols-1 overflow-hidden rounded-[var(--radius-card)] border border-line bg-[linear-gradient(180deg,var(--color-surface),var(--color-bg-2))] sm:grid-cols-2 lg:grid-cols-4"
+    >
+      {
+        site.signals.map((s, i) => (
+          <li
+            class:list={[
+              "flex items-start gap-3 border-line p-6",
+              i % 2 === 0 && "border-r",
+              i < site.signals.length - 1 && "lg:border-r",
+              i < 2 && "border-b lg:border-b-0",
+            ]}
+          >
+            <span
+              class="mt-1 inline-block size-2 shrink-0 rotate-45 rounded-[2px] bg-accent shadow-[0_0_10px_-2px_rgba(200,242,78,0.7)]"
+              aria-hidden="true"
+            />
+            <span class="text-sm leading-snug text-ink-soft">{s}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
   <!-- Preuve : réalisations (uniquement si le secteur en a) -->
   {
     proofCases.length > 0 && (
@@ -128,6 +185,21 @@ const serviceLd = {
       </Section>
     )
   }
+
+  <!-- Mini-FAQ d'objections -->
+  <Section spacing="sm">
+    <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+      <Reveal>
+        <Kicker>FAQ</Kicker>
+        <h2 class="mt-4 text-3xl font-semibold sm:text-4xl">
+          Les questions fréquentes.
+        </h2>
+      </Reveal>
+      <Reveal delay={100}>
+        <Faq items={faq} />
+      </Reveal>
+    </div>
+  </Section>
 
   <CTASection
     title={`Prêt à attirer plus de clients dans votre secteur ?`}

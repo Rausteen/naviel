@@ -53,7 +53,8 @@ pnpm preview      # prévisualiser le build de production
 **Le fichier le plus important.** Tout ce qui est éditable s'y trouve :
 
 - `brandName`, `tagline`, `city` (siège), `coverage` (« Partout en France »), `areaServed` (SEO), `siteUrl`, `locale`
-- `contact` : **e-mail**, **lien de réservation** (`bookingUrl`, ex. Cal.com), téléphone (optionnel)
+- `contact` : **e-mail**, **lien de réservation** (`bookingUrl`, ex. Cal.com), `phone` (click-to-call + CTA sticky), `whatsapp` (n° intl sans `+`), `formAccessKey` (clé [Web3Forms](https://web3forms.com) → active le formulaire de contact). Vide = la fonctionnalité est masquée proprement.
+- `analytics` : `ga4Id`, `adsId`, `adsConversionLabel` — **vide = aucun tracking ni bandeau**. Renseigné = gtag.js + Consent Mode v2 (refus par défaut) + bandeau de consentement, et déclenchement de la conversion Google Ads sur `/merci`.
 - `nav` : entrées de navigation (dont **Contact**)
 - `signals` : signaux honnêtes (non chiffrés) affichés sur l'accueil
 - `social` : réseaux sociaux (vide par défaut)
@@ -231,6 +232,10 @@ Sortie statique (`output: 'static'`) → déployable partout.
 - [ ] Compléter les **descriptions** des produits maison (`products.desc`).
 - [ ] Remplacer l'**image OG** (`public/og-default.png`) par un visuel définitif si souhaité.
 - [ ] Compléter les **mentions légales** et la **confidentialité** (champs entre crochets).
+- [ ] Renseigner `contact.phone` et `contact.whatsapp` (CTA sticky mobile + extensions d'appel Ads).
+- [ ] Créer une clé **Web3Forms** → `contact.formAccessKey` (active le formulaire + redirection `/merci`).
+- [ ] Pour Google Ads : renseigner `analytics.ga4Id`, `analytics.adsId`, `analytics.adsConversionLabel` (conversion déclenchée sur `/merci`).
+- [ ] Collecter de vrais **avis clients** (preuve sociale = levier de conversion n°1).
 - [ ] Vérifier `siteUrl` / `astro.config.mjs` / `robots.txt`.
 
 ---

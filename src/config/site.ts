@@ -42,6 +42,12 @@ export interface Founder {
   bio: string;
 }
 
+export interface Analytics {
+  ga4Id: string; // ex. "G-XXXXXXXXXX" — vide = aucun tracking, aucun bandeau
+  adsId: string; // ex. "AW-XXXXXXXXXX"
+  adsConversionLabel: string; // ex. "abcdEFGhIJ" (conversion sur /merci)
+}
+
 export interface SiteConfig {
   brandName: string;
   tagline: string;
@@ -55,8 +61,11 @@ export interface SiteConfig {
   contact: {
     email: string;
     bookingUrl: string;
-    phone: string;
+    phone: string; // ex. "+33 6 12 34 56 78" — vide = bouton Appeler masqué
+    whatsapp: string; // numéro intl sans + ni espaces, ex. "33612345678" — vide = masqué
+    formAccessKey: string; // clé Web3Forms — vide = formulaire masqué (fallback Cal.com)
   };
+  analytics: Analytics;
   nav: NavItem[];
   stats: Stat[];
   signals: string[];
@@ -84,7 +93,17 @@ export const site: SiteConfig = {
   contact: {
     email: "contact@naviel.fr", // Remplacer si autre adresse
     bookingUrl: "https://cal.com/naviel/appel-decouverte", // Lien de réservation (Cal.com)
-    phone: "", // optionnel — laisser vide si non utilisé
+    phone: "", // ex. "+33 6 12 34 56 78" — vide = bouton Appeler masqué
+    whatsapp: "", // ex. "33612345678" (intl, sans + ni espaces) — vide = masqué
+    formAccessKey: "", // clé Web3Forms (https://web3forms.com) — vide = formulaire masqué
+  },
+
+  // Tracking — INACTIF tant que les IDs sont vides (aucun script, aucun bandeau).
+  // Quand renseigné : gtag.js + Consent Mode v2 (refus par défaut) + bandeau.
+  analytics: {
+    ga4Id: "",
+    adsId: "",
+    adsConversionLabel: "",
   },
 
   nav: [

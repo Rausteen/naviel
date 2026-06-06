@@ -1,0 +1,118 @@
+---
+import { site } from "@config";
+
+// Rendu uniquement si une clé Web3Forms est configurée.
+const key = site.contact.formAccessKey;
+const sectors = site.sectors.map((s) => s.name);
+const inputClass =
+  "w-full rounded-xl border border-line bg-bg-2 px-4 py-3 text-ink placeholder:text-muted focus-visible:outline-2 focus-visible:outline-accent";
+---
+
+{
+  key && (
+    <form
+      action="https://api.web3forms.com/submit"
+      method="POST"
+      class="rounded-[var(--radius-card)] border border-line bg-surface p-6 sm:p-8"
+    >
+      <input type="hidden" name="access_key" value={key} />
+      <input type="hidden" name="subject" value="Nouvelle demande — site Naviel" />
+      <input type="hidden" name="from_name" value="Site Naviel" />
+      <input type="hidden" name="redirect" value={`${site.siteUrl}/merci`} />
+      {/* Anti-spam (honeypot) — caché aux humains */}
+      <input
+        type="checkbox"
+        name="botcheck"
+        class="hidden"
+        style="display:none"
+        tabindex="-1"
+        autocomplete="off"
+      />
+
+      <div class="grid gap-4">
+        <div>
+          <label for="cf-name" class="mb-1.5 block text-sm text-ink-soft">
+            Nom *
+          </label>
+          <input
+            id="cf-name"
+            name="name"
+            type="text"
+            required
+            autocomplete="name"
+            class={inputClass}
+            placeholder="Votre nom"
+          />
+        </div>
+
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label for="cf-email" class="mb-1.5 block text-sm text-ink-soft">
+              E-mail *
+            </label>
+            <input
+              id="cf-email"
+              name="email"
+              type="email"
+              required
+              autocomplete="email"
+              class={inputClass}
+              placeholder="vous@exemple.fr"
+            />
+          </div>
+          <div>
+            <label for="cf-phone" class="mb-1.5 block text-sm text-ink-soft">
+              Téléphone
+            </label>
+            <input
+              id="cf-phone"
+              name="phone"
+              type="tel"
+              autocomplete="tel"
+              class={inputClass}
+              placeholder="06 12 34 56 78"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label for="cf-secteur" class="mb-1.5 block text-sm text-ink-soft">
+            Votre secteur
+          </label>
+          <select id="cf-secteur" name="secteur" class={inputClass}>
+            <option value="">Sélectionnez…</option>
+            {sectors.map((s) => (
+              <option value={s}>{s}</option>
+            ))}
+            <option value="Autre">Autre</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="cf-message" class="mb-1.5 block text-sm text-ink-soft">
+            Votre projet *
+          </label>
+          <textarea
+            id="cf-message"
+            name="message"
+            required
+            rows="4"
+            class={inputClass}
+            placeholder="Décrivez votre activité et votre besoin en quelques mots."
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="mt-1 inline-flex items-center justify-center gap-2 rounded-[var(--radius-pill)] bg-accent px-6 py-3.5 text-base font-semibold text-[#10110a] transition-transform duration-300 hover:-translate-y-0.5 motion-reduce:transition-none"
+        >
+          Envoyer ma demande
+          <span aria-hidden="true">→</span>
+        </button>
+        <p class="text-xs text-muted">
+          Réponse rapide · Sans engagement · Vos données ne sont jamais revendues.
+        </p>
+      </div>
+    </form>
+  )
+}
