@@ -57,7 +57,19 @@ const localBusiness = {
     : {}),
 };
 
-const allJsonLd = [localBusiness, ...jsonLd];
+// JSON-LD Organization — entité de marque (knowledge graph / publisher)
+const organization = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: site.brandName,
+  url: site.siteUrl,
+  logo: new URL("/apple-touch-icon.png", site.siteUrl).href,
+  ...(site.social.length
+    ? { sameAs: site.social.map((s) => s.href) }
+    : {}),
+};
+
+const allJsonLd = [localBusiness, organization, ...jsonLd];
 ---
 
 <!-- Primaire -->
@@ -65,6 +77,14 @@ const allJsonLd = [localBusiness, ...jsonLd];
 <meta name="description" content={description} />
 <link rel="canonical" href={canonicalURL} />
 {noindex && <meta name="robots" content="noindex, nofollow" />}
+{
+  site.analytics.gscVerification && (
+    <meta
+      name="google-site-verification"
+      content={site.analytics.gscVerification}
+    />
+  )
+}
 <meta name="generator" content={Astro.generator} />
 
 <!-- Open Graph -->

@@ -54,7 +54,7 @@ const articleLd = {
 ---
 
 <Layout
-  title={data.title}
+  title={data.seoTitle ?? data.title}
   description={data.description}
   type="article"
   image={data.cover?.src}

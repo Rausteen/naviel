@@ -61,8 +61,8 @@ const articleLd = {
 ---
 
 <Layout
-  title={data.title}
-  description={data.summary}
+  title={data.seoTitle ?? data.title}
+  description={data.seoDescription ?? data.summary}
   type="article"
   image={data.cover.src}
   jsonLd={[breadcrumb, articleLd]}

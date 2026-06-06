@@ -54,7 +54,8 @@ pnpm preview      # prévisualiser le build de production
 
 - `brandName`, `tagline`, `city` (siège), `coverage` (« Partout en France »), `areaServed` (SEO), `siteUrl`, `locale`
 - `contact` : **e-mail**, **lien de réservation** (`bookingUrl`, ex. Cal.com), `phone` (click-to-call + CTA sticky), `whatsapp` (n° intl sans `+`), `formAccessKey` (clé [Web3Forms](https://web3forms.com) → active le formulaire de contact). Vide = la fonctionnalité est masquée proprement.
-- `analytics` : `ga4Id`, `adsId`, `adsConversionLabel` — **vide = aucun tracking ni bandeau**. Renseigné = gtag.js + Consent Mode v2 (refus par défaut) + bandeau de consentement, et déclenchement de la conversion Google Ads sur `/merci`.
+- `analytics` : `ga4Id`, `adsId`, `adsConversionLabel`, `gscVerification` — **vide = aucun tracking ni bandeau**. Renseigné = gtag.js + Consent Mode v2 (refus par défaut) + bandeau de consentement, conversion Google Ads sur `/merci`, et balise de vérification Search Console.
+- `pricing`, `signals`, `reviews`, `founder` : voir commentaires dans le fichier.
 - `nav` : entrées de navigation (dont **Contact**)
 - `signals` : signaux honnêtes (non chiffrés) affichés sur l'accueil
 - `pricing` : ancrage « à partir de » sur `/offre` (montants éditables ; `enabled: false` ou montants vides → retour au « sur devis »)
@@ -191,6 +192,49 @@ pour les campagnes Google Ads.
 > ⚠️ Pour un secteur **sans réalisation**, laissez `hasProof: false` et
 > n'affichez **aucun chiffre ni faux cas client** — présentez-le comme un
 > « secteur accompagné ».
+
+> SEO : ajoutez `seoTitle` et `seoDescription` (frontmatter) pour un `<title>`
+> et une meta optimisés requête, distincts du H1/résumé.
+
+---
+
+## Ajouter une page métier (verticale SEO)
+
+Pages « service × métier » à fort intent (ex. detailing, ostéopathe…), générées
+sous `/creation-site/[slug]`. Créez `src/content/verticales/mon-metier.mdx` :
+
+```mdx
+---
+title: "Création de site pour mon métier"      # H1
+metier: "Mon métier"
+seoTitle: "Création de site pour mon métier · SEO local"   # <title>
+seoDescription: "Description SEO (≈150 caractères)."
+summary: "Une phrase d'intro."
+eyebrow: "Sous-spécialités · séparées · par des points"
+sectorSlug: "sante"          # secteur parent (maillage interne)
+keywords: ["création site mon métier", "SEO mon métier"]
+order: 5
+---
+
+Contenu UNIQUE (pas de doorway)…
+```
+
+La page est générée automatiquement, reliée à son secteur parent, et listée sur
+le hub `/creation-site`.
+
+---
+
+## SEO — actions hors-site (à faire avec tes accès)
+
+Le technique/on-page est en place. Restent les actions qui demandent des comptes :
+
+- [ ] **Search Console** + **Bing Webmaster** : vérifier le domaine
+  (`analytics.gscVerification` pour la balise) et soumettre `sitemap-index.xml`.
+- [ ] **GA4** + conversion **Google Ads** : renseigner les IDs dans `analytics`.
+- [ ] **Google Business Profile** : créer/optimiser la fiche + collecter des avis.
+- [ ] **Backlinks** : crédit « Réalisé par Naviel » (ancre brandée) dans le
+  footer des sites clients ; cross-link depuis jarvan.ai / quizace.ai / revizly.app.
+- [ ] **Contenu** : 2-4 articles/mois (clusters), maillés vers les pages money.
 
 ---
 

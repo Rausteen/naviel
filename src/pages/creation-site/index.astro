@@ -1,0 +1,75 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Section from "@components/Section.astro";
+import Kicker from "@components/Kicker.astro";
+import Reveal from "@components/Reveal.astro";
+import CTASection from "@components/CTASection.astro";
+import { site } from "@config";
+
+const items = (await getCollection("verticales")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Accueil", item: site.siteUrl },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Création de site",
+      item: `${site.siteUrl}/creation-site`,
+    },
+  ],
+};
+---
+
+<Layout
+  title="Création de site internet par métier · SEO"
+  description="Création de site internet et SEO local par métier : detailing, ostéopathe, dentiste, kiné… Un site sur-mesure qui vous amène des clients. Agence basée à Paris."
+  jsonLd={[breadcrumb]}
+>
+  <Section spacing="md" class="pt-28 sm:pt-36">
+    <Reveal class="max-w-3xl">
+      <Kicker>Création de site par métier</Kicker>
+      <h1 class="mt-4 text-4xl font-semibold sm:text-5xl lg:text-6xl">
+        Un site pensé pour votre métier.
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-ink-soft">
+        On conçoit des sites sur-mesure, référencés localement, pour des métiers
+        précis — pas des templates génériques. Choisissez le vôtre.
+      </p>
+    </Reveal>
+  </Section>
+
+  <Section spacing="sm">
+    {
+      items.length > 0 ? (
+        <div class="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
+          {items.map((item, i) => (
+            <Reveal delay={i * 60}>
+              <a
+                href={`/creation-site/${item.slug}`}
+                class="group flex h-full flex-col justify-between rounded-[var(--radius-card)] border border-line bg-surface p-4 transition-all duration-300 hover:-translate-y-1 hover:border-line-2 motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:p-6"
+              >
+                <h2 class="text-base font-semibold tracking-tight text-ink sm:text-xl">
+                  {item.data.metier}
+                </h2>
+                <span class="mt-4 inline-flex items-center gap-1.5 text-[0.8rem] font-medium text-accent sm:text-sm">
+                  Voir la page
+                  <span aria-hidden="true">→</span>
+                </span>
+              </a>
+            </Reveal>
+          ))}
+        </div>
+      ) : (
+        <p class="text-ink-soft">Les pages métiers arrivent bientôt.</p>
+      )
+    }
+  </Section>
+
+  <CTASection />
+</Layout>

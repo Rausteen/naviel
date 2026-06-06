@@ -5,74 +5,75 @@ import Section from "@components/Section.astro";
 import Kicker from "@components/Kicker.astro";
 import Button from "@components/Button.astro";
 import Reveal from "@components/Reveal.astro";
+import Faq from "@components/Faq.astro";
 import CaseStudyCard from "@components/CaseStudyCard.astro";
 import CTASection from "@components/CTASection.astro";
-import Faq from "@components/Faq.astro";
 import { site } from "@config";
 
 export async function getStaticPaths() {
-  const sectors = await getCollection("sectors");
-  return sectors.map((entry) => ({
-    params: { slug: entry.slug },
-    props: { entry },
-  }));
+  const items = await getCollection("verticales");
+  return items.map((entry) => ({ params: { slug: entry.slug }, props: { entry } }));
 }
 
 interface Props {
-  entry: CollectionEntry<"sectors">;
+  entry: CollectionEntry<"verticales">;
 }
 
 const { entry } = Astro.props;
 const { data } = entry;
 const { Content } = await entry.render();
 
-const pageUrl = `${site.siteUrl}/secteurs/${entry.slug}`;
+const pageUrl = `${site.siteUrl}/creation-site/${entry.slug}`;
 
-// Preuve : on ne montre les réalisations que pour les secteurs qui en ont (auto)
-const proofCases = data.hasProof
-  ? (await getCollection("caseStudies"))
-      .sort((a, b) => a.data.order - b.data.order)
-      .slice(0, 2)
-  : [];
+// Secteur parent (pour le maillage interne)
+const sectors = await getCollection("sectors");
+const parent = sectors.find((s) => s.slug === data.sectorSlug);
 
-// Pages métiers rattachées à ce secteur (maillage interne)
-const verticales = (await getCollection("verticales"))
-  .filter((v) => v.data.sectorSlug === entry.slug)
-  .sort((a, b) => a.data.order - b.data.order);
+// Preuve auto premium : on montre les réalisations si le parent en a
+const proofCases =
+  parent?.data.hasProof
+    ? (await getCollection("caseStudies"))
+        .sort((a, b) => a.data.order - b.data.order)
+        .slice(0, 2)
+    : [];
 
 const breadcrumb = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
     { "@type": "ListItem", position: 1, name: "Accueil", item: site.siteUrl },
-    { "@type": "ListItem", position: 2, name: "Secteurs", item: `${site.siteUrl}/secteurs` },
-    { "@type": "ListItem", position: 3, name: data.name, item: pageUrl },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Création de site",
+      item: `${site.siteUrl}/creation-site`,
+    },
+    { "@type": "ListItem", position: 3, name: data.title, item: pageUrl },
   ],
 };
 
 const serviceLd = {
   "@context": "https://schema.org",
   "@type": "Service",
-  serviceType: `Acquisition de clients — ${data.name}`,
+  serviceType: data.seoTitle,
   provider: { "@type": "Organization", name: site.brandName },
   areaServed: { "@type": "Country", name: site.areaServed },
-  description: data.summary,
+  description: data.seoDescription,
   url: pageUrl,
 };
 
-// Mini-FAQ d'objections (commune aux secteurs) — bon pour la conversion + le SEO
 const faq = [
   {
     q: "Combien de temps pour être en ligne ?",
-    a: "Selon le périmètre, un site vitrine sur-mesure se livre en quelques semaines. On vous donne un calendrier précis dès l'appel découverte.",
+    a: "Selon le périmètre, un site vitrine sur-mesure se livre en quelques semaines. Calendrier précis dès l'appel découverte.",
   },
   {
     q: "Combien ça coûte ?",
-    a: "La création d'un site démarre à 2 500 € (payable en plusieurs fois), avec un suivi mensuel à partir de 99 €/mois (hébergement, maintenance, SEO). La gestion Google Ads est une option. Devis clair et ferme avant de démarrer.",
+    a: "La création démarre à 2 500 € (payable en plusieurs fois), avec un suivi mensuel à partir de 99 €/mois. Devis clair et ferme avant de démarrer.",
   },
   {
     q: "Vous travaillez à distance ?",
-    a: `Oui. ${site.brandName} est basée à ${site.city} et accompagne ses clients partout en France, à distance — du premier appel jusqu'aux résultats.`,
+    a: `Oui. ${site.brandName} est basée à ${site.city} et accompagne ses clients à distance, du premier appel jusqu'aux résultats.`,
   },
   {
     q: "À qui appartient le site ?",
@@ -92,8 +93,8 @@ const faqLd = {
 ---
 
 <Layout
-  title={data.seoTitle ?? data.name}
-  description={data.seoDescription ?? data.summary}
+  title={data.seoTitle}
+  description={data.seoDescription}
   jsonLd={[breadcrumb, serviceLd, faqLd]}
 >
   <Section spacing="md" class="pt-28 sm:pt-36">
@@ -102,7 +103,7 @@ const faqLd = {
       <span aria-hidden="true"> / </span>
       <a href="/secteurs" class="transition-colors hover:text-ink-soft">Secteurs</a>
       <span aria-hidden="true"> / </span>
-      <span class="text-ink-soft">{data.name}</span>
+      <span class="text-ink-soft">{data.metier}</span>
     </nav>
 
     <div class="mt-8 max-w-3xl">
@@ -112,11 +113,11 @@ const faqLd = {
       </h1>
       <p class="mt-6 text-lg text-ink-soft">{data.summary}</p>
       <div class="mt-8 flex flex-wrap gap-3">
-        <Button href={site.contact.bookingUrl} variant="primary" size="lg" external>
+        <Button href={site.contact.bookingUrl} variant="primary" size="lg" external arrow>
           Réserver un appel de 15 min
         </Button>
         {
-          data.hasProof && (
+          proofCases.length > 0 && (
             <Button href="/realisations" variant="ghost" size="lg">
               Voir nos réalisations
             </Button>
@@ -126,7 +127,7 @@ const faqLd = {
     </div>
   </Section>
 
-  <!-- Corps de la landing (intro, ce qu'on fait) -->
+  <!-- Corps -->
   <Section spacing="sm">
     <article class="prose-naviel max-w-3xl">
       <Content />
@@ -159,7 +160,7 @@ const faqLd = {
     </ul>
   </Section>
 
-  <!-- Preuve : réalisations (uniquement si le secteur en a) -->
+  <!-- Preuve (auto premium) -->
   {
     proofCases.length > 0 && (
       <Section spacing="sm" class="border-t border-line bg-bg-2">
@@ -191,32 +192,7 @@ const faqLd = {
     )
   }
 
-  <!-- Pages métiers (maillage interne) -->
-  {
-    verticales.length > 0 && (
-      <Section spacing="sm">
-        <Reveal class="max-w-2xl">
-          <Kicker dot={false}>Votre métier précisément</Kicker>
-          <h2 class="mt-4 text-2xl font-semibold sm:text-3xl">
-            Des pages dédiées à votre activité.
-          </h2>
-        </Reveal>
-        <div class="mt-8 flex flex-wrap gap-3">
-          {verticales.map((v) => (
-            <a
-              href={`/creation-site/${v.slug}`}
-              class="inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-line bg-surface px-4 py-2.5 text-sm text-ink-soft transition-colors hover:border-line-2 hover:text-ink"
-            >
-              <span class="size-1.5 rotate-45 rounded-[1px] bg-accent" aria-hidden="true" />
-              {v.data.metier}
-            </a>
-          ))}
-        </div>
-      </Section>
-    )
-  }
-
-  <!-- Mini-FAQ d'objections -->
+  <!-- FAQ -->
   <Section spacing="sm">
     <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
       <Reveal>
@@ -224,6 +200,20 @@ const faqLd = {
         <h2 class="mt-4 text-3xl font-semibold sm:text-4xl">
           Les questions fréquentes.
         </h2>
+        {
+          parent && (
+            <p class="mt-4 text-ink-soft">
+              Voir aussi notre page{" "}
+              <a
+                href={`/secteurs/${parent.slug}`}
+                class="text-accent underline underline-offset-2"
+              >
+                {parent.data.name}
+              </a>
+              .
+            </p>
+          )
+        }
       </Reveal>
       <Reveal delay={100}>
         <Faq items={faq} />
@@ -232,7 +222,7 @@ const faqLd = {
   </Section>
 
   <CTASection
-    title={`Prêt à attirer plus de clients dans votre secteur ?`}
+    title={`Prêt à attirer plus de clients ?`}
     text="Un appel de 15 minutes, sans engagement. On regarde votre situation et ce qu'on peut faire pour vous amener plus de rendez-vous."
   />
 </Layout>
@@ -275,6 +265,5 @@ const faqLd = {
     border-left: 2px solid var(--color-accent);
     padding-left: 1.25rem;
     font-style: italic;
-    color: var(--color-ink-soft);
   }
 </style>

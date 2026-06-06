@@ -65,6 +65,7 @@ export interface Analytics {
   ga4Id: string; // ex. "G-XXXXXXXXXX" — vide = aucun tracking, aucun bandeau
   adsId: string; // ex. "AW-XXXXXXXXXX"
   adsConversionLabel: string; // ex. "abcdEFGhIJ" (conversion sur /merci)
+  gscVerification: string; // contenu de la balise google-site-verification (vide = absent)
 }
 
 export interface SiteConfig {
@@ -125,6 +126,7 @@ export const site: SiteConfig = {
     ga4Id: "",
     adsId: "",
     adsConversionLabel: "",
+    gscVerification: "",
   },
 
   nav: [
