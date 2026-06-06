@@ -256,6 +256,12 @@ export const site: SiteConfig = {
       featured: false,
       desc: "",
     },
+    {
+      name: "Restauration",
+      slug: "restauration",
+      featured: false,
+      desc: "",
+    },
   ],
 
   // Fondateur (section « Derrière Naviel » sur /agence).
@@ -274,6 +280,7 @@ export const site: SiteConfig = {
     "Beauté & esthétique",
     "Santé",
     "Artisanat",
+    "Restauration",
     "Commerce local",
   ],
 };
