@@ -1,0 +1,151 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Section from "@components/Section.astro";
+import Kicker from "@components/Kicker.astro";
+import Button from "@components/Button.astro";
+import Card from "@components/Card.astro";
+import Reveal from "@components/Reveal.astro";
+import Faq from "@components/Faq.astro";
+import CTASection from "@components/CTASection.astro";
+import { site } from "@config";
+
+const piliers = [
+  {
+    num: "01",
+    title: "Site sur-mesure",
+    text: "Un site premium, orienté conversion, qui reflète le niveau de votre activité — zéro template.",
+  },
+  {
+    num: "02",
+    title: "SEO local Paris",
+    text: "Être trouvé sur « [votre métier] + Paris » et votre arrondissement, fiche Google Business optimisée.",
+  },
+  {
+    num: "03",
+    title: "Google Ads (option)",
+    text: "Des appels qualifiés immédiatement quand vous voulez accélérer, pilotés sur le ROI.",
+  },
+];
+
+const faq = [
+  {
+    q: "Vous recevez à Paris ?",
+    a: "Naviel est basée à Paris. On travaille à distance (visio, téléphone, e-mail) pour être efficaces, et on peut se voir si nécessaire. La qualité de l'accompagnement ne dépend pas d'un rendez-vous physique.",
+  },
+  {
+    q: "Combien coûte un site à Paris ?",
+    a: "La création démarre à 2 500 € (payable en plusieurs fois), avec un suivi mensuel à partir de 99 €/mois. Devis clair et ferme avant de démarrer.",
+  },
+  {
+    q: "Travaillez-vous avec mon secteur ?",
+    a: "On se spécialise par secteur : auto premium, santé, habitat & rénovation, beauté & esthétique, artisanat & commerce, immobilier. Si vous êtes un artisan ou un commerce de service, parlons-en.",
+  },
+];
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Accueil", item: site.siteUrl },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Création de site internet à Paris",
+      item: `${site.siteUrl}/creation-site-internet-paris`,
+    },
+  ],
+};
+
+const serviceLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType: "Création de site internet & SEO à Paris",
+  provider: { "@type": "Organization", name: site.brandName },
+  areaServed: { "@type": "City", name: "Paris" },
+  description:
+    "Création de site internet sur-mesure et référencement local à Paris pour les artisans et commerces de service.",
+  url: `${site.siteUrl}/creation-site-internet-paris`,
+};
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<Layout
+  title="Création de site internet & SEO à Paris"
+  description="Agence de création de site internet et SEO local à Paris pour artisans et commerces de service. Un site sur-mesure qui vous amène des clients. À partir de 2 500 €."
+  jsonLd={[breadcrumb, serviceLd, faqLd]}
+>
+  <Section spacing="md" class="pt-28 sm:pt-36">
+    <Reveal class="max-w-3xl">
+      <Kicker pulse>Agence à Paris</Kicker>
+      <h1 class="mt-4 text-4xl font-semibold sm:text-5xl lg:text-6xl">
+        Création de site internet & SEO à <span class="text-accent">Paris</span>.
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-ink-soft">
+        Basée à Paris, Naviel conçoit des sites sur-mesure et du référencement
+        local pour les artisans et commerces de service. On ne livre pas un
+        site : on construit un canal qui vous amène des clients.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <Button href={site.contact.bookingUrl} variant="primary" size="lg" external arrow>
+          Réserver un appel de 15 min
+        </Button>
+        <Button href="/realisations" variant="ghost" size="lg">
+          Voir nos réalisations
+        </Button>
+      </div>
+    </Reveal>
+  </Section>
+
+  <Section spacing="sm">
+    <div class="grid gap-5 md:grid-cols-3">
+      {
+        piliers.map((p, i) => (
+          <Reveal delay={i * 90}>
+            <Card hover class="h-full">
+              <span class="font-display text-3xl font-semibold text-accent">
+                {p.num}
+              </span>
+              <h2 class="mt-4 text-lg font-semibold">{p.title}</h2>
+              <p class="mt-2 text-sm text-ink-soft">{p.text}</p>
+            </Card>
+          </Reveal>
+        ))
+      }
+    </div>
+  </Section>
+
+  <Section spacing="sm">
+    <div class="grid gap-10 lg:grid-cols-2 lg:gap-16">
+      <Reveal class="space-y-5 text-ink-soft">
+        <h2 class="text-3xl font-semibold text-ink sm:text-4xl">
+          Un partenaire local, des résultats concrets.
+        </h2>
+        <p>
+          À Paris comme ailleurs, vos clients vous cherchent sur Google. Si vous
+          n'apparaissez pas, ou si votre site n'inspire pas confiance, ils
+          passent à la concurrence. On corrige ça : un site rapide et premium,
+          un référencement local solide, et de la publicité quand vous voulez
+          accélérer.
+        </p>
+        <p>
+          Un seul interlocuteur, du design aux résultats — pas de ping-pong
+          entre prestataires.
+        </p>
+      </Reveal>
+      <Reveal delay={100}>
+        <Faq items={faq} />
+      </Reveal>
+    </div>
+  </Section>
+
+  <CTASection />
+</Layout>

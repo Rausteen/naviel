@@ -1,0 +1,177 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Section from "@components/Section.astro";
+import Kicker from "@components/Kicker.astro";
+import Button from "@components/Button.astro";
+import Card from "@components/Card.astro";
+import Reveal from "@components/Reveal.astro";
+import Faq from "@components/Faq.astro";
+import CTASection from "@components/CTASection.astro";
+import { site } from "@config";
+
+const etapes = [
+  {
+    num: "01",
+    title: "Audit & ciblage",
+    text: "On analyse votre marché, vos mots-clés et vos concurrents pour cibler les recherches qui amènent des clients — pas des clics inutiles.",
+  },
+  {
+    num: "02",
+    title: "Création des campagnes",
+    text: "Annonces, mots-clés, pages de destination et suivi des conversions. Tout est en place pour mesurer ce qui rapporte.",
+  },
+  {
+    num: "03",
+    title: "Optimisation continue",
+    text: "On pilote au ROI : on coupe ce qui gaspille, on pousse ce qui convertit, et on vous rend des comptes clairs.",
+  },
+];
+
+const faq = [
+  {
+    q: "Qui paie le budget publicitaire ?",
+    a: "Vous, directement à Google, sur votre propre compte. Vous gardez la main et la transparence totale sur votre budget. Notre rémunération couvre la gestion et l'optimisation.",
+  },
+  {
+    q: "Quel budget pub prévoir ?",
+    a: "Cela dépend de votre marché et de vos objectifs. Pour beaucoup d'activités locales, on démarre souvent autour de 800 €/mois de budget Google, mais on en discute selon votre situation.",
+  },
+  {
+    q: "Combien coûte la gestion ?",
+    a: "La gestion Google Ads démarre à 400 €/mois, hors budget publicitaire. C'est une option, réservée à ceux qui veulent vraiment accélérer — jamais imposée.",
+  },
+  {
+    q: "Faut-il déjà avoir un site ?",
+    a: "Oui, et un bon : la pub envoie du trafic, mais c'est votre site qui transforme. On peut créer le site puis lancer les campagnes, ou piloter les Ads sur un site existant performant.",
+  },
+];
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Accueil", item: site.siteUrl },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Google Ads",
+      item: `${site.siteUrl}/google-ads`,
+    },
+  ],
+};
+
+const serviceLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType: "Gestion de campagnes Google Ads",
+  provider: { "@type": "Organization", name: site.brandName },
+  areaServed: { "@type": "Country", name: site.areaServed },
+  description:
+    "Gestion de campagnes Google Ads pour artisans et commerces de service : appels qualifiés, pilotage au ROI, budget payé directement à Google.",
+  url: `${site.siteUrl}/google-ads`,
+};
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<Layout
+  title="Agence Google Ads pour artisans & commerces de service"
+  description="Gestion de campagnes Google Ads pour générer des appels qualifiés : pilotage au ROI, budget payé directement à Google, sans engagement. Agence basée à Paris."
+  jsonLd={[breadcrumb, serviceLd, faqLd]}
+>
+  <Section spacing="md" class="pt-28 sm:pt-36">
+    <Reveal class="max-w-3xl">
+      <Kicker>Google Ads</Kicker>
+      <h1 class="mt-4 text-4xl font-semibold sm:text-5xl lg:text-6xl">
+        Des appels qualifiés, dès maintenant.
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-ink-soft">
+        Le SEO construit votre visibilité dans la durée. La publicité, elle,
+        génère des demandes <span class="text-accent">immédiatement</span>. Quand
+        vous voulez accélérer, on lance et on pilote vos campagnes Google Ads —
+        sur le ROI, pas sur les clics.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <Button href={site.contact.bookingUrl} variant="primary" size="lg" external arrow>
+          En parler en 15 min
+        </Button>
+        <Button href="/offre#tarifs" variant="ghost" size="lg">
+          Voir les tarifs
+        </Button>
+      </div>
+    </Reveal>
+  </Section>
+
+  <!-- Transparence budget -->
+  <Section spacing="sm">
+    <Reveal>
+      <Card accent class="overflow-hidden">
+        <div class="ambient-halo opacity-50"></div>
+        <div class="relative max-w-2xl">
+          <h2 class="text-2xl font-semibold sm:text-3xl">
+            Vous payez le budget directement à Google.
+          </h2>
+          <p class="mt-4 text-ink-soft">
+            Pas d'intermédiaire opaque sur votre budget pub : il est versé à
+            Google, sur votre propre compte, en toute transparence. Nous, on
+            gère la performance — ciblage, annonces, optimisation et suivi du
+            ROI. Vous gardez la main, on apporte l'expertise.
+          </p>
+        </div>
+      </Card>
+    </Reveal>
+  </Section>
+
+  <!-- Process -->
+  <Section spacing="sm">
+    <Reveal class="max-w-2xl">
+      <Kicker>Comment on travaille</Kicker>
+      <h2 class="mt-4 text-3xl font-semibold sm:text-4xl">
+        Du ciblage au ROI.
+      </h2>
+    </Reveal>
+    <ol class="mt-10 grid gap-5 md:grid-cols-3">
+      {
+        etapes.map((e, i) => (
+          <Reveal as="li" delay={i * 90}>
+            <Card class="h-full">
+              <span class="font-display text-3xl font-semibold text-accent">
+                {e.num}
+              </span>
+              <h3 class="mt-4 text-lg font-semibold">{e.title}</h3>
+              <p class="mt-2 text-sm text-ink-soft">{e.text}</p>
+            </Card>
+          </Reveal>
+        ))
+      }
+    </ol>
+  </Section>
+
+  <!-- FAQ -->
+  <Section spacing="sm">
+    <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+      <Reveal>
+        <Kicker>FAQ</Kicker>
+        <h2 class="mt-4 text-3xl font-semibold sm:text-4xl">
+          Vos questions sur Google Ads.
+        </h2>
+      </Reveal>
+      <Reveal delay={100}>
+        <Faq items={faq} />
+      </Reveal>
+    </div>
+  </Section>
+
+  <CTASection
+    title="Prêt à générer des appels qualifiés ?"
+    text="Un appel de 15 minutes pour voir si Google Ads est pertinent pour vous — et à quel budget. Sans engagement."
+  />
+</Layout>

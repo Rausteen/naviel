@@ -30,6 +30,8 @@ const year = new Date().getFullYear();
             [
               { label: "Méthode", href: "/methode" },
               { label: "Secteurs", href: "/secteurs" },
+              { label: "Création de site par métier", href: "/creation-site" },
+              { label: "Google Ads", href: "/google-ads" },
               { label: "Réalisations", href: "/realisations" },
               { label: "Offre & tarifs", href: "/offre" },
               { label: "Agence", href: "/agence" },
@@ -84,7 +86,14 @@ const year = new Date().getFullYear();
               Réserver un appel ↗
             </a>
           </li>
-          <li class="text-muted">{site.city}, France</li>
+          <li>
+            <a
+              href="/creation-site-internet-paris"
+              class="text-ink-soft transition-colors hover:text-ink"
+            >
+              {site.city}, France
+            </a>
+          </li>
           {
             site.social.map((s) => (
               <li>
