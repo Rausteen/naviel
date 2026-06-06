@@ -1,0 +1,121 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Section from "@components/Section.astro";
+import { site } from "@config";
+---
+
+<Layout
+  title="Politique de confidentialité"
+  description="Politique de confidentialité et gestion des données personnelles (RGPD) du site Naviel."
+  noindex
+>
+  <Section spacing="md" class="pt-28 sm:pt-36">
+    <div class="prose-legal mx-auto max-w-3xl">
+      <h1>Politique de confidentialité</h1>
+      <p class="lead">
+        {/* À REMPLACER : modèle RGPD à faire valider et compléter avant la mise en ligne. */}
+        <strong>À REMPLACER</strong> — ce document est un modèle RGPD. Faites-le
+        valider et complétez-le selon votre situation réelle avant la mise en
+        ligne.
+      </p>
+
+      <h2>Responsable du traitement</h2>
+      <p>
+        Le responsable du traitement des données est {site.brandName} (À
+        REMPLACER : coordonnées complètes). Pour toute question relative à vos
+        données, contactez
+        <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>.
+      </p>
+
+      <h2>Données collectées</h2>
+      <p>
+        Ce site est statique et ne collecte pas de données à votre insu. Des
+        données peuvent être transmises uniquement lorsque vous nous
+        contactez (e-mail) ou réservez un rendez-vous via notre outil de
+        prise de rendez-vous. À REMPLACER : préciser les données réellement
+        collectées et les outils utilisés (Calendly, e-mail, analytics…).
+      </p>
+
+      <h2>Finalités</h2>
+      <ul>
+        <li>Répondre à vos demandes de contact.</li>
+        <li>Organiser un rendez-vous découverte.</li>
+        <li>À REMPLACER : ajouter toute autre finalité réelle.</li>
+      </ul>
+
+      <h2>Durée de conservation</h2>
+      <p>
+        Les données sont conservées le temps nécessaire au traitement de votre
+        demande, puis archivées ou supprimées conformément à la réglementation.
+        À REMPLACER : préciser les durées.
+      </p>
+
+      <h2>Outils tiers</h2>
+      <p>
+        La prise de rendez-vous s'effectue via un outil externe (par défaut
+        Calendly). La consultation de ce service est soumise à sa propre
+        politique de confidentialité. À REMPLACER si vous utilisez d'autres
+        services (mesure d'audience, etc.).
+      </p>
+
+      <h2>Vos droits</h2>
+      <p>
+        Conformément au RGPD, vous disposez d'un droit d'accès, de
+        rectification, d'effacement, de limitation et d'opposition concernant
+        vos données. Pour les exercer, écrivez à
+        <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>. Vous
+        pouvez également introduire une réclamation auprès de la CNIL.
+      </p>
+
+      <h2>Cookies</h2>
+      <p>
+        Ce site n'utilise pas de cookies de suivi par défaut. À REMPLACER : si
+        vous ajoutez de la mesure d'audience ou de la publicité, mettez en place
+        un bandeau de consentement conforme.
+      </p>
+    </div>
+  </Section>
+</Layout>
+
+<style is:global>
+  .prose-legal {
+    color: var(--color-ink-soft);
+    line-height: 1.75;
+  }
+  .prose-legal h1 {
+    color: var(--color-ink);
+    font-size: 2.5rem;
+  }
+  .prose-legal .lead {
+    margin-top: 1rem;
+    color: var(--color-muted);
+  }
+  .prose-legal h2 {
+    color: var(--color-ink);
+    font-size: 1.4rem;
+    margin-top: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .prose-legal p {
+    margin-top: 1rem;
+  }
+  .prose-legal ul {
+    margin-top: 1rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+  .prose-legal li + li {
+    margin-top: 0.4rem;
+  }
+  .prose-legal li::marker {
+    color: var(--color-accent);
+  }
+  .prose-legal a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .prose-legal strong {
+    color: var(--color-ink);
+  }
+</style>

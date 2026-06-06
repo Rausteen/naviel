@@ -1,0 +1,128 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Section from "@components/Section.astro";
+import Kicker from "@components/Kicker.astro";
+import Reveal from "@components/Reveal.astro";
+import Button from "@components/Button.astro";
+import { site } from "@config";
+
+// Détecte si l'URL Calendly a bien été personnalisée (sinon on n'embarque pas)
+const calendlyConfigured =
+  site.contact.calendlyUrl.includes("calendly.com/") &&
+  site.contact.calendlyUrl.replace(/\/+$/, "") !== "https://calendly.com";
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Accueil", item: site.siteUrl },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Contact",
+      item: `${site.siteUrl}/contact`,
+    },
+  ],
+};
+---
+
+<Layout
+  title="Contact"
+  description="Réservez un appel de 15 minutes, sans engagement. On regarde votre situation et ce qu'on peut faire pour vous amener plus de clients."
+  jsonLd={[breadcrumb]}
+>
+  <Section spacing="md" class="pt-28 sm:pt-36">
+    <div class="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+      <!-- Texte de réassurance -->
+      <Reveal>
+        <Kicker pulse>Parlons-en</Kicker>
+        <h1 class="mt-4 text-4xl font-semibold sm:text-5xl">
+          Réservez un appel de 15 minutes.
+        </h1>
+        <p class="mt-6 text-lg text-ink-soft">
+          Sans engagement. On regarde votre situation, on vous dit franchement
+          ce qui peut être amélioré, et ce qu'on peut faire pour vous amener
+          plus de clients.
+        </p>
+
+        <ul class="mt-8 space-y-4 text-ink-soft">
+          <li class="flex items-start gap-3">
+            <span class="mt-1.5 size-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true"></span>
+            Un échange concret, pas un argumentaire commercial.
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="mt-1.5 size-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true"></span>
+            Un avis honnête sur votre présence en ligne actuelle.
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="mt-1.5 size-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true"></span>
+            Un devis clair si on décide de travailler ensemble.
+          </li>
+        </ul>
+
+        <div class="mt-10 rounded-[var(--radius-card)] border border-line bg-surface p-6">
+          <h2 class="text-sm font-semibold uppercase tracking-[0.18em] text-muted">
+            Par e-mail
+          </h2>
+          <a
+            href={`mailto:${site.contact.email}`}
+            class="mt-3 inline-block text-lg text-ink transition-colors hover:text-accent"
+          >
+            {site.contact.email}
+          </a>
+          {
+            site.contact.phone && (
+              <p class="mt-3">
+                <a
+                  href={`tel:${site.contact.phone.replace(/\s/g, "")}`}
+                  class="text-lg text-ink transition-colors hover:text-accent"
+                >
+                  {site.contact.phone}
+                </a>
+              </p>
+            )
+          }
+        </div>
+      </Reveal>
+
+      <!-- Embed Calendly (ou fallback si non configuré) -->
+      <Reveal delay={120}>
+        {
+          calendlyConfigured ? (
+            <div
+              class="overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface"
+            >
+              <iframe
+                src={site.contact.calendlyUrl}
+                title="Réserver un appel via Calendly"
+                loading="lazy"
+                class="h-[680px] w-full border-0"
+              />
+            </div>
+          ) : (
+            <div class="flex h-full flex-col items-start justify-center rounded-[var(--radius-card)] border border-dashed border-line-2 bg-surface p-8">
+              <p class="text-sm font-medium uppercase tracking-wider text-accent">
+                À REMPLACER
+              </p>
+              <p class="mt-3 text-ink-soft">
+                Renseignez votre lien de réservation dans
+                <code class="text-ink"> src/config/site.ts </code>
+                (<code class="text-ink">contact.calendlyUrl</code>) pour afficher
+                ici le calendrier de réservation.
+              </p>
+              <div class="mt-6">
+                <Button
+                  href={site.contact.calendlyUrl}
+                  variant="primary"
+                  external
+                >
+                  Ouvrir le lien de réservation
+                </Button>
+              </div>
+            </div>
+          )
+        }
+      </Reveal>
+    </div>
+  </Section>
+</Layout>

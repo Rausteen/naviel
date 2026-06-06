@@ -1,0 +1,165 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+import Section from "@components/Section.astro";
+import Container from "@components/Container.astro";
+import CTASection from "@components/CTASection.astro";
+import { site } from "@config";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  return posts.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<"blog">;
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+const { Content } = await entry.render();
+
+const pageUrl = `${site.siteUrl}/blog/${entry.slug}`;
+const dateFmt = new Intl.DateTimeFormat("fr-FR", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Accueil", item: site.siteUrl },
+    { "@type": "ListItem", position: 2, name: "Blog", item: `${site.siteUrl}/blog` },
+    { "@type": "ListItem", position: 3, name: data.title, item: pageUrl },
+  ],
+};
+
+const articleLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: data.title,
+  description: data.description,
+  ...(data.cover ? { image: new URL(data.cover.src, site.siteUrl).href } : {}),
+  datePublished: data.date.toISOString(),
+  author: { "@type": "Organization", name: data.author },
+  publisher: { "@type": "Organization", name: site.brandName },
+  mainEntityOfPage: pageUrl,
+};
+---
+
+<Layout
+  title={data.title}
+  description={data.description}
+  type="article"
+  image={data.cover?.src}
+  jsonLd={[breadcrumb, articleLd]}
+>
+  <Section spacing="md" class="pt-28 sm:pt-36">
+    <div class="mx-auto max-w-3xl">
+      <nav aria-label="Fil d'Ariane" class="text-sm text-muted">
+        <a href="/" class="transition-colors hover:text-ink-soft">Accueil</a>
+        <span aria-hidden="true"> / </span>
+        <a href="/blog" class="transition-colors hover:text-ink-soft">Blog</a>
+      </nav>
+
+      <div class="mt-6 flex flex-wrap items-center gap-3 text-xs uppercase tracking-wider text-muted">
+        <time datetime={data.date.toISOString()}>{dateFmt.format(data.date)}</time>
+        {data.tags.length > 0 && <span aria-hidden="true">·</span>}
+        {data.tags.map((t) => <span>{t}</span>)}
+      </div>
+
+      <h1 class="mt-4 text-4xl font-semibold leading-tight sm:text-5xl">
+        {data.title}
+      </h1>
+      <p class="mt-5 text-lg text-ink-soft">{data.description}</p>
+    </div>
+  </Section>
+
+  {
+    data.cover && (
+      <Section spacing="sm" container={false}>
+        <Container>
+          <div class="mx-auto max-w-4xl overflow-hidden rounded-[var(--radius-card)] border border-line">
+            <Image
+              src={data.cover}
+              alt={data.title}
+              width={1280}
+              height={800}
+              loading="eager"
+              class="w-full object-cover"
+            />
+          </div>
+        </Container>
+      </Section>
+    )
+  }
+
+  <Section spacing="sm">
+    <article class="prose-naviel mx-auto max-w-3xl">
+      <Content />
+    </article>
+  </Section>
+
+  <CTASection />
+</Layout>
+
+<style is:global>
+  .prose-naviel {
+    color: var(--color-ink-soft);
+    font-size: 1.0625rem;
+    line-height: 1.75;
+  }
+  .prose-naviel > * + * {
+    margin-top: 1.25rem;
+  }
+  .prose-naviel h2 {
+    color: var(--color-ink);
+    font-size: 1.6rem;
+    margin-top: 2.75rem;
+    margin-bottom: 0.5rem;
+  }
+  .prose-naviel h3 {
+    color: var(--color-ink);
+    font-size: 1.25rem;
+    margin-top: 2rem;
+  }
+  .prose-naviel a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .prose-naviel strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .prose-naviel ul,
+  .prose-naviel ol {
+    padding-left: 1.25rem;
+  }
+  .prose-naviel ul {
+    list-style: disc;
+  }
+  .prose-naviel ol {
+    list-style: decimal;
+  }
+  .prose-naviel li + li {
+    margin-top: 0.5rem;
+  }
+  .prose-naviel li::marker {
+    color: var(--color-accent);
+  }
+  .prose-naviel hr {
+    border: 0;
+    border-top: 1px solid var(--color-line);
+    margin: 2.5rem 0;
+  }
+  .prose-naviel em {
+    color: var(--color-ink-soft);
+  }
+</style>

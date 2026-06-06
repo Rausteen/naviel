@@ -1,0 +1,104 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Section from "@components/Section.astro";
+import { site } from "@config";
+---
+
+<Layout
+  title="Mentions légales"
+  description="Mentions légales du site Naviel."
+  noindex
+>
+  <Section spacing="md" class="pt-28 sm:pt-36">
+    <div class="prose-legal mx-auto max-w-3xl">
+      <h1>Mentions légales</h1>
+      <p class="lead">
+        {/* À REMPLACER : ces mentions sont des placeholders. Faites-les valider
+        et complétez toutes les informations obligatoires avant la mise en ligne. */}
+        <strong>À REMPLACER</strong> — ce contenu est un modèle. Complétez toutes
+        les informations ci-dessous avant la mise en ligne.
+      </p>
+
+      <h2>Éditeur du site</h2>
+      <ul>
+        <li>Dénomination : {site.brandName} — À REMPLACER (forme juridique)</li>
+        <li>Adresse : À REMPLACER (siège social)</li>
+        <li>SIREN / SIRET : À REMPLACER</li>
+        <li>Numéro de TVA intracommunautaire : À REMPLACER</li>
+        <li>Directeur de la publication : À REMPLACER</li>
+        <li>E-mail : {site.contact.email}</li>
+      </ul>
+
+      <h2>Hébergement</h2>
+      <ul>
+        <li>Hébergeur : À REMPLACER (nom)</li>
+        <li>Adresse : À REMPLACER</li>
+        <li>Contact : À REMPLACER</li>
+      </ul>
+
+      <h2>Propriété intellectuelle</h2>
+      <p>
+        L'ensemble des contenus présents sur ce site (textes, images, logo,
+        charte graphique) est protégé par le droit de la propriété
+        intellectuelle. Toute reproduction sans autorisation est interdite.
+        À REMPLACER si nécessaire.
+      </p>
+
+      <h2>Responsabilité</h2>
+      <p>
+        {site.brandName} s'efforce d'assurer l'exactitude des informations
+        diffusées sur ce site, sans garantie d'exhaustivité. À REMPLACER si
+        nécessaire.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        Pour toute question relative à ces mentions légales, écrivez-nous à
+        <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>.
+      </p>
+    </div>
+  </Section>
+</Layout>
+
+<style is:global>
+  .prose-legal {
+    color: var(--color-ink-soft);
+    line-height: 1.75;
+  }
+  .prose-legal h1 {
+    color: var(--color-ink);
+    font-size: 2.5rem;
+  }
+  .prose-legal .lead {
+    margin-top: 1rem;
+    color: var(--color-muted);
+  }
+  .prose-legal h2 {
+    color: var(--color-ink);
+    font-size: 1.4rem;
+    margin-top: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .prose-legal p {
+    margin-top: 1rem;
+  }
+  .prose-legal ul {
+    margin-top: 1rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+  .prose-legal li + li {
+    margin-top: 0.4rem;
+  }
+  .prose-legal li::marker {
+    color: var(--color-accent);
+  }
+  .prose-legal a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .prose-legal strong {
+    color: var(--color-ink);
+  }
+</style>

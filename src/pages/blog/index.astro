@@ -1,0 +1,110 @@
+---
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+import Section from "@components/Section.astro";
+import Kicker from "@components/Kicker.astro";
+import Reveal from "@components/Reveal.astro";
+import { site } from "@config";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+
+const dateFmt = new Intl.DateTimeFormat("fr-FR", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Accueil", item: site.siteUrl },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Blog",
+      item: `${site.siteUrl}/blog`,
+    },
+  ],
+};
+---
+
+<Layout
+  title="Blog"
+  description="Conseils et analyses sur l'acquisition de clients pour les professionnels de l'automobile premium : sites, SEO local et publicité."
+  jsonLd={[breadcrumb]}
+>
+  <Section spacing="md" class="pt-28 sm:pt-36">
+    <Reveal class="max-w-3xl">
+      <Kicker>Blog</Kicker>
+      <h1 class="mt-4 text-4xl font-semibold sm:text-5xl lg:text-6xl">
+        Acquisition, sites & SEO pour l'auto premium.
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-ink-soft">
+        Des contenus concrets pour comprendre comment transformer votre
+        présence en ligne en vrais rendez-vous.
+      </p>
+    </Reveal>
+  </Section>
+
+  <Section spacing="sm">
+    {
+      posts.length === 0 ? (
+        <p class="text-ink-soft">
+          {/* À REMPLACER : ajouter des articles dans src/content/blog/ */}
+          Les premiers articles arrivent bientôt.
+        </p>
+      ) : (
+        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post, i) => (
+            <Reveal delay={i * 80}>
+              <a
+                href={`/blog/${post.slug}`}
+                class="group flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface transition-all duration-300 hover:-translate-y-1 hover:border-line-2 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+              >
+                {post.data.cover && (
+                  <div class="aspect-[16/10] overflow-hidden bg-bg-2">
+                    <Image
+                      src={post.data.cover}
+                      alt={post.data.title}
+                      width={700}
+                      height={438}
+                      loading={i < 3 ? "eager" : "lazy"}
+                      class="size-full object-cover transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                    />
+                  </div>
+                )}
+                <div class="flex flex-1 flex-col p-6">
+                  <time
+                    datetime={post.data.date.toISOString()}
+                    class="text-xs uppercase tracking-wider text-muted"
+                  >
+                    {dateFmt.format(post.data.date)}
+                  </time>
+                  <h2 class="mt-2 text-lg font-semibold leading-snug text-ink">
+                    {post.data.title}
+                  </h2>
+                  <p class="mt-2 flex-1 text-sm text-ink-soft">
+                    {post.data.description}
+                  </p>
+                  <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-accent">
+                    Lire l'article
+                    <span
+                      class="transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none"
+                      aria-hidden="true"
+                    >
+                      →
+                    </span>
+                  </span>
+                </div>
+              </a>
+            </Reveal>
+          ))}
+        </div>
+      )
+    }
+  </Section>
+</Layout>
