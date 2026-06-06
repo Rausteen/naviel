@@ -14,6 +14,7 @@ import StatGrid from "@components/StatGrid.astro";
 import CaseStudyCard from "@components/CaseStudyCard.astro";
 import SectorCard from "@components/SectorCard.astro";
 import MethodCard from "@components/MethodCard.astro";
+import Pricing from "@components/Pricing.astro";
 import Testimonials from "@components/Testimonials.astro";
 import Faq from "@components/Faq.astro";
 import CTASection from "@components/CTASection.astro";
@@ -193,6 +194,21 @@ const faqJsonLd = {
             Voir nos réalisations
           </Button>
         </div>
+
+        <p
+          data-rise
+          style="--rise-delay:330"
+          class="mt-5 text-sm text-muted"
+        >
+          Site à partir de <span class="text-ink-soft">2 500 €</span> · suivi
+          <span class="text-ink-soft"> 99 €/mois</span> —{" "}
+          <a
+            href="/offre#tarifs"
+            class="text-accent underline decoration-accent/40 underline-offset-4 hover:text-accent-deep"
+          >
+            voir les tarifs
+          </a>
+        </p>
       </div>
 
       <!-- Aperçu de site (preuve visuelle) -->
@@ -443,6 +459,9 @@ const faqJsonLd = {
       }
     </div>
   </Section>
+
+  <!-- ===================== TARIFS ===================== -->
+  <Pricing />
 
   <!-- ===================== AVIS CLIENTS ===================== -->
   <Testimonials reviews={site.reviews} />

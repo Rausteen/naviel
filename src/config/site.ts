@@ -133,7 +133,7 @@ export const site: SiteConfig = {
     { label: "Méthode", href: "/methode" },
     { label: "Secteurs", href: "/secteurs" },
     { label: "Réalisations", href: "/realisations" },
-    { label: "Offre", href: "/offre" },
+    { label: "Offre & tarifs", href: "/offre" },
     { label: "Agence", href: "/agence" },
     { label: "Contact", href: "/contact" },
   ],
