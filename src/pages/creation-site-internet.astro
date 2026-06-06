@@ -394,14 +394,17 @@ const signals = [
         </p>
       </div>
 
-      <!-- Embed Cal.com inline (thème sombre) -->
-      <div class="mx-auto mt-10 max-w-3xl">
-        <div
-          id="cal-inline"
-          class="overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface"
-          style="min-height:600px"
+      <!-- Le calendrier Cal.com s'ouvre au clic (popup) → page courte et focalisée -->
+      <div class="mt-8 flex flex-col items-center">
+        <button
+          type="button"
+          data-cal-link={calLink}
+          data-cal-config='{"layout":"month_view","theme":"dark"}'
+          class="group inline-flex items-center justify-center gap-2 rounded-[var(--radius-pill)] bg-accent px-8 py-4 text-base font-semibold text-[#10110a] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-[#d3f865] hover:shadow-[0_12px_30px_-12px_rgba(200,242,78,0.55)] motion-reduce:transition-none"
         >
-        </div>
+          Choisir un créneau
+          <span class="transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none" aria-hidden="true">→</span>
+        </button>
         <p class="mt-5 text-center text-sm text-muted">
           Un souci pour réserver ? Écrivez-nous à
           <a
@@ -478,11 +481,12 @@ const signals = [
 
     Cal("init", { origin: "https://cal.com" });
 
+    // Le calendrier s'ouvre en popup au clic sur les boutons [data-cal-link].
+    // On injecte le gclid (s'il existe) dans la config du popup pour le prefill.
     var gclid = navielCookie("gclid");
-    Cal("inline", {
-      elementOrSelector: "#cal-inline",
-      calLink: calLink,
-      config: Object.assign({ theme: "dark", layout: "month_view" }, gclid ? { gclid: gclid } : {}),
+    var calConfig = Object.assign({ layout: "month_view", theme: "dark" }, gclid ? { gclid: gclid } : {});
+    document.querySelectorAll("[data-cal-link]").forEach(function (el) {
+      el.setAttribute("data-cal-config", JSON.stringify(calConfig));
     });
 
     Cal("ui", {
