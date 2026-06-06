@@ -34,6 +34,15 @@ export interface Review {
   role: string; // ex. "Atelier PPF · Strasbourg"
 }
 
+export interface Pricing {
+  enabled: boolean; // false → section masquée (retour au « sur devis »)
+  oneOffLabel: string;
+  oneOffFrom: string; // ex. "1 500 €" — vide = masqué
+  recurringLabel: string;
+  recurringFrom: string; // ex. "500 €/mois" — vide = masqué
+  note: string;
+}
+
 export interface Sector {
   name: string;
   slug: string;
@@ -75,6 +84,7 @@ export interface SiteConfig {
   nav: NavItem[];
   stats: Stat[];
   signals: string[];
+  pricing: Pricing;
   reviews: Review[];
   social: SocialLink[];
   products: Product[];
@@ -137,6 +147,16 @@ export const site: SiteConfig = {
     "Basés à Paris, partout en France",
     "Devis clair et ferme · le site vous appartient",
   ],
+
+  // Tarifs — ancrage « à partir de » (ajuste les montants ou passe enabled à false).
+  pricing: {
+    enabled: true,
+    oneOffLabel: "Site sur-mesure",
+    oneOffFrom: "1 500 €",
+    recurringLabel: "Référencement & Google Ads",
+    recurringFrom: "500 €/mois",
+    note: "Le prix final dépend du nombre de pages, des contenus et des options choisies. On vous donne un devis clair et ferme avant de démarrer — sans surprise.",
+  },
 
   // Avis clients. Section masquée automatiquement si le tableau est vide.
   reviews: [

@@ -57,6 +57,8 @@ pnpm preview      # prévisualiser le build de production
 - `analytics` : `ga4Id`, `adsId`, `adsConversionLabel` — **vide = aucun tracking ni bandeau**. Renseigné = gtag.js + Consent Mode v2 (refus par défaut) + bandeau de consentement, et déclenchement de la conversion Google Ads sur `/merci`.
 - `nav` : entrées de navigation (dont **Contact**)
 - `signals` : signaux honnêtes (non chiffrés) affichés sur l'accueil
+- `pricing` : ancrage « à partir de » sur `/offre` (montants éditables ; `enabled: false` ou montants vides → retour au « sur devis »)
+- `reviews` : avis clients (section masquée si vide)
 - `social` : réseaux sociaux (vide par défaut)
 - `products` : produits maison du studio (page `/agence`) — `desc` vide = seul le nom s'affiche
 - `founder` : `{ name, role, photo, bio }` (section « Derrière Naviel » sur `/agence`). **Tout champ vide n'affiche rien** — dépose la photo dans `/public` et référence-la (ex. `/founder.jpg`)
