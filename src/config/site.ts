@@ -36,7 +36,7 @@ export interface Review {
 
 export interface PriceItem {
   label: string;
-  from: string; // ex. "2 500 €" ou "99 €/mois" — vide = ligne masquée
+  from: string; // ex. "2 499 €" ou "99 €/mois" — vide = ligne masquée
   note: string; // précision sous le montant
   badge?: string; // ex. "Option" (facultatif)
 }
@@ -161,7 +161,7 @@ export const site: SiteConfig = {
     items: [
       {
         label: "Création du site",
-        from: "2 500 €",
+        from: "2 499 €",
         note: "Payable en 3 ou 4 fois (env. 625 à 835 €/mois). La plupart des projets se situent entre 3 000 € et 4 500 € selon le périmètre.",
       },
       {

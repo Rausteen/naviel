@@ -1,0 +1,203 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Section from "@components/Section.astro";
+import Kicker from "@components/Kicker.astro";
+import Button from "@components/Button.astro";
+import Card from "@components/Card.astro";
+import Reveal from "@components/Reveal.astro";
+import Faq from "@components/Faq.astro";
+import CTASection from "@components/CTASection.astro";
+import { site } from "@config";
+
+const signes = [
+  {
+    title: "Il ne vous amène aucun client",
+    text: "Du trafic faible, peu ou pas de demandes : votre site est une vitrine, pas un canal.",
+  },
+  {
+    title: "Il fait daté",
+    text: "Design vieillissant, pas à votre image : il vous dessert face à des concurrents plus soignés.",
+  },
+  {
+    title: "Il est lent ou pas mobile",
+    text: "Chargement long, illisible au téléphone : vos visiteurs partent avant même de vous lire.",
+  },
+  {
+    title: "Vous n'avez pas la main",
+    text: "Impossible à modifier, dépendant d'un prestataire injoignable, domaine pas à votre nom.",
+  },
+];
+
+const etapes = [
+  {
+    num: "01",
+    title: "Audit de l'existant",
+    text: "On analyse votre site actuel : design, conversion, SEO, vitesse — et ce qui mérite d'être conservé.",
+  },
+  {
+    num: "02",
+    title: "Refonte & migration propre",
+    text: "Nouveau site sur-mesure, et migration SEO maîtrisée (redirections) pour ne pas perdre votre référencement.",
+  },
+  {
+    num: "03",
+    title: "Mise en ligne & suivi",
+    text: "On publie, on surveille l'indexation et les positions, et on optimise dans la durée.",
+  },
+];
+
+const faq = [
+  {
+    q: "Vais-je perdre mon référencement Google ?",
+    a: "Non, si la migration est faite correctement. On met en place les redirections, on conserve ce qui fonctionne et on améliore le reste. Une refonte bien menée fait généralement progresser le SEO.",
+  },
+  {
+    q: "Combien coûte une refonte ?",
+    a: "Comme une création, à partir de 2 499 € selon le périmètre, avec un suivi mensuel à partir de 99 €/mois. Devis clair et ferme avant de démarrer.",
+  },
+  {
+    q: "Combien de temps ça prend ?",
+    a: "Quelques semaines selon l'ampleur. On vous donne un calendrier précis dès l'appel découverte.",
+  },
+  {
+    q: "Je récupère la propriété de mon site ?",
+    a: "Oui. Le nom de domaine est à votre nom et le site vous appartient — fini la dépendance.",
+  },
+];
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Accueil", item: site.siteUrl },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Refonte de site",
+      item: `${site.siteUrl}/refonte-site-internet`,
+    },
+  ],
+};
+
+const serviceLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType: "Refonte de site internet",
+  provider: { "@type": "Organization", name: site.brandName },
+  areaServed: { "@type": "Country", name: site.areaServed },
+  description:
+    "Refonte de site internet pour artisans et commerces de service : nouveau design orienté conversion, migration SEO propre, performances.",
+  url: `${site.siteUrl}/refonte-site-internet`,
+};
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<Layout
+  title="Refonte de site internet · plus de clients"
+  description="Votre site est daté ou ne vous amène aucun client ? On le refait : design orienté conversion, migration SEO propre, performances. À partir de 2 499 €."
+  jsonLd={[breadcrumb, serviceLd, faqLd]}
+>
+  <Section spacing="md" class="pt-28 sm:pt-36">
+    <Reveal class="max-w-3xl">
+      <Kicker>Refonte de site</Kicker>
+      <h1 class="mt-4 text-4xl font-semibold sm:text-5xl lg:text-6xl">
+        Votre site mérite mieux qu'une vitrine oubliée.
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-ink-soft">
+        Un site daté, lent ou qui n'amène personne vous coûte des clients chaque
+        mois. On le refait pour de bon : moderne, rapide, orienté conversion — et
+        sans perdre votre référencement.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <Button href={site.contact.bookingUrl} variant="primary" size="lg" external arrow>
+          Demander un audit gratuit
+        </Button>
+        <Button href="/realisations" variant="ghost" size="lg">
+          Voir nos réalisations
+        </Button>
+      </div>
+    </Reveal>
+  </Section>
+
+  <!-- Signes -->
+  <Section spacing="sm">
+    <Reveal class="max-w-2xl">
+      <Kicker dot={false}>Les signaux</Kicker>
+      <h2 class="mt-4 text-3xl font-semibold sm:text-4xl">
+        4 signes qu'il est temps de refondre.
+      </h2>
+    </Reveal>
+    <div class="mt-10 grid gap-4 sm:grid-cols-2">
+      {
+        signes.map((s, i) => (
+          <Reveal delay={i * 70}>
+            <div class="flex h-full gap-3 rounded-[var(--radius-card)] border border-line bg-surface p-6">
+              <span
+                class="mt-0.5 size-2 shrink-0 rotate-45 rounded-[2px] bg-accent shadow-[0_0_10px_-2px_rgba(200,242,78,0.7)]"
+                aria-hidden="true"
+              />
+              <div>
+                <h3 class="font-semibold text-ink">{s.title}</h3>
+                <p class="mt-1 text-sm text-ink-soft">{s.text}</p>
+              </div>
+            </div>
+          </Reveal>
+        ))
+      }
+    </div>
+  </Section>
+
+  <!-- Process -->
+  <Section spacing="sm" class="border-y border-line bg-bg-2">
+    <Reveal class="max-w-2xl">
+      <Kicker>Comment on procède</Kicker>
+      <h2 class="mt-4 text-3xl font-semibold sm:text-4xl">
+        Une refonte sans perdre votre SEO.
+      </h2>
+    </Reveal>
+    <ol class="mt-10 grid gap-5 md:grid-cols-3">
+      {
+        etapes.map((e, i) => (
+          <Reveal as="li" delay={i * 90}>
+            <Card class="h-full">
+              <span class="font-display text-3xl font-semibold text-accent">
+                {e.num}
+              </span>
+              <h3 class="mt-4 text-lg font-semibold">{e.title}</h3>
+              <p class="mt-2 text-sm text-ink-soft">{e.text}</p>
+            </Card>
+          </Reveal>
+        ))
+      }
+    </ol>
+  </Section>
+
+  <!-- FAQ -->
+  <Section spacing="sm">
+    <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+      <Reveal>
+        <Kicker>FAQ</Kicker>
+        <h2 class="mt-4 text-3xl font-semibold sm:text-4xl">
+          Vos questions sur la refonte.
+        </h2>
+      </Reveal>
+      <Reveal delay={100}>
+        <Faq items={faq} />
+      </Reveal>
+    </div>
+  </Section>
+
+  <CTASection
+    title="Prêt à transformer votre site en machine à rendez-vous ?"
+    text="Un appel de 15 minutes : on regarde votre site actuel et ce qu'une refonte pourrait changer. Sans engagement."
+  />
+</Layout>

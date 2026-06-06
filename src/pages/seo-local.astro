@@ -1,0 +1,179 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Section from "@components/Section.astro";
+import Kicker from "@components/Kicker.astro";
+import Button from "@components/Button.astro";
+import Card from "@components/Card.astro";
+import Reveal from "@components/Reveal.astro";
+import Faq from "@components/Faq.astro";
+import CTASection from "@components/CTASection.astro";
+import { site } from "@config";
+
+const leviers = [
+  {
+    num: "01",
+    title: "Fiche Google Business",
+    text: "Création/optimisation de votre fiche, catégories, photos, et stratégie d'avis — le cœur du pack local.",
+  },
+  {
+    num: "02",
+    title: "SEO technique & on-page",
+    text: "Structure, titres, contenus et vitesse optimisés pour les requêtes de votre métier dans votre zone.",
+  },
+  {
+    num: "03",
+    title: "Contenu local",
+    text: "Pages par prestation et par zone, contenus utiles qui construisent votre autorité dans la durée.",
+  },
+];
+
+const faq = [
+  {
+    q: "En combien de temps voit-on des résultats ?",
+    a: "Le SEO est un investissement de fond : les premiers effets apparaissent généralement en quelques semaines à quelques mois selon la concurrence. La fiche Google peut, elle, bouger plus vite.",
+  },
+  {
+    q: "Garantissez-vous la première position ?",
+    a: "Personne de sérieux ne garantit une position précise (Google seul décide). On garantit une méthode éprouvée et de la transparence sur les résultats. Notre travail parle de lui-même.",
+  },
+  {
+    q: "Combien ça coûte ?",
+    a: "Le SEO local est inclus dans la création du site, puis entretenu via le suivi mensuel (à partir de 99 €/mois). On peut aussi accompagner un site existant — parlons-en.",
+  },
+  {
+    q: "Et si je n'ai pas encore de site ?",
+    a: "On peut créer le site et activer le SEO local dès le lancement. Voir notre offre.",
+  },
+];
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Accueil", item: site.siteUrl },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "SEO local",
+      item: `${site.siteUrl}/seo-local`,
+    },
+  ],
+};
+
+const serviceLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType: "Référencement local (SEO)",
+  provider: { "@type": "Organization", name: site.brandName },
+  areaServed: { "@type": "Country", name: site.areaServed },
+  description:
+    "Référencement local pour artisans et commerces de service : fiche Google Business, SEO technique et on-page, contenu local.",
+  url: `${site.siteUrl}/seo-local`,
+};
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<Layout
+  title="Référencement local (SEO) pour artisans & commerces"
+  description="Être premier sur Google dans votre ville : fiche Google Business, SEO technique et contenu local. La méthode qui a placé 300+ pages en première page."
+  jsonLd={[breadcrumb, serviceLd, faqLd]}
+>
+  <Section spacing="md" class="pt-28 sm:pt-36">
+    <Reveal class="max-w-3xl">
+      <Kicker>SEO local</Kicker>
+      <h1 class="mt-4 text-4xl font-semibold sm:text-5xl lg:text-6xl">
+        Premier sur Google dans votre ville.
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-ink-soft">
+        Vos clients vous cherchent par métier et par ville. Le référencement
+        local vous place devant eux — au moment exact où ils ont besoin de vous,
+        sans payer chaque clic.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <Button href={site.contact.bookingUrl} variant="primary" size="lg" external arrow>
+          Parler de mon référencement
+        </Button>
+        <Button href="/realisations" variant="ghost" size="lg">
+          Voir nos résultats
+        </Button>
+      </div>
+    </Reveal>
+  </Section>
+
+  <!-- Preuve -->
+  <Section spacing="sm">
+    <Reveal>
+      <Card accent class="overflow-hidden">
+        <div class="ambient-halo opacity-50"></div>
+        <div class="relative max-w-2xl">
+          <h2 class="text-2xl font-semibold sm:text-3xl">
+            <span class="text-accent">300+ pages</span> en première page Google.
+          </h2>
+          <p class="mt-4 text-ink-soft">
+            Sur l'un de nos projets de detailing & lavage premium, on a déployé
+            plus de 300 pages en première page et placé des dizaines de mots-clés
+            locaux en première position — devant des concurrents installés depuis
+            des années. La méthode est rodée.
+          </p>
+          <div class="mt-6">
+            <Button href="/realisations" variant="ghost">Voir l'étude de cas</Button>
+          </div>
+        </div>
+      </Card>
+    </Reveal>
+  </Section>
+
+  <!-- Leviers -->
+  <Section spacing="sm">
+    <Reveal class="max-w-2xl">
+      <Kicker>Les leviers</Kicker>
+      <h2 class="mt-4 text-3xl font-semibold sm:text-4xl">
+        Ce qu'on actionne pour vous.
+      </h2>
+    </Reveal>
+    <div class="mt-10 grid gap-5 md:grid-cols-3">
+      {
+        leviers.map((l, i) => (
+          <Reveal delay={i * 90}>
+            <Card class="h-full">
+              <span class="font-display text-3xl font-semibold text-accent">
+                {l.num}
+              </span>
+              <h3 class="mt-4 text-lg font-semibold">{l.title}</h3>
+              <p class="mt-2 text-sm text-ink-soft">{l.text}</p>
+            </Card>
+          </Reveal>
+        ))
+      }
+    </div>
+  </Section>
+
+  <!-- FAQ -->
+  <Section spacing="sm" class="border-t border-line bg-bg-2">
+    <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+      <Reveal>
+        <Kicker>FAQ</Kicker>
+        <h2 class="mt-4 text-3xl font-semibold sm:text-4xl">
+          Vos questions sur le SEO local.
+        </h2>
+      </Reveal>
+      <Reveal delay={100}>
+        <Faq items={faq} />
+      </Reveal>
+    </div>
+  </Section>
+
+  <CTASection
+    title="Prêt à dominer les recherches locales ?"
+    text="Un appel de 15 minutes pour voir où vous en êtes et le potentiel SEO de votre zone. Sans engagement."
+  />
+</Layout>

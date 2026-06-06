@@ -99,7 +99,7 @@ const faq = [
   },
   {
     q: "Combien ça coûte ?",
-    a: "La création d'un site démarre à 2 500 € (payable en 3 ou 4 fois), avec un suivi mensuel à partir de 99 €/mois (hébergement, maintenance, SEO). La gestion Google Ads est une option (à partir de 400 €/mois, hors budget pub). On vous donne un devis clair et ferme avant de démarrer.",
+    a: "La création d'un site démarre à 2 499 € (payable en 3 ou 4 fois), avec un suivi mensuel à partir de 99 €/mois (hébergement, maintenance, SEO). La gestion Google Ads est une option (à partir de 400 €/mois, hors budget pub). On vous donne un devis clair et ferme avant de démarrer.",
   },
   {
     q: "Qui gère le budget de publicité Google Ads ?",
@@ -200,7 +200,7 @@ const faqJsonLd = {
           style="--rise-delay:330"
           class="mt-5 text-sm text-muted"
         >
-          Site à partir de <span class="text-ink-soft">2 500 €</span> · suivi
+          Site à partir de <span class="text-ink-soft">2 499 €</span> · suivi
           <span class="text-ink-soft"> 99 €/mois</span> —{" "}
           <a
             href="/offre#tarifs"
@@ -277,25 +277,65 @@ const faqJsonLd = {
 
   <!-- ===================== PROBLÈME / REFRAME ===================== -->
   <Section spacing="md">
-    <div class="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
+    <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
       <Reveal>
-        <h2 class="text-3xl font-semibold sm:text-4xl lg:text-[2.75rem]">
+        <Kicker>Le problème</Kicker>
+        <h2 class="mt-4 text-3xl font-semibold sm:text-4xl lg:text-[2.6rem] lg:leading-[1.05]">
           Un beau site sans visiteurs, c'est une carte de visite oubliée dans un
           tiroir.
         </h2>
+        <div class="mt-6 space-y-4 text-base text-ink-soft sm:text-lg">
+          <p>
+            Le problème n'a jamais été le design. La plupart des sites
+            d'artisans sont corrects — mais personne ne les voit. Sans trafic
+            qualifié, le plus beau des sites ne génère aucun rendez-vous.
+          </p>
+          <p>
+            Notre métier commence là où s'arrête celui des autres : amener les
+            bonnes personnes sur votre site, et les transformer en clients.
+          </p>
+        </div>
       </Reveal>
-      <Reveal delay={100} class="space-y-5 text-base text-ink-soft sm:text-lg">
-        <p>
-          Le problème n'a jamais été le design. La plupart des sites
-          d'artisans premium sont corrects — mais personne ne les voit. Sans
-          trafic qualifié, le plus beau des sites ne génère aucun
-          rendez-vous.
-        </p>
-        <p>
-          Notre métier commence exactement là où s'arrête celui des autres :
-          amener les bonnes personnes sur votre site, et les transformer en
-          clients. Le design est un moyen, pas une fin.
-        </p>
+
+      <!-- Visuel de contraste -->
+      <Reveal delay={120}>
+        <div class="space-y-4">
+          <div class="rounded-[var(--radius-card)] border border-line bg-surface p-6">
+            <div class="flex items-center gap-3">
+              <span
+                class="grid size-9 shrink-0 place-items-center rounded-full border border-line-2 text-muted"
+                aria-hidden="true"
+              >
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <div>
+                <p class="font-medium text-ink-soft">Un beau site, zéro visiteur</p>
+                <p class="text-sm text-muted">→ oublié dans un tiroir</p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="rounded-[var(--radius-card)] border border-accent/30 bg-[linear-gradient(135deg,rgba(200,242,78,0.10),rgba(200,242,78,0.02))] p-6"
+          >
+            <div class="flex items-center gap-3">
+              <span
+                class="grid size-9 shrink-0 place-items-center rounded-full border border-accent/40 bg-accent/10 text-accent"
+                aria-hidden="true"
+              >
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <div>
+                <p class="font-medium text-ink">Un site + trafic qualifié</p>
+                <p class="text-sm text-ink-soft">→ un flux de rendez-vous</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </Reveal>
     </div>
   </Section>
