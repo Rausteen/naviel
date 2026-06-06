@@ -217,19 +217,21 @@ const signals = [
     </Container>
   </section>
 
-  <!-- ============ RÉASSURANCE ============ -->
-  <Section spacing="sm">
-    <ul class="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm text-ink-soft">
-      {
-        signals.map((s) => (
-          <li class="inline-flex items-center gap-2">
-            <span class="size-1.5 rotate-45 rounded-[1px] bg-accent" aria-hidden="true" />
-            {s}
-          </li>
-        ))
-      }
-    </ul>
-  </Section>
+  <!-- ============ RÉASSURANCE (bande fine) ============ -->
+  <div class="mt-10 border-y border-line bg-bg-2">
+    <Container>
+      <ul class="flex flex-wrap items-center justify-center gap-x-6 gap-y-1.5 py-3 text-sm text-ink-soft">
+        {
+          signals.map((s) => (
+            <li class="inline-flex items-center gap-2">
+              <span class="size-1.5 rotate-45 rounded-[1px] bg-accent" aria-hidden="true" />
+              {s}
+            </li>
+          ))
+        }
+      </ul>
+    </Container>
+  </div>
 
   <!-- ============ PROBLÈME → PROMESSE ============ -->
   <Section spacing="sm" class="border-y border-line bg-bg-2">
