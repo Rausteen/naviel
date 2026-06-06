@@ -100,23 +100,28 @@ const breadcrumb = {
               />
             </div>
           ) : (
-            <div class="flex h-full flex-col items-start justify-center rounded-[var(--radius-card)] border border-dashed border-line-2 bg-surface p-8">
+            <div class="flex h-full flex-col items-start justify-center rounded-[var(--radius-card)] border border-line bg-surface p-8">
               <p class="text-sm font-medium uppercase tracking-wider text-accent">
-                À REMPLACER
+                Réserver un créneau
               </p>
+              <h2 class="mt-3 text-2xl font-semibold text-ink">
+                Choisissez l'heure qui vous arrange.
+              </h2>
               <p class="mt-3 text-ink-soft">
-                Renseignez votre lien de réservation dans
-                <code class="text-ink"> src/config/site.ts </code>
-                (<code class="text-ink">contact.calendlyUrl</code>) pour afficher
-                ici le calendrier de réservation.
+                Cliquez ci-dessous pour ouvrir notre agenda et réserver votre
+                appel de 15 minutes. Vous préférez l'e-mail ? Écrivez-nous, on
+                vous répond vite.
               </p>
-              <div class="mt-6">
+              <div class="mt-6 flex flex-wrap gap-3">
                 <Button
                   href={site.contact.calendlyUrl}
                   variant="primary"
                   external
                 >
-                  Ouvrir le lien de réservation
+                  Ouvrir l'agenda
+                </Button>
+                <Button href={`mailto:${site.contact.email}`} variant="ghost">
+                  Écrire un e-mail
                 </Button>
               </div>
             </div>

@@ -10,6 +10,7 @@ import Reveal from "@components/Reveal.astro";
 import Marquee from "@components/Marquee.astro";
 import StatGrid from "@components/StatGrid.astro";
 import CaseStudyCard from "@components/CaseStudyCard.astro";
+import SectorCard from "@components/SectorCard.astro";
 import Faq from "@components/Faq.astro";
 import CTASection from "@components/CTASection.astro";
 import { site } from "@config";
@@ -34,14 +35,14 @@ const piliers = [
   {
     num: "03",
     title: "Référencement SEO local",
-    text: "« PPF Strasbourg », fiche Google, optimisations techniques et contenus. On vous rend visible là où vos clients cherchent.",
+    text: "Mots-clés de votre métier, fiche Google, optimisations techniques et contenus. On vous rend visible là où vos clients cherchent.",
   },
 ];
 
 const pourquoi = [
   {
     title: "Spécialistes de votre secteur",
-    text: "Detailing, PPF, covering, lavage premium : on connaît votre marché, vos clients et vos mots-clés.",
+    text: "On se spécialise par secteur — auto premium, habitat, esthétique… On apprend votre marché, vos clients et vos mots-clés.",
   },
   {
     title: "Un seul interlocuteur",
@@ -83,11 +84,11 @@ const process = [
 const faq = [
   {
     q: "Combien de temps pour avoir mon site en ligne ?",
-    a: "Cela dépend du périmètre, mais un site vitrine sur-mesure se livre généralement en quelques semaines. On vous donne un calendrier précis dès l'appel découverte. À REMPLACER : préciser un délai indicatif réaliste.",
+    a: "Cela dépend du périmètre, mais un site vitrine sur-mesure se livre généralement en quelques semaines. On vous donne un calendrier précis dès l'appel découverte.",
   },
   {
     q: "Combien ça coûte ?",
-    a: "Chaque projet est sur devis, car le périmètre varie (nombre de pages, contenus, options pub). On vous donne un prix clair et ferme avant de démarrer, sans surprise. À REMPLACER : indiquer une fourchette si vous le souhaitez.",
+    a: "Chaque projet est sur devis, car le périmètre varie (nombre de pages, contenus, options pub). On vous donne un prix clair et ferme avant de démarrer, sans surprise.",
   },
   {
     q: "Qui gère le budget de publicité Google Ads ?",
@@ -102,8 +103,8 @@ const faq = [
     a: "Le site vous appartient. Le nom de domaine est à votre nom, et vous n'êtes pas pris en otage. On travaille en confiance, pas par dépendance.",
   },
   {
-    q: "Vous travaillez uniquement à Strasbourg ?",
-    a: "On est basés à Strasbourg et spécialisés sur le marché local de l'automobile premium, mais on peut accompagner des professionnels au-delà. Parlons-en lors de l'appel.",
+    q: "Vous travaillez avec quels secteurs, et où ?",
+    a: "On est basés à Paris et on accompagne les entreprises de service premium partout en France : auto premium (notre vitrine phare), habitat & rénovation, beauté & esthétique, santé, artisanat & commerce premium. Si vous êtes une entreprise premium, parlons-en lors de l'appel.",
   },
 ];
 
@@ -130,7 +131,7 @@ const faqJsonLd = {
     <Container class="relative">
       <div class="mx-auto max-w-3xl text-center">
         <p data-rise style="--rise-delay:0">
-          <Kicker pulse>Agence d'acquisition · Auto premium · {site.city}</Kicker>
+          <Kicker pulse>Agence d'acquisition · Entreprises locales premium · {site.city}</Kicker>
         </p>
 
         <h1
@@ -147,9 +148,10 @@ const faqJsonLd = {
           style="--rise-delay:180"
           class="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-ink-soft sm:text-xl"
         >
-          Spécialistes du detailing, du PPF et du covering. Un site sur-mesure
-          pensé pour transformer les visiteurs en rendez-vous — référencé sur
-          Google, et boosté par la pub quand vous voulez accélérer.
+          Pour les artisans et entreprises de service premium qui veulent plus
+          de clients. Un site sur-mesure pensé pour transformer les visiteurs en
+          rendez-vous — référencé sur Google, et boosté par la pub quand vous
+          voulez accélérer.
         </p>
 
         <div
@@ -199,10 +201,6 @@ const faqJsonLd = {
   <!-- ============================ STATS ============================ -->
   <Section spacing="md">
     <StatGrid stats={site.stats} />
-    <p class="mt-4 text-center text-xs text-muted">
-      {/* À REMPLACER par de vrais chiffres avant la mise en ligne. */}
-      Chiffres indicatifs — à remplacer par vos résultats réels.
-    </p>
   </Section>
 
   <!-- ===================== PROBLÈME / REFRAME ===================== -->
@@ -309,6 +307,37 @@ const faqJsonLd = {
     </div>
   </Section>
 
+  <!-- ===================== SECTEURS ===================== -->
+  <Section>
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <Reveal class="max-w-2xl">
+        <Kicker>Secteurs</Kicker>
+        <h2 class="mt-4 text-3xl font-semibold sm:text-4xl lg:text-5xl">
+          Une méthode premium, déclinée par secteur.
+        </h2>
+        <p class="mt-4 text-ink-soft">
+          L'automobile premium est notre vitrine phare — c'est là qu'on a fait
+          nos preuves. On applique la même méthode aux autres secteurs premium.
+        </p>
+      </Reveal>
+      <Reveal delay={80}>
+        <Button href="/secteurs" variant="ghost">
+          Voir tous les secteurs
+        </Button>
+      </Reveal>
+    </div>
+
+    <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        site.sectors.map((sector, i) => (
+          <Reveal delay={i * 70}>
+            <SectorCard sector={sector} />
+          </Reveal>
+        ))
+      }
+    </div>
+  </Section>
+
   <!-- ===================== RÉALISATIONS (teaser) ===================== -->
   <Section>
     <div class="flex flex-wrap items-end justify-between gap-6">
@@ -317,6 +346,10 @@ const faqJsonLd = {
         <h2 class="mt-4 text-3xl font-semibold sm:text-4xl lg:text-5xl">
           Des sites en production, pas des maquettes.
         </h2>
+        <p class="mt-4 text-ink-soft">
+          Notre vitrine phare : l'automobile premium. Des sites en ligne qui
+          captent la demande et la transforment en rendez-vous.
+        </p>
       </Reveal>
       <Reveal delay={80}>
         <Button href="/realisations" variant="ghost">

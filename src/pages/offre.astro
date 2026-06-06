@@ -37,7 +37,7 @@ const inclus = [
     text: "Être trouvé par les bonnes personnes, là où elles cherchent vos prestations.",
     points: [
       "Optimisation technique (vitesse, balisage, structure)",
-      "Ciblage des requêtes locales (« PPF Strasbourg »…)",
+      "Ciblage des requêtes locales de votre métier",
       "Configuration de la fiche Google Business",
       "Contenus pensés pour le référencement",
     ],
@@ -63,7 +63,7 @@ const serviceLd = {
   "@type": "Service",
   serviceType: "Création de site web et acquisition de clients",
   provider: { "@type": "Organization", name: site.brandName },
-  areaServed: { "@type": "City", name: site.city },
+  areaServed: { "@type": "Country", name: "France" },
   description:
     "Conception de site sur-mesure, mise en ligne clé en main (hébergement + nom de domaine), référencement SEO local, avec Google Ads en option.",
   url: `${site.siteUrl}/offre`,
@@ -206,11 +206,9 @@ const serviceLd = {
           précis après l'appel découverte — un prix clair et ferme, sans
           surprise en cours de route.
         </p>
-        <p class="text-muted text-sm">
-          {/* À REMPLACER : si vous souhaitez afficher une fourchette de prix
-          ou des formules, ajoutez-les ici. Ne pas inventer de tarifs. */}
-          À REMPLACER : ajoutez ici vos formules ou une fourchette de prix si
-          vous le souhaitez.
+        <p>
+          Pas d'abonnement opaque ni de coûts cachés : vous savez exactement ce
+          que vous payez, et le site vous appartient.
         </p>
       </Reveal>
     </div>

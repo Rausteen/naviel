@@ -48,4 +48,24 @@ const blog = defineCollection({
     }),
 });
 
-export const collections = { caseStudies, blog };
+/**
+ * Secteurs — landings de conversion / SEO par métier (servent aux campagnes Ads).
+ * L'automobile premium est la vitrine phare (hasProof: true). Pour les autres
+ * secteurs : aucun chiffre, aucun faux cas client — « secteurs accompagnés ».
+ */
+const sectors = defineCollection({
+  type: "content",
+  schema: () =>
+    z.object({
+      name: z.string(), // ex. "Automobile premium"
+      title: z.string(), // titre H1 de la landing
+      summary: z.string(), // 1 phrase (hub + meta)
+      eyebrow: z.string().optional(),
+      featured: z.boolean().default(false),
+      hasProof: z.boolean().default(false), // true uniquement si réalisations réelles
+      keywords: z.array(z.string()).default([]),
+      order: z.number().default(0),
+    }),
+});
+
+export const collections = { caseStudies, blog, sectors };

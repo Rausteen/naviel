@@ -9,8 +9,8 @@ import { site } from "@config";
 
 const valeurs = [
   {
-    title: "Spécialistes, pas généralistes",
-    text: "On ne fait pas « tous les sites pour tous les métiers ». On connaît l'automobile premium : le detailing, le PPF, le covering. C'est là qu'on est bons.",
+    title: "Spécialistes par secteur",
+    text: "On a fait nos preuves dans l'automobile premium, et on applique la même méthode aux autres secteurs premium. On apprend chaque marché en profondeur.",
   },
   {
     title: "La performance comme preuve",
@@ -39,7 +39,7 @@ const breadcrumb = {
 
 <Layout
   title="Agence"
-  description="Naviel, agence d'acquisition spécialisée pour l'automobile premium à Strasbourg. Notre approche, notre angle spécialiste, et les produits qu'on développe en interne."
+  description="Naviel, agence d'acquisition pour les entreprises locales premium, basée à Paris. Notre approche, notre angle spécialiste par secteur, et les produits qu'on développe en interne."
   jsonLd={[breadcrumb]}
 >
   <Section spacing="md" class="pt-28 sm:pt-36">
@@ -49,11 +49,10 @@ const breadcrumb = {
         Un studio spécialiste, pas un assembleur de templates.
       </h1>
       <p class="mt-6 max-w-2xl text-lg text-ink-soft">
-        {site.brandName} est née d'un constat simple : les professionnels de
-        l'automobile premium méritent mieux qu'un site générique qui ne leur
-        amène personne. On a décidé de réunir le design, la technique et
-        l'acquisition sous un même toit, pour une seule promesse : vous amener
-        des clients.
+        {site.brandName} est née d'un constat simple : les entreprises de
+        service premium méritent mieux qu'un site générique qui ne leur amène
+        personne. On a décidé de réunir le design, la technique et l'acquisition
+        sous un même toit, pour une seule promesse : vous amener des clients.
       </p>
     </Reveal>
   </Section>
@@ -75,11 +74,11 @@ const breadcrumb = {
           ligne technique, et l'acquisition (SEO local + publicité en option).
           Un seul interlocuteur, une seule responsabilité — la vôtre.
         </p>
-        <p class="text-muted text-sm">
-          {/* À REMPLACER : présentez ici la personne derrière l'agence
-          (parcours, expertise, photo). Ne pas inventer de biographie. */}
-          À REMPLACER : présentez ici la personne derrière l'agence (parcours,
-          expertise, éventuellement une photo).
+        <p>
+          Notre vitrine phare, c'est l'automobile premium : c'est là qu'on a
+          fait nos preuves, avec des sites en production. On décline aujourd'hui
+          cette même méthode aux autres secteurs premium — habitat, esthétique,
+          santé, artisanat et commerce.
         </p>
       </Reveal>
     </div>
@@ -135,16 +134,12 @@ const breadcrumb = {
                   ↗
                 </span>
               </div>
-              <p class="mt-3 text-sm text-muted">{p.desc}</p>
+              {p.desc && <p class="mt-3 text-sm text-muted">{p.desc}</p>}
             </a>
           </Reveal>
         ))
       }
     </div>
-    <p class="mt-6 text-xs text-muted">
-      {/* À REMPLACER : décrire précisément chaque produit. Ne pas inventer le positionnement. */}
-      Descriptions à compléter — voir <code class="text-ink-soft">src/config/site.ts</code>.
-    </p>
   </Section>
 
   <CTASection />

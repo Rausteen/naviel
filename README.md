@@ -1,7 +1,11 @@
 # Naviel — Site marketing
 
-Site vitrine de **Naviel**, agence d'acquisition spécialisée pour l'automobile
-premium (detailing, PPF, covering, lavage haut de gamme) à Strasbourg.
+Site vitrine de **Naviel**, agence d'acquisition pour les entreprises locales
+premium, basée à Paris (positionnement national). L'**automobile premium**
+(detailing, PPF, covering, lavage haut de gamme) est la **vitrine phare** —
+c'est là qu'on a des preuves chiffrées — et la même méthode est déclinée par
+secteur (habitat & rénovation, beauté & esthétique, santé, artisanat & commerce
+premium).
 
 > Positionnement : « On crée votre site **et** on vous amène des clients. »
 > Ce site est la principale vitrine de l'agence : la qualité de design et les
@@ -71,6 +75,16 @@ pnpm preview      # prévisualiser le build de production
 
 Voir « Ajouter un article de blog ».
 
+### 4. Secteurs — `src/config/site.ts` (`sectors`) + `src/content/sectors/*.mdx`
+
+La liste `sectors` de `site.ts` pilote la grille de la home et le hub
+`/secteurs`. Chaque secteur a une landing de conversion/SEO générée depuis la
+content collection `sectors`. Voir « Ajouter un secteur ».
+
+> Le drapeau `featured` met en avant la vitrine phare (auto premium). Le drapeau
+> `hasProof` (dans la landing) affiche les réalisations : à ne mettre à `true`
+> **que** pour un secteur où il existe de vrais cas clients.
+
 ---
 
 ## Ajouter une étude de cas
@@ -134,6 +148,45 @@ Contenu de l'article…
 ```
 
 Mettez `draft: true` pour masquer un article tant qu'il n'est pas prêt.
+
+---
+
+## Ajouter un secteur
+
+1. Ajoutez l'entrée dans `sectors` de `src/config/site.ts` (pilote la grille
+   home + le hub `/secteurs`) :
+
+```ts
+{ name: "Mon secteur", slug: "mon-secteur", featured: false, desc: "" }
+```
+
+2. Créez la landing `src/content/sectors/mon-secteur.mdx` (le `slug` = nom de
+   fichier) :
+
+```mdx
+---
+name: "Mon secteur"
+title: "Plus de clients pour mon secteur"
+summary: "Une phrase de résumé (hub + meta)."
+eyebrow: "Sous-métiers · séparés · par des points"
+featured: false
+hasProof: false   # true uniquement s'il existe de vrais cas clients
+keywords: ["mot-clé 1", "mot-clé 2"]
+order: 6
+---
+
+Intro du secteur…
+
+## Ce qu'on fait pour vous
+…
+```
+
+La page `/secteurs/mon-secteur` est générée automatiquement et sert de landing
+pour les campagnes Google Ads.
+
+> ⚠️ Pour un secteur **sans réalisation**, laissez `hasProof: false` et
+> n'affichez **aucun chiffre ni faux cas client** — présentez-le comme un
+> « secteur accompagné ».
 
 ---
 

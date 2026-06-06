@@ -1,0 +1,175 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Section from "@components/Section.astro";
+import Kicker from "@components/Kicker.astro";
+import Button from "@components/Button.astro";
+import Reveal from "@components/Reveal.astro";
+import CaseStudyCard from "@components/CaseStudyCard.astro";
+import CTASection from "@components/CTASection.astro";
+import { site } from "@config";
+
+export async function getStaticPaths() {
+  const sectors = await getCollection("sectors");
+  return sectors.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<"sectors">;
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+const { Content } = await entry.render();
+
+const pageUrl = `${site.siteUrl}/secteurs/${entry.slug}`;
+
+// Preuve : on ne montre les réalisations que pour les secteurs qui en ont (auto)
+const proofCases = data.hasProof
+  ? (await getCollection("caseStudies"))
+      .sort((a, b) => a.data.order - b.data.order)
+      .slice(0, 2)
+  : [];
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Accueil", item: site.siteUrl },
+    { "@type": "ListItem", position: 2, name: "Secteurs", item: `${site.siteUrl}/secteurs` },
+    { "@type": "ListItem", position: 3, name: data.name, item: pageUrl },
+  ],
+};
+
+const serviceLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType: `Acquisition de clients — ${data.name}`,
+  provider: { "@type": "Organization", name: site.brandName },
+  areaServed: { "@type": "Country", name: "France" },
+  description: data.summary,
+  url: pageUrl,
+};
+---
+
+<Layout
+  title={data.name}
+  description={data.summary}
+  jsonLd={[breadcrumb, serviceLd]}
+>
+  <Section spacing="md" class="pt-28 sm:pt-36">
+    <nav aria-label="Fil d'Ariane" class="text-sm text-muted">
+      <a href="/" class="transition-colors hover:text-ink-soft">Accueil</a>
+      <span aria-hidden="true"> / </span>
+      <a href="/secteurs" class="transition-colors hover:text-ink-soft">Secteurs</a>
+      <span aria-hidden="true"> / </span>
+      <span class="text-ink-soft">{data.name}</span>
+    </nav>
+
+    <div class="mt-8 max-w-3xl">
+      {data.eyebrow && <Kicker>{data.eyebrow}</Kicker>}
+      <h1 class="mt-4 text-4xl font-semibold sm:text-5xl lg:text-6xl">
+        {data.title}
+      </h1>
+      <p class="mt-6 text-lg text-ink-soft">{data.summary}</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <Button href={site.contact.calendlyUrl} variant="primary" size="lg" external>
+          Réserver un appel de 15 min
+        </Button>
+        {
+          data.hasProof && (
+            <Button href="/realisations" variant="ghost" size="lg">
+              Voir nos réalisations
+            </Button>
+          )
+        }
+      </div>
+    </div>
+  </Section>
+
+  <!-- Corps de la landing (intro, ce qu'on fait) -->
+  <Section spacing="sm">
+    <article class="prose-naviel max-w-3xl">
+      <Content />
+    </article>
+  </Section>
+
+  <!-- Preuve : réalisations (uniquement si le secteur en a) -->
+  {
+    proofCases.length > 0 && (
+      <Section spacing="sm" class="border-t border-line bg-bg-2">
+        <Reveal class="max-w-2xl">
+          <Kicker>La preuve</Kicker>
+          <h2 class="mt-4 text-3xl font-semibold sm:text-4xl">
+            Des sites en production dans ce secteur.
+          </h2>
+        </Reveal>
+        <div class="mt-10 grid gap-5 sm:grid-cols-2">
+          {proofCases.map((cs, i) => (
+            <Reveal delay={i * 90}>
+              <CaseStudyCard
+                href={`/realisations/${cs.slug}`}
+                title={cs.data.title}
+                client={cs.data.client}
+                secteur={cs.data.secteur}
+                summary={cs.data.summary}
+                cover={cs.data.cover}
+                url={cs.data.url}
+              />
+            </Reveal>
+          ))}
+        </div>
+      </Section>
+    )
+  }
+
+  <CTASection
+    title={`Prêt à attirer plus de clients dans votre secteur ?`}
+    text="Un appel de 15 minutes, sans engagement. On regarde votre situation et ce qu'on peut faire pour vous amener plus de rendez-vous."
+  />
+</Layout>
+
+<style is:global>
+  .prose-naviel {
+    color: var(--color-ink-soft);
+    font-size: 1.0625rem;
+    line-height: 1.75;
+  }
+  .prose-naviel > * + * {
+    margin-top: 1.25rem;
+  }
+  .prose-naviel h2 {
+    color: var(--color-ink);
+    font-size: 1.6rem;
+    margin-top: 2.75rem;
+    margin-bottom: 0.5rem;
+  }
+  .prose-naviel a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .prose-naviel strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .prose-naviel ul {
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+  .prose-naviel li + li {
+    margin-top: 0.5rem;
+  }
+  .prose-naviel li::marker {
+    color: var(--color-accent);
+  }
+  .prose-naviel blockquote {
+    border-left: 2px solid var(--color-accent);
+    padding-left: 1.25rem;
+    font-style: italic;
+    color: var(--color-ink-soft);
+  }
+</style>

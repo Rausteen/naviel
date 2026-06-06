@@ -43,8 +43,8 @@ const localBusiness = {
   email: site.contact.email,
   ...(site.contact.phone ? { telephone: site.contact.phone } : {}),
   areaServed: {
-    "@type": "City",
-    name: site.city,
+    "@type": "Country",
+    name: "France",
   },
   address: {
     "@type": "PostalAddress",
