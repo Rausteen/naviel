@@ -134,6 +134,59 @@ const faqLd = {
     </article>
   </Section>
 
+  <!-- Ce que comprend votre site -->
+  <Section spacing="sm">
+    <Reveal class="max-w-2xl">
+      <Kicker dot={false}>Inclus</Kicker>
+      <h2 class="mt-4 text-2xl font-semibold sm:text-3xl">
+        Ce que comprend votre site.
+      </h2>
+    </Reveal>
+    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        [
+          {
+            t: "Design sur-mesure",
+            d: "Une identité à votre image, orientée conversion. Zéro template.",
+          },
+          {
+            t: "Référencement local (SEO)",
+            d: "Pensé pour les recherches de votre métier dans votre zone.",
+          },
+          {
+            t: "Mise en ligne clé en main",
+            d: "Nom de domaine, hébergement rapide, SSL et e-mails pro.",
+          },
+          {
+            t: "Prise de rendez-vous facilitée",
+            d: "Le parcours mène droit au contact ou à la réservation.",
+          },
+          {
+            t: "Mobile-first & rapide",
+            d: "La majorité de vos visiteurs sont sur mobile : tout est pensé pour eux.",
+          },
+          {
+            t: "Le site vous appartient",
+            d: "Domaine à votre nom, aucune dépendance. Devis clair et ferme.",
+          },
+        ].map((f, i) => (
+          <Reveal delay={i * 60}>
+            <div class="flex h-full gap-3 rounded-[var(--radius-card)] border border-line bg-surface p-5">
+              <span
+                class="mt-0.5 size-2 shrink-0 rotate-45 rounded-[2px] bg-accent shadow-[0_0_10px_-2px_rgba(200,242,78,0.7)]"
+                aria-hidden="true"
+              />
+              <div>
+                <h3 class="font-medium text-ink">{f.t}</h3>
+                <p class="mt-1 text-sm text-ink-soft">{f.d}</p>
+              </div>
+            </div>
+          </Reveal>
+        ))
+      }
+    </div>
+  </Section>
+
   <!-- Réassurance -->
   <Section spacing="sm">
     <ul
