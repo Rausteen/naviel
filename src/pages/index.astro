@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
-import ppfCover from "../assets/case-studies/ppf-strasbourg.png";
+import strascleanCover from "../assets/case-studies/strasclean.png";
 import Layout from "@layouts/Layout.astro";
 import Section from "@components/Section.astro";
 import Container from "@components/Container.astro";
@@ -136,18 +136,23 @@ const faqJsonLd = {
   jsonLd={[faqJsonLd]}
 >
   <!-- ============================ HERO ============================ -->
-  <section class="relative overflow-hidden pt-28 sm:pt-36 lg:pt-44">
+  <section class="relative overflow-hidden pt-24 sm:pt-32 lg:pt-40">
     <div class="ambient-halo"></div>
     <Container class="relative">
       <div class="mx-auto max-w-3xl text-center">
         <p data-rise style="--rise-delay:0">
-          <Kicker pulse>Agence d'acquisition · Entreprises de service premium · {site.coverage}</Kicker>
+          <span
+            class="inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-line-2 bg-surface/60 px-3.5 py-1.5 text-xs font-medium text-ink-soft backdrop-blur"
+          >
+            <span class="inline-block size-1.5 rounded-full bg-accent pulse-dot" aria-hidden="true"></span>
+            Agence d'acquisition · {site.coverage}
+          </span>
         </p>
 
         <h1
           data-rise
           style="--rise-delay:90"
-          class="mt-7 text-4xl font-semibold leading-[1.02] sm:text-6xl lg:text-7xl"
+          class="mt-6 text-[2.6rem] font-semibold leading-[1.03] sm:text-6xl lg:text-7xl"
         >
           On crée votre site <span class="italic font-normal">et</span> on vous
           amène <span class="text-accent">les clients.</span>
@@ -156,10 +161,10 @@ const faqJsonLd = {
         <p
           data-rise
           style="--rise-delay:180"
-          class="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-ink-soft sm:text-xl"
+          class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-ink-soft sm:mt-7 sm:text-xl"
         >
           Pour les artisans et entreprises de service premium qui veulent plus
-          de clients. Un site sur-mesure pensé pour transformer les visiteurs en
+          de clients. Un site sur-mesure qui transforme les visiteurs en
           rendez-vous — référencé sur Google, et boosté par la pub quand vous
           voulez accélérer.
         </p>
@@ -167,7 +172,7 @@ const faqJsonLd = {
         <div
           data-rise
           style="--rise-delay:270"
-          class="mt-9 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center"
+          class="mt-7 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center"
         >
           <Button
             href={site.contact.bookingUrl}
@@ -188,60 +193,37 @@ const faqJsonLd = {
             Voir nos réalisations
           </Button>
         </div>
-
-        <p
-          data-rise
-          style="--rise-delay:360"
-          class="mt-8 text-sm text-muted"
-        >
-          Déjà en ligne :
-          <a
-            href="https://ppf-strasbourg.fr"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-ink-soft underline decoration-accent/40 underline-offset-4 transition-colors hover:text-ink"
-            >ppf-strasbourg.fr</a
-          >
-          <span aria-hidden="true">·</span>
-          <a
-            href="https://strasclean.fr"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-ink-soft underline decoration-accent/40 underline-offset-4 transition-colors hover:text-ink"
-            >strasclean.fr</a
-          >
-        </p>
       </div>
 
       <!-- Aperçu de site (preuve visuelle) -->
       <div
         data-rise
-        style="--rise-delay:540"
-        class="relative mx-auto mt-14 max-w-3xl sm:mt-16"
+        style="--rise-delay:420"
+        class="relative mx-auto mt-12 max-w-3xl sm:mt-14"
       >
         <!-- Cadre navigateur -->
         <div
-          class="overflow-hidden rounded-[var(--radius-card)] border border-line-2 bg-surface shadow-[0_40px_120px_-50px_rgba(200,242,78,0.35)]"
+          class="overflow-hidden rounded-[var(--radius-card)] border border-line-2 bg-surface shadow-[0_40px_120px_-50px_rgba(200,242,78,0.4)]"
         >
           <div
-            class="flex items-center gap-2 border-b border-line bg-bg-2 px-4 py-3"
+            class="flex items-center gap-2 border-b border-line bg-bg-2 px-4 py-2.5"
           >
             <span class="size-2.5 rounded-full bg-line-2" aria-hidden="true"></span>
             <span class="size-2.5 rounded-full bg-line-2" aria-hidden="true"></span>
             <span class="size-2.5 rounded-full bg-accent/70" aria-hidden="true"></span>
             <span
-              class="ml-3 inline-flex items-center gap-1.5 truncate rounded-[var(--radius-pill)] border border-line bg-bg/60 px-3 py-1 text-xs text-muted"
+              class="ml-2 inline-flex items-center gap-1.5 truncate rounded-[var(--radius-pill)] border border-line bg-bg/60 px-3 py-1 text-xs text-muted"
             >
               <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <rect x="3" y="7" width="10" height="7" rx="1.5" stroke="currentColor" stroke-width="1.3"/>
                 <path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" stroke="currentColor" stroke-width="1.3"/>
               </svg>
-              ppf-strasbourg.fr
+              strasclean.fr
             </span>
           </div>
           <Image
-            src={ppfCover}
-            alt="Aperçu du site ppf-strasbourg.fr réalisé par Naviel"
+            src={strascleanCover}
+            alt="Aperçu du site strasclean.fr réalisé par Naviel"
             width={1100}
             height={688}
             loading="eager"
@@ -249,14 +231,19 @@ const faqJsonLd = {
           />
         </div>
 
-        <!-- Puce de preuve flottante -->
+        <!-- Puces de preuve flottantes -->
         <div
-          class="absolute -bottom-4 left-3 inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-accent/30 bg-bg/85 px-3.5 py-2 text-sm font-medium text-ink shadow-[0_12px_30px_-12px_rgba(0,0,0,0.8)] backdrop-blur"
+          class="absolute -bottom-4 left-3 inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-accent/30 bg-bg/90 px-3.5 py-2 text-sm font-medium text-ink shadow-[0_12px_30px_-12px_rgba(0,0,0,0.85)] backdrop-blur"
         >
           <span
             class="size-2 rotate-45 rounded-[2px] bg-accent shadow-[0_0_10px_-2px_rgba(200,242,78,0.7)]"
             aria-hidden="true"></span>
-          <span class="text-accent">×2,4</span> demandes de devis
+          <span class="text-accent">300+</span> pages en 1ʳᵉ page Google
+        </div>
+        <div
+          class="absolute -top-3 right-3 hidden items-center gap-2 rounded-[var(--radius-pill)] border border-line-2 bg-bg/90 px-3.5 py-2 text-sm font-medium text-ink shadow-[0_12px_30px_-12px_rgba(0,0,0,0.85)] backdrop-blur sm:inline-flex"
+        >
+          <span class="text-accent">★★★★★</span> Detailing premium
         </div>
       </div>
     </Container>
