@@ -104,9 +104,21 @@ export const site: SiteConfig = {
   // Produits développés en interne par le studio (page /agence uniquement).
   // desc : 1 ligne. Si vide → seul le nom est affiché (jamais de placeholder).
   products: [
-    { name: "jarvan.ai", href: "https://jarvan.ai", desc: "" },
-    { name: "quizace.ai", href: "https://quizace.ai", desc: "" },
-    { name: "revizly.app", href: "https://revizly.app", desc: "" },
+    {
+      name: "jarvan.ai",
+      href: "https://jarvan.ai",
+      desc: "Copilote IA pour Google Ads : il crée les campagnes, traque le budget gaspillé et soumet chaque optimisation à votre validation.",
+    },
+    {
+      name: "quizace.ai",
+      href: "https://quizace.ai",
+      desc: "Assistant de révision en extension Chrome : une réponse claire et expliquée directement sur la page, sur les principales plateformes.",
+    },
+    {
+      name: "revizly.app",
+      href: "https://revizly.app",
+      desc: "L'IA de révision : un cours déposé devient fiches, flashcards et quiz prêts à apprendre. Plus de 50 000 étudiants.",
+    },
   ],
 
   // Secteurs accompagnés. L'automobile premium est la vitrine phare (featured) :
