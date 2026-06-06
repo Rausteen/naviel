@@ -10,6 +10,8 @@ export interface Props {
   ariaLabel?: string;
   /** Ajoute une flèche → qui glisse au survol */
   arrow?: boolean;
+  /** Ouvre le calendrier Cal.com en popup (ex. "naviel/appel-decouverte") */
+  calLink?: string;
 }
 
 const {
@@ -21,6 +23,7 @@ const {
   type = "button",
   ariaLabel,
   arrow = false,
+  calLink,
 } = Astro.props;
 
 const base =
@@ -45,7 +48,25 @@ const externalAttrs = external
 ---
 
 {
-  href ? (
+  calLink ? (
+    <button
+      type="button"
+      data-cal-link={calLink}
+      data-cal-config='{"layout":"month_view","theme":"dark"}'
+      class:list={cls}
+      aria-label={ariaLabel}
+    >
+      <slot />
+      {arrow && (
+        <span
+          class="transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none"
+          aria-hidden="true"
+        >
+          →
+        </span>
+      )}
+    </button>
+  ) : href ? (
     <a href={href} class:list={cls} aria-label={ariaLabel} {...externalAttrs}>
       <slot />
       {arrow && (

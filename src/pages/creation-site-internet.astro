@@ -1,9 +1,9 @@
 ---
 /**
  * Landing page de campagne Google Ads Search — objectif unique : réserver un appel.
- * Page focalisée : pas de header/nav du site (Layout `bare`), un seul CTA répété
- * (smooth-scroll vers #reserver), embed Cal.com inline, capture gclid/utm,
- * conversion Google Ads sur bookingSuccessfulV2.
+ * Page focalisée : pas de header/nav du site (Layout `bare`). Tous les CTA
+ * ouvrent le calendrier Cal.com en POPUP (data-cal-link). Conversion Google Ads
+ * déclenchée sur l'event Cal `bookingSuccessfulV2` (attribution auto par gtag).
  *
  * INDEXATION : laissée indexable (contenu unique → peut aussi capter de l'organique).
  * Pour la réserver STRICTEMENT aux pubs, ajouter `noindex` au composant <Layout> ci-dessous.
@@ -149,7 +149,7 @@ const signals = [
           aria-hidden="true"></span>
         {site.brandName}
       </span>
-      <Button href="#reserver" variant="primary">Réserver un appel</Button>
+      <Button calLink={calLink} variant="primary">Réserver un appel</Button>
     </Container>
   </div>
 
@@ -178,7 +178,7 @@ const signals = [
           </p>
 
           <div class="mt-7">
-            <Button href="#reserver" variant="primary" size="lg" arrow>
+            <Button calLink={calLink} variant="primary" size="lg" arrow>
               Réserver un appel gratuit
             </Button>
           </div>
@@ -246,7 +246,7 @@ const signals = [
         vous trouvent — et vous contactent.
       </p>
       <div class="mt-7 flex justify-center">
-        <Button href="#reserver" variant="primary" size="lg" arrow>
+        <Button calLink={calLink} variant="primary" size="lg" arrow>
           Réserver un appel gratuit
         </Button>
       </div>
@@ -353,7 +353,7 @@ const signals = [
       }
     </ol>
     <div class="mt-9 flex justify-center">
-      <Button href="#reserver" variant="primary" size="lg" arrow>
+      <Button calLink={calLink} variant="primary" size="lg" arrow>
         Réserver un appel gratuit
       </Button>
     </div>
