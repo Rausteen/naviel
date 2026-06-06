@@ -52,17 +52,18 @@ pnpm preview      # prévisualiser le build de production
 
 **Le fichier le plus important.** Tout ce qui est éditable s'y trouve :
 
-- `brandName`, `tagline`, `city`, `siteUrl`, `locale`
+- `brandName`, `tagline`, `city` (siège), `coverage` (« Partout en France »), `areaServed` (SEO), `siteUrl`, `locale`
 - `contact` : **e-mail**, **lien Calendly** (`calendlyUrl`), téléphone (optionnel)
-- `nav` : entrées de navigation
-- `stats` : chiffres clés affichés sur l'accueil
+- `nav` : entrées de navigation (dont **Contact**)
+- `signals` : signaux honnêtes (non chiffrés) affichés sur l'accueil
 - `social` : réseaux sociaux (vide par défaut)
-- `products` : produits maison du studio (page `/agence`)
+- `products` : produits maison du studio (page `/agence`) — `desc` vide = seul le nom s'affiche
+- `founder` : `{ name, role, photo, bio }` (section « Derrière Naviel » sur `/agence`). **Tout champ vide n'affiche rien** — dépose la photo dans `/public` et référence-la (ex. `/founder.jpg`)
 - `keywords` : mots-clés du marquee
 
-> ⚠️ Les éléments marqués `// À REMPLACER` doivent être renseignés avant la mise
-> en ligne. **Ne jamais inventer de statistiques ni de résultats clients** : si
-> une donnée n'existe pas, retirez-la plutôt que d'afficher un faux chiffre.
+> ⚠️ **Ne jamais inventer de statistiques ni de résultats clients** : si une
+> donnée n'existe pas, retirez-la plutôt que d'afficher un faux chiffre. Les
+> chiffres réels remplaceront les `signals` quand ils seront disponibles.
 
 > Si vous changez `siteUrl`, mettez aussi à jour `SITE_URL` dans
 > `astro.config.mjs` et l'URL du sitemap dans `public/robots.txt`.
@@ -102,7 +103,7 @@ url: "https://exemple.fr"
 cover: "../../assets/case-studies/mon-projet.png"
 summary: "Une phrase de résumé."
 metrics:
-  - { label: "Demandes / mois", value: "À REMPLACER" }
+  - { label: "Demandes / mois", value: "" }   # vide = non affiché
 services:
   - "Site sur-mesure"
   - "SEO local"
@@ -222,13 +223,14 @@ Sortie statique (`output: 'static'`) → déployable partout.
 
 ## Checklist avant mise en ligne
 
-- [ ] Remplacer le lien **Calendly** (`contact.calendlyUrl`).
+- [x] Lien **Calendly** branché (`contact.calendlyUrl`).
+- [x] **Captures réelles** des réalisations intégrées.
 - [ ] Remplacer l'**e-mail** de contact si besoin.
-- [ ] Remplacer les **stats** par de vrais chiffres (ou les retirer).
-- [ ] Remplacer les **métriques** des études de cas.
-- [ ] Remplacer les **captures** des réalisations et l'**image OG**.
-- [ ] Compléter les **descriptions** des produits maison (`products`).
-- [ ] Compléter les **mentions légales** et la **politique de confidentialité**.
+- [ ] Renseigner de vrais **chiffres** (remplaceront les `signals`) + **métriques** des études de cas.
+- [ ] Remplir le **fondateur** (`founder`) + déposer sa photo dans `/public`.
+- [ ] Compléter les **descriptions** des produits maison (`products.desc`).
+- [ ] Remplacer l'**image OG** (`public/og-default.png`) par un visuel définitif si souhaité.
+- [ ] Compléter les **mentions légales** et la **confidentialité** (champs entre crochets).
 - [ ] Vérifier `siteUrl` / `astro.config.mjs` / `robots.txt`.
 
 ---

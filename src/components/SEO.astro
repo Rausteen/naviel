@@ -44,11 +44,12 @@ const localBusiness = {
   ...(site.contact.phone ? { telephone: site.contact.phone } : {}),
   areaServed: {
     "@type": "Country",
-    name: "France",
+    name: site.areaServed,
   },
   address: {
     "@type": "PostalAddress",
     addressLocality: site.city,
+    addressRegion: "Île-de-France",
     addressCountry: "FR",
   },
   ...(site.social.length

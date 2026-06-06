@@ -2,7 +2,7 @@
  * Configuration centralisée du site.
  * ───────────────────────────────────────────────────────────────────────────
  * Le propriétaire ne devrait avoir à modifier QUE ce fichier pour personnaliser
- * le nom de marque, la navigation, les coordonnées, les CTA, les stats, etc.
+ * le nom de marque, la navigation, les coordonnées, les CTA, les signaux, etc.
  *
  * NE JAMAIS inventer de statistiques ou de résultats clients.
  */
@@ -10,11 +10,6 @@
 export interface NavItem {
   label: string;
   href: string;
-}
-
-export interface Stat {
-  value: string;
-  label: string;
 }
 
 export interface SocialLink {
@@ -25,7 +20,7 @@ export interface SocialLink {
 export interface Product {
   name: string;
   href: string;
-  desc: string;
+  desc: string; // 1 ligne. Si vide → seul le nom est affiché.
 }
 
 export interface Sector {
@@ -35,10 +30,19 @@ export interface Sector {
   desc: string;
 }
 
+export interface Founder {
+  name: string;
+  role: string;
+  photo: string; // chemin depuis /public (ex. "/founder.jpg"). Vide → masqué.
+  bio: string;
+}
+
 export interface SiteConfig {
   brandName: string;
   tagline: string;
   city: string;
+  coverage: string;
+  areaServed: string;
   siteUrl: string;
   locale: string;
   lang: string;
@@ -49,28 +53,31 @@ export interface SiteConfig {
     phone: string;
   };
   nav: NavItem[];
-  stats: Stat[];
+  signals: string[];
   social: SocialLink[];
   products: Product[];
   sectors: Sector[];
+  founder: Founder;
   keywords: string[];
 }
 
 export const site: SiteConfig = {
   brandName: "Naviel", // Nom de la marque (verrouillé)
   tagline: "On crée votre site et on vous amène des clients.",
-  city: "Paris", // Siège — positionnement national
-  siteUrl: "https://naviel.fr", // URL de prod (pour SEO/sitemap) — synchroniser avec astro.config.mjs
+  city: "Paris", // Siège
+  coverage: "Partout en France", // Zone d'intervention
+  areaServed: "France", // Pour le SEO / JSON-LD
+  siteUrl: "https://naviel.fr", // URL de prod (SEO/sitemap) — synchroniser avec astro.config.mjs
   locale: "fr_FR",
   lang: "fr",
 
   // Description SEO par défaut (utilisée si une page n'en fournit pas)
   description:
-    "Agence d'acquisition pour les entreprises locales premium à Paris : sites sur-mesure, SEO local et Google Ads. On crée votre site et on vous amène des clients.",
+    "Agence d'acquisition pour les entreprises de service premium, basée à Paris, partout en France : sites sur-mesure, SEO local et Google Ads. On crée votre site et on vous amène des clients.",
 
   contact: {
     email: "contact@naviel.fr", // Remplacer si autre adresse
-    calendlyUrl: "https://calendly.com/", // Lien de réservation à renseigner
+    calendlyUrl: "https://calendly.com/nathanabib07/30min", // Lien de réservation
     phone: "", // optionnel — laisser vide si non utilisé
   },
 
@@ -80,20 +87,22 @@ export const site: SiteConfig = {
     { label: "Réalisations", href: "/realisations" },
     { label: "Offre", href: "/offre" },
     { label: "Agence", href: "/agence" },
+    { label: "Contact", href: "/contact" },
   ],
 
-  // Chiffres d'exemple — remplacer par de vrais chiffres ou retirer la stat.
-  // NE JAMAIS inventer de statistiques.
-  stats: [
-    { value: "12+", label: "sites livrés & en production" },
-    { value: "×3,2", label: "de demandes après refonte" },
-    { value: "1ʳᵉ", label: "page Google sur les requêtes locales" },
-    { value: "48h", label: "pour lancer une première campagne" },
+  // Signaux honnêtes (NON chiffrés). Remplacer par de vrais chiffres seulement
+  // quand ils existent — ne jamais inventer de statistiques.
+  signals: [
+    "Design + SEO + Ads sous un même toit",
+    "Sur-mesure, zéro template",
+    "Basés à Paris, partout en France",
+    "Devis clair et ferme · le site vous appartient",
   ],
 
   social: [], // ex. { label: "Instagram", href: "..." }
 
   // Produits développés en interne par le studio (page /agence uniquement).
+  // desc : 1 ligne. Si vide → seul le nom est affiché (jamais de placeholder).
   products: [
     { name: "jarvan.ai", href: "https://jarvan.ai", desc: "" },
     { name: "quizace.ai", href: "https://quizace.ai", desc: "" },
@@ -101,8 +110,7 @@ export const site: SiteConfig = {
   ],
 
   // Secteurs accompagnés. L'automobile premium est la vitrine phare (featured) :
-  // c'est là qu'on a des preuves chiffrées. Pour les autres secteurs, aucun
-  // chiffre ni faux cas client — ce sont des « secteurs accompagnés ».
+  // c'est là qu'on a des preuves. Pour les autres : aucun chiffre, aucun faux cas.
   sectors: [
     {
       name: "Automobile premium",
@@ -130,6 +138,15 @@ export const site: SiteConfig = {
       desc: "",
     },
   ],
+
+  // Fondateur (section « Derrière Naviel » sur /agence).
+  // Tout champ vide n'affiche RIEN (aucun placeholder visible).
+  founder: {
+    name: "",
+    role: "",
+    photo: "", // ex. "/founder.jpg" (déposer le fichier dans /public)
+    bio: "",
+  },
 
   // Mots-clés (secteurs) affichés dans le marquee
   keywords: [

@@ -11,6 +11,7 @@ const caseStudies = defineCollection({
     z.object({
       title: z.string(),
       client: z.string(),
+      clientCity: z.string().default(""), // ex. "Strasbourg" → tag "Client à Strasbourg"
       secteur: z.string(), // ex. "PPF · Covering"
       year: z.number(),
       url: z.string().url(), // site du client

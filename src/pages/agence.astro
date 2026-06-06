@@ -39,7 +39,7 @@ const breadcrumb = {
 
 <Layout
   title="Agence"
-  description="Naviel, agence d'acquisition pour les entreprises locales premium, basée à Paris. Notre approche, notre angle spécialiste par secteur, et les produits qu'on développe en interne."
+  description="Naviel, agence d'acquisition pour les entreprises de service premium, basée à Paris, partout en France. Notre approche, notre angle spécialiste par secteur, et les produits qu'on développe en interne."
   jsonLd={[breadcrumb]}
 >
   <Section spacing="md" class="pt-28 sm:pt-36">
@@ -99,6 +99,50 @@ const breadcrumb = {
       }
     </div>
   </Section>
+
+  {/* ===================== DERRIÈRE NAVIEL (fondateur) ===================== */}
+  {
+    (site.founder.name || site.founder.bio) && (
+      <Section spacing="md" class="border-y border-line bg-bg-2">
+        <div class="grid items-center gap-10 lg:grid-cols-[auto_1fr] lg:gap-14">
+          {site.founder.photo && (
+            <Reveal class="mx-auto lg:mx-0">
+              <img
+                src={site.founder.photo}
+                alt={site.founder.name || "Fondateur de Naviel"}
+                width="220"
+                height="260"
+                loading="lazy"
+                decoding="async"
+                class="h-[260px] w-[220px] rounded-[var(--radius-card)] border border-line object-cover"
+              />
+            </Reveal>
+          )}
+          <Reveal delay={80}>
+            <Kicker>Derrière Naviel</Kicker>
+            {site.founder.name && (
+              <h2 class="mt-4 text-3xl font-semibold sm:text-4xl">
+                {site.founder.name}
+              </h2>
+            )}
+            {site.founder.role && (
+              <p class="mt-2 text-accent">{site.founder.role}</p>
+            )}
+            {site.founder.bio && (
+              <p class="mt-5 max-w-2xl text-lg text-ink-soft">
+                {site.founder.bio}
+              </p>
+            )}
+            <p class="mt-5 max-w-2xl text-ink-soft">
+              Un seul interlocuteur : vous parlez directement à l'expert qui
+              conçoit et pilote votre acquisition. Pas d'intermédiaire, pas de
+              ping-pong entre services.
+            </p>
+          </Reveal>
+        </div>
+      </Section>
+    )
+  }
 
   <!-- ===================== PRODUITS MAISON ===================== -->
   <Section spacing="md" class="border-y border-line bg-bg-2">

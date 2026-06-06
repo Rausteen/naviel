@@ -12,43 +12,42 @@ import { site } from "@config";
   <Section spacing="md" class="pt-28 sm:pt-36">
     <div class="prose-legal mx-auto max-w-3xl">
       <h1>Mentions légales</h1>
-      <p class="lead">
-        {/* À REMPLACER : ces mentions sont des placeholders. Faites-les valider
-        et complétez toutes les informations obligatoires avant la mise en ligne. */}
-        <strong>À REMPLACER</strong> — ce contenu est un modèle. Complétez toutes
-        les informations ci-dessous avant la mise en ligne.
-      </p>
 
       <h2>Éditeur du site</h2>
       <ul>
-        <li>Dénomination : {site.brandName} — À REMPLACER (forme juridique)</li>
-        <li>Adresse : À REMPLACER (siège social)</li>
-        <li>SIREN / SIRET : À REMPLACER</li>
-        <li>Numéro de TVA intracommunautaire : À REMPLACER</li>
-        <li>Directeur de la publication : À REMPLACER</li>
-        <li>E-mail : {site.contact.email}</li>
+        <li>Dénomination : {site.brandName} — [forme juridique]</li>
+        <li>Siège social : [adresse], {site.city}, France</li>
+        <li>SIREN / SIRET : [numéro]</li>
+        <li>Numéro de TVA intracommunautaire : [numéro]</li>
+        <li>
+          Directeur de la publication :{" "}
+          {site.founder.name ? site.founder.name : "[nom]"}
+        </li>
+        <li>
+          E-mail : <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+        </li>
       </ul>
 
       <h2>Hébergement</h2>
       <ul>
-        <li>Hébergeur : À REMPLACER (nom)</li>
-        <li>Adresse : À REMPLACER</li>
-        <li>Contact : À REMPLACER</li>
+        <li>Hébergeur : [nom de l'hébergeur]</li>
+        <li>Adresse : [adresse de l'hébergeur]</li>
+        <li>Contact : [contact de l'hébergeur]</li>
       </ul>
 
       <h2>Propriété intellectuelle</h2>
       <p>
         L'ensemble des contenus présents sur ce site (textes, images, logo,
         charte graphique) est protégé par le droit de la propriété
-        intellectuelle. Toute reproduction sans autorisation est interdite.
-        À REMPLACER si nécessaire.
+        intellectuelle. Toute reproduction, sans autorisation écrite préalable,
+        est interdite.
       </p>
 
       <h2>Responsabilité</h2>
       <p>
         {site.brandName} s'efforce d'assurer l'exactitude des informations
-        diffusées sur ce site, sans garantie d'exhaustivité. À REMPLACER si
-        nécessaire.
+        diffusées sur ce site, sans toutefois garantir leur exhaustivité ni leur
+        parfaite mise à jour.
       </p>
 
       <h2>Contact</h2>

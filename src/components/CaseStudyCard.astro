@@ -11,6 +11,7 @@ export interface Props {
   cover: ImageMetadata;
   url: string;
   year?: number;
+  clientCity?: string;
   services?: string[];
   /** Charger l'image en priorité (au-dessus de la ligne de flottaison) */
   eager?: boolean;
@@ -24,6 +25,7 @@ const {
   summary,
   cover,
   year,
+  clientCity,
   services = [],
   eager = false,
   class: className = "",
@@ -50,6 +52,14 @@ const {
       year && (
         <span class="absolute right-4 top-4 rounded-[var(--radius-pill)] border border-line bg-bg/60 px-2.5 py-1 font-display text-sm text-ink-soft backdrop-blur">
           {year}
+        </span>
+      )
+    }
+    {
+      clientCity && (
+        <span class="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-[var(--radius-pill)] border border-line bg-bg/60 px-2.5 py-1 text-xs text-ink-soft backdrop-blur">
+          <span class="size-1.5 rounded-full bg-accent" aria-hidden="true" />
+          Client à {clientCity}
         </span>
       )
     }

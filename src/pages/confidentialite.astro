@@ -12,50 +12,41 @@ import { site } from "@config";
   <Section spacing="md" class="pt-28 sm:pt-36">
     <div class="prose-legal mx-auto max-w-3xl">
       <h1>Politique de confidentialité</h1>
-      <p class="lead">
-        {/* À REMPLACER : modèle RGPD à faire valider et compléter avant la mise en ligne. */}
-        <strong>À REMPLACER</strong> — ce document est un modèle RGPD. Faites-le
-        valider et complétez-le selon votre situation réelle avant la mise en
-        ligne.
-      </p>
 
       <h2>Responsable du traitement</h2>
       <p>
-        Le responsable du traitement des données est {site.brandName} (À
-        REMPLACER : coordonnées complètes). Pour toute question relative à vos
-        données, contactez
-        <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>.
+        Le responsable du traitement des données est {site.brandName}, basé à
+        {" "}{site.city}. Pour toute question relative à vos données, contactez
+        {" "}<a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>.
       </p>
 
       <h2>Données collectées</h2>
       <p>
         Ce site est statique et ne collecte pas de données à votre insu. Des
-        données peuvent être transmises uniquement lorsque vous nous
-        contactez (e-mail) ou réservez un rendez-vous via notre outil de
-        prise de rendez-vous. À REMPLACER : préciser les données réellement
-        collectées et les outils utilisés (Calendly, e-mail, analytics…).
+        données ne sont transmises que lorsque vous nous contactez par e-mail ou
+        réservez un rendez-vous via notre outil de prise de rendez-vous
+        (Calendly). Les données traitées sont alors celles que vous communiquez
+        volontairement (nom, e-mail, message, créneau).
       </p>
 
       <h2>Finalités</h2>
       <ul>
         <li>Répondre à vos demandes de contact.</li>
         <li>Organiser un rendez-vous découverte.</li>
-        <li>À REMPLACER : ajouter toute autre finalité réelle.</li>
+        <li>Assurer le suivi de la relation commerciale.</li>
       </ul>
 
       <h2>Durée de conservation</h2>
       <p>
         Les données sont conservées le temps nécessaire au traitement de votre
-        demande, puis archivées ou supprimées conformément à la réglementation.
-        À REMPLACER : préciser les durées.
+        demande et à la relation commerciale, puis archivées ou supprimées
+        conformément à la réglementation en vigueur.
       </p>
 
       <h2>Outils tiers</h2>
       <p>
-        La prise de rendez-vous s'effectue via un outil externe (par défaut
-        Calendly). La consultation de ce service est soumise à sa propre
-        politique de confidentialité. À REMPLACER si vous utilisez d'autres
-        services (mesure d'audience, etc.).
+        La prise de rendez-vous s'effectue via Calendly. La consultation de ce
+        service est soumise à sa propre politique de confidentialité.
       </p>
 
       <h2>Vos droits</h2>
@@ -69,9 +60,9 @@ import { site } from "@config";
 
       <h2>Cookies</h2>
       <p>
-        Ce site n'utilise pas de cookies de suivi par défaut. À REMPLACER : si
-        vous ajoutez de la mesure d'audience ou de la publicité, mettez en place
-        un bandeau de consentement conforme.
+        Ce site n'utilise pas de cookies de suivi. Si une mesure d'audience ou
+        de la publicité venait à être ajoutée, un bandeau de consentement
+        conforme serait mis en place au préalable.
       </p>
     </div>
   </Section>

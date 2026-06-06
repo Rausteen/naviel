@@ -84,6 +84,14 @@ const articleLd = {
       <h1 class="mt-4 text-4xl font-semibold sm:text-5xl lg:text-6xl">
         {data.title}
       </h1>
+      {
+        data.clientCity && (
+          <p class="mt-4 inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-line px-3 py-1.5 text-sm text-ink-soft">
+            <span class="size-1.5 rounded-full bg-accent" aria-hidden="true" />
+            Client à {data.clientCity} · accompagné à distance
+          </p>
+        )
+      }
       <p class="mt-6 text-lg text-ink-soft">{data.summary}</p>
 
       <div class="mt-8 flex flex-wrap items-center gap-3">

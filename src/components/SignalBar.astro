@@ -1,0 +1,38 @@
+---
+import Reveal from "./Reveal.astro";
+
+export interface Props {
+  items: readonly string[];
+  class?: string;
+}
+const { items, class: className = "" } = Astro.props;
+---
+
+<Reveal>
+  <ul
+    class:list={[
+      "grid grid-cols-1 overflow-hidden rounded-[var(--radius-card)] border border-line bg-[linear-gradient(180deg,var(--color-surface),var(--color-bg-2))] sm:grid-cols-2 lg:grid-cols-4",
+      className,
+    ]}
+  >
+    {
+      items.map((item, i) => (
+        <li
+          class:list={[
+            "flex items-start gap-3 border-line p-6 sm:p-7",
+            i % 2 === 0 && "sm:border-r lg:border-r",
+            i < items.length - 1 && "lg:border-r",
+            i % 2 === 0 && i < items.length - 1 && "border-b sm:border-b lg:border-b-0",
+            i % 2 === 1 && i < items.length - 1 && "border-b sm:border-b-0",
+          ]}
+        >
+          <span
+            class="mt-1 inline-block size-2 shrink-0 rotate-45 rounded-[2px] bg-accent shadow-[0_0_10px_-2px_rgba(200,242,78,0.7)]"
+            aria-hidden="true"
+          />
+          <span class="text-sm leading-snug text-ink-soft">{item}</span>
+        </li>
+      ))
+    }
+  </ul>
+</Reveal>

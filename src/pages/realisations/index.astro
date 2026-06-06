@@ -34,7 +34,7 @@ const breadcrumb = {
 
 <Layout
   title="Réalisations"
-  description="Nos études de cas : des sites en production pour des professionnels de l'automobile premium — detailing, PPF, covering, lavage premium. Notre vitrine phare."
+  description="Nos études de cas : des sites en production pour l'automobile premium — detailing, PPF, covering, lavage premium. Agence basée à Paris, partout en France."
   jsonLd={[breadcrumb]}
 >
   <Section spacing="md" class="pt-28 sm:pt-36">
@@ -44,9 +44,10 @@ const breadcrumb = {
         Des sites pensés pour amener des clients.
       </h1>
       <p class="mt-6 max-w-2xl text-lg text-ink-soft">
-        Chaque projet est conçu sur-mesure, mis en ligne clé en main et
-        référencé localement. Voici comment on transforme un site en canal
-        d'acquisition.
+        Nos clients sont partout en France — voici nos sites en production.
+        Chaque projet est conçu sur-mesure, mis en ligne clé en main et référencé
+        localement. Nos références actuelles à Strasbourg le prouvent : on
+        travaille à distance, où que vous soyez.
       </p>
     </Reveal>
   </Section>
@@ -55,7 +56,7 @@ const breadcrumb = {
     {
       cases.length === 0 ? (
         <p class="text-ink-soft">
-          {/* À REMPLACER : ajouter des études de cas dans src/content/caseStudies/ */}
+          {/* Ajouter des études de cas dans src/content/caseStudies/ */}
           Les premières études de cas arrivent bientôt.
         </p>
       ) : (
@@ -71,6 +72,7 @@ const breadcrumb = {
                 cover={cs.data.cover}
                 url={cs.data.url}
                 year={cs.data.year}
+                clientCity={cs.data.clientCity}
                 services={cs.data.services}
                 eager={i < 2}
               />
