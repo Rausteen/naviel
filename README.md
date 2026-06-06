@@ -268,6 +268,30 @@ Sortie statique (`output: 'static'`) → déployable partout.
 
 ---
 
+## Suivi de conversion Cal.com → Google Ads (méthode C, hors-ligne)
+
+Pour compter les **vrais rendez-vous** (pas les clics) et les attribuer aux
+annonces, on importe les conversions hors-ligne via le `gclid` :
+
+1. **Capture du `gclid`** : la landing `/creation-site-internet` stocke `gclid`
+   + `utm_*` dans un cookie (90 j) et préremplit un champ caché `gclid` de Cal.
+2. **Champ Cal** : dans l'event type Cal.com, ajoute une **question cachée**
+   nommée `gclid` (pour qu'elle revienne dans le webhook).
+3. **Webhook** : Cal.com → `Settings → Webhooks`, event `BOOKING_CREATED`,
+   URL `https://naviel.fr/api/cal/webhook`, et définis un **Secret**.
+4. **Endpoint** : déjà implémenté dans `server.mjs` (`POST /api/cal/webhook`,
+   handler `server/cal-webhook.mjs`) — vérifie la signature, extrait le `gclid`
+   et importe la conversion via `server/google-ads.mjs` (API REST Google Ads).
+5. **Variables d'environnement** : copier `.env.example` → `.env` (host/Dokploy)
+   et renseigner `CAL_WEBHOOK_SECRET` + les identifiants Google Ads
+   (`GOOGLE_ADS_*`). Tant que c'est vide, le webhook répond 200 sans rien
+   importer (et journalise).
+
+> Tester : `POST /api/cal/webhook` avec une signature `X-Cal-Signature-256`
+> valide → 200 ; signature invalide → 401.
+
+---
+
 ## Checklist avant mise en ligne
 
 - [x] Lien de **réservation** branché (`contact.bookingUrl` — Cal.com).
