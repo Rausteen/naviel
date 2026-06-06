@@ -1,9 +1,18 @@
 ---
+import { getCollection } from "astro:content";
 import Container from "./Container.astro";
 import Logo from "./Logo.astro";
 import { site } from "@config";
 
 const year = new Date().getFullYear();
+
+// Sites clients en ligne (preuve) — alimenté par les études de cas
+const liveSites = (await getCollection("caseStudies"))
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((cs) => ({
+    label: cs.data.url.replace(/^https?:\/\//, "").replace(/\/$/, ""),
+    href: cs.data.url,
+  }));
 ---
 
 <footer class="relative border-t border-line bg-bg-2">
@@ -121,8 +130,30 @@ const year = new Date().getFullYear();
       </div>
     </div>
 
+    <!-- Sites clients déjà en ligne (preuve) -->
+    {
+      liveSites.length > 0 && (
+        <p class="mt-6 text-xs text-muted">
+          Déjà en ligne :
+          {liveSites.map((s, i) => (
+            <>
+              {i > 0 && <span aria-hidden="true"> · </span>}
+              <a
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="transition-colors hover:text-ink-soft"
+              >
+                {s.label}
+              </a>
+            </>
+          ))}
+        </p>
+      )
+    }
+
     <!-- Clin d'œil discret aux produits maison -->
-    <p class="mt-6 text-xs text-muted">
+    <p class="mt-2 text-xs text-muted">
       Nos produits :
       {
         site.products.map((p, i) => (
