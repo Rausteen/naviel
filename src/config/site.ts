@@ -164,6 +164,12 @@ export const site: SiteConfig = {
       featured: false,
       desc: "",
     },
+    {
+      name: "Immobilier premium",
+      slug: "immobilier-premium",
+      featured: false,
+      desc: "",
+    },
   ],
 
   // Fondateur (section « Derrière Naviel » sur /agence).
