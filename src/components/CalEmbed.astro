@@ -33,7 +33,9 @@ const sendTo =
     };
   })(window, "https://app.cal.com/embed/embed.js", "init");
 
-  Cal("init", { origin: "https://cal.com" });
+  // ⚠️ origin DOIT être app.cal.com (page d'embed qui émet les événements).
+  // Avec cal.com, le popup s'affiche mais n'émet pas bookingSuccessful.
+  Cal("init", { origin: "https://app.cal.com" });
   Cal("ui", {
     theme: "dark",
     hideEventTypeDetails: false,
