@@ -4,7 +4,6 @@ import SEO from "@components/SEO.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import StickyCTA from "@components/StickyCTA.astro";
-import Analytics from "@components/Analytics.astro";
 import GtagHead from "@components/GtagHead.astro";
 import CalEmbed from "@components/CalEmbed.astro";
 import { site } from "@config";
@@ -97,9 +96,6 @@ const {
 
     <!-- Réservation Cal.com en popup (boutons [data-cal-link]) + conversion -->
     <CalEmbed />
-
-    <!-- Tracking conforme (inactif tant que les IDs ne sont pas renseignés) -->
-    <Analytics />
 
     <!-- Overlay de grain subtil -->
     <div class="grain-overlay" aria-hidden="true"></div>
