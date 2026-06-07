@@ -124,8 +124,8 @@ export const site: SiteConfig = {
   // Quand renseigné : gtag.js + Consent Mode v2 (refus par défaut) + bandeau.
   analytics: {
     ga4Id: "",
-    adsId: "",
-    adsConversionLabel: "",
+    adsId: "AW-18221346331",
+    adsConversionLabel: "", // À coller : libellé de l'action de conversion Google Ads (voir étape 2)
     gscVerification: "",
   },
 
