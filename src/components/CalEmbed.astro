@@ -2,18 +2,13 @@
 /**
  * Initialise Cal.com en mode embed pour TOUT le site : les boutons
  * [data-cal-link] (Button `booking`/`calLink`) ouvrent le calendrier en POPUP.
- * Déclenche aussi la conversion Google Ads sur `bookingSuccessfulV2`.
- * Le script embed.js de Cal n'est chargé qu'à l'init (non bloquant).
+ * À la réservation, on redirige vers /merci (fenêtre principale) qui déclenche
+ * la conversion Google Ads en first-party. Le script embed.js de Cal n'est
+ * chargé qu'à l'init (non bloquant).
  */
-import { site } from "@config";
-
-const sendTo =
-  site.analytics.adsId && site.analytics.adsConversionLabel
-    ? `${site.analytics.adsId}/${site.analytics.adsConversionLabel}`
-    : "";
 ---
 
-<script is:inline define:vars={{ sendTo }}>
+<script is:inline>
   (function (C, A, L) {
     let p = function (a, ar) { a.q.push(ar); };
     let d = C.document;
@@ -38,17 +33,17 @@ const sendTo =
     hideEventTypeDetails: false,
     cssVarsPerTheme: { dark: { "cal-brand": "#c8f24e" } },
   });
-  // Conversion sur réservation réussie. On écoute les 2 noms d'event (selon
-  // version de Cal) avec anti-double-comptage. Log de debug en console.
-  var navielConverted = false;
-  function navielBookingConversion() {
-    if (navielConverted) return;
-    navielConverted = true;
-    if (window.gtag && sendTo) {
-      window.gtag("event", "conversion", { send_to: sendTo });
-    }
-    try { console.info("[Naviel] réservation Cal → conversion envoyée", sendTo || "(send_to vide)"); } catch (e) {}
+  // Réservation réussie → on renvoie vers /merci dans la fenêtre principale.
+  // C'est /merci qui déclenche la conversion Google Ads (au chargement), dans
+  // un contexte first-party (cookie du clic Google lisible = bonne attribution).
+  // On écoute les 2 noms d'event (selon version de Cal), anti-double-comptage.
+  var navielBooked = false;
+  function navielOnBooking() {
+    if (navielBooked) return;
+    navielBooked = true;
+    try { console.info("[Naviel] réservation Cal → redirection /merci"); } catch (e) {}
+    window.location.href = "/merci";
   }
-  Cal("on", { action: "bookingSuccessfulV2", callback: navielBookingConversion });
-  Cal("on", { action: "bookingSuccessful", callback: navielBookingConversion });
+  Cal("on", { action: "bookingSuccessfulV2", callback: navielOnBooking });
+  Cal("on", { action: "bookingSuccessful", callback: navielOnBooking });
 </script>
