@@ -1,60 +1,17 @@
 ---
 /**
- * Tracking conforme RGPD (Consent Mode v2).
- * - Ne s'active QUE si un ID est renseigné dans site.analytics (sinon : rien).
- * - Par défaut, tous les consentements sont REFUSÉS (denied).
- * - Le bandeau permet d'accepter/refuser ; le choix est mémorisé (localStorage).
- * - Sur accept, le consentement passe à « granted » et le tracking démarre.
+ * Bandeau de consentement (Consent Mode v2). La balise gtag est dans le <head>
+ * (GtagHead.astro). Ici : l'UI accepter/refuser ; le choix met à jour le
+ * consentement et est mémorisé (localStorage). Affiché seulement si tracking actif.
  */
 import { site } from "@config";
 
-const { ga4Id, adsId } = site.analytics;
-const enabled = Boolean(ga4Id || adsId);
-const loaderId = ga4Id || adsId; // un seul script gtag suffit pour les 2
+const enabled = Boolean(site.analytics.ga4Id || site.analytics.adsId);
 ---
 
 {
   enabled && (
     <>
-      <script is:inline define:vars={{ ga4Id, adsId, loaderId }}>
-        {`
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        window.gtag = gtag;
-
-        // Consent Mode v2 — tout refusé par défaut (UE)
-        gtag('consent', 'default', {
-          ad_storage: 'denied',
-          ad_user_data: 'denied',
-          ad_personalization: 'denied',
-          analytics_storage: 'denied',
-          wait_for_update: 500,
-        });
-
-        // Si l'utilisateur a déjà accepté lors d'une visite précédente
-        try {
-          if (localStorage.getItem('naviel-consent') === 'granted') {
-            gtag('consent', 'update', {
-              ad_storage: 'granted',
-              ad_user_data: 'granted',
-              ad_personalization: 'granted',
-              analytics_storage: 'granted',
-            });
-          }
-        } catch (e) {}
-
-        // Chargement de gtag.js
-        var s = document.createElement('script');
-        s.async = true;
-        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + loaderId;
-        document.head.appendChild(s);
-
-        gtag('js', new Date());
-        if (ga4Id) gtag('config', ga4Id);
-        if (adsId) gtag('config', adsId);
-        `}
-      </script>
-
       <div
         id="consent-banner"
         class="fixed inset-x-3 bottom-[84px] z-50 hidden rounded-[var(--radius-card)] border border-line-2 bg-surface/95 p-5 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.9)] backdrop-blur-xl md:inset-x-auto md:bottom-4 md:right-4 md:max-w-sm"
@@ -96,7 +53,6 @@ const loaderId = ga4Id || adsId; // un seul script gtag suffit pour les 2
           var stored = null;
           try { stored = localStorage.getItem('naviel-consent'); } catch (e) {}
           if (!stored) banner.classList.remove('hidden');
-
           function set(choice) {
             try { localStorage.setItem('naviel-consent', choice); } catch (e) {}
             if (choice === 'granted' && window.gtag) {

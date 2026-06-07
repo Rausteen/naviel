@@ -1,0 +1,37 @@
+---
+/**
+ * Balise Google (gtag.js) au format STANDARD dans le <head> — détectable par
+ * Google Tag Assistant / la vérification Google Ads. Consent Mode v2 :
+ * tout refusé par défaut, mis à jour à l'acceptation (bandeau dans Analytics.astro).
+ * Ne s'affiche que si un ID est renseigné dans site.analytics.
+ */
+import { site } from "@config";
+
+const { ga4Id, adsId } = site.analytics;
+const enabled = Boolean(ga4Id || adsId);
+const loaderId = ga4Id || adsId; // un seul gtag.js suffit pour GA4 + Ads
+---
+
+{
+  enabled && (
+    <>
+      <script is:inline>
+        {`
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag;
+        gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});
+        try{ if(localStorage.getItem('naviel-consent')==='granted'){ gtag('consent','update',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});}}catch(e){}
+        `}
+      </script>
+      <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${loaderId}`} />
+      <script is:inline define:vars={{ ga4Id, adsId }}>
+        {`
+        gtag('js', new Date());
+        if (ga4Id) gtag('config', ga4Id);
+        if (adsId) gtag('config', adsId);
+        `}
+      </script>
+    </>
+  )
+}
