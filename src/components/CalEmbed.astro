@@ -3,8 +3,7 @@
  * Initialise Cal.com en mode embed pour TOUT le site : les boutons
  * [data-cal-link] (Button `booking`/`calLink`) ouvrent le calendrier en POPUP.
  * À la réservation réussie, on déclenche la conversion Google Ads directement
- * (méthode gratuite, sans réglage côté Cal). Des logs de diagnostic listent
- * tous les événements Cal pour vérifier le déclenchement.
+ * (méthode gratuite, sans réglage côté Cal).
  */
 import { site } from "@config";
 
@@ -33,15 +32,6 @@ const sendTo =
     };
   })(window, "https://app.cal.com/embed/embed.js", "init");
 
-  // Log IMMÉDIAT (avant tout event) : prouve que ce code est bien déployé/chargé.
-  try {
-    console.info(
-      "%c[Naviel] CalEmbed v7 actif",
-      "color:#c8f24e;font-weight:bold",
-      { gtag: !!window.gtag, sendTo: sendTo || "(vide)" }
-    );
-  } catch (e) {}
-
   // ⚠️ origin DOIT être app.cal.com (page d'embed qui émet les événements).
   // Avec cal.com, le popup s'affiche mais n'émet pas bookingSuccessful.
   Cal("init", { origin: "https://app.cal.com" });
@@ -56,31 +46,16 @@ const sendTo =
   // L'event est mis en file dans dataLayer et envoyé dès que gtag.js charge.
   var navielConverted = false;
   function navielConvert() {
-    if (navielConverted) return;
+    if (navielConverted || !sendTo) return;
     navielConverted = true;
-    if (!sendTo) {
-      try { console.warn("[Naviel] send_to vide — vérifier site.analytics"); } catch (e) {}
-      return;
-    }
     window.dataLayer = window.dataLayer || [];
     if (typeof window.gtag !== "function") {
       window.gtag = function () { window.dataLayer.push(arguments); };
     }
     window.gtag("event", "conversion", { send_to: sendTo });
-    try { console.info("%c[Naviel] ✅ CONVERSION ENVOYÉE", "color:#c8f24e;font-weight:bold", sendTo); } catch (e) {}
   }
 
-  // ── Diagnostic : on logge les événements clés du cycle de vie de l'embed ────
-  function navielLog(name) {
-    return function (e) {
-      try { console.info("[Naviel] event Cal:", name, (e && e.detail) || e); } catch (err) {}
-    };
-  }
-  ["linkReady", "linkFailed", "__iframeReady", "__windowLoadComplete"].forEach(function (a) {
-    Cal("on", { action: a, callback: navielLog(a) });
-  });
-
-  // Les 2 noms d'event de réservation selon la version de Cal.
-  Cal("on", { action: "bookingSuccessfulV2", callback: function (e) { navielLog("bookingSuccessfulV2")(e); navielConvert(); } });
-  Cal("on", { action: "bookingSuccessful", callback: function (e) { navielLog("bookingSuccessful")(e); navielConvert(); } });
+  // Les 2 noms d'event de réservation selon la version de Cal (anti-double-comptage).
+  Cal("on", { action: "bookingSuccessfulV2", callback: navielConvert });
+  Cal("on", { action: "bookingSuccessful", callback: navielConvert });
 </script>
