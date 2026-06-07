@@ -38,10 +38,17 @@ const sendTo =
     hideEventTypeDetails: false,
     cssVarsPerTheme: { dark: { "cal-brand": "#c8f24e" } },
   });
-  Cal("on", {
-    action: "bookingSuccessfulV2",
-    callback: function () {
-      if (sendTo && window.gtag) window.gtag("event", "conversion", { send_to: sendTo });
-    },
-  });
+  // Conversion sur réservation réussie. On écoute les 2 noms d'event (selon
+  // version de Cal) avec anti-double-comptage. Log de debug en console.
+  var navielConverted = false;
+  function navielBookingConversion() {
+    if (navielConverted) return;
+    navielConverted = true;
+    if (window.gtag && sendTo) {
+      window.gtag("event", "conversion", { send_to: sendTo });
+    }
+    try { console.info("[Naviel] réservation Cal → conversion envoyée", sendTo || "(send_to vide)"); } catch (e) {}
+  }
+  Cal("on", { action: "bookingSuccessfulV2", callback: navielBookingConversion });
+  Cal("on", { action: "bookingSuccessful", callback: navielBookingConversion });
 </script>
