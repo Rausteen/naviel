@@ -52,16 +52,22 @@ const sendTo =
   });
 
   // ── Conversion Google Ads sur réservation réussie ──────────────────────────
+  // Autonome : on garantit gtag/dataLayer même si le tag n'est pas encore prêt.
+  // L'event est mis en file dans dataLayer et envoyé dès que gtag.js charge.
   var navielConverted = false;
   function navielConvert() {
     if (navielConverted) return;
     navielConverted = true;
-    if (window.gtag && sendTo) {
-      window.gtag("event", "conversion", { send_to: sendTo });
-      try { console.info("%c[Naviel] ✅ CONVERSION ENVOYÉE", "color:#c8f24e;font-weight:bold", sendTo); } catch (e) {}
-    } else {
-      try { console.warn("[Naviel] réservation détectée mais gtag/send_to manquant", { gtag: !!window.gtag, sendTo: sendTo }); } catch (e) {}
+    if (!sendTo) {
+      try { console.warn("[Naviel] send_to vide — vérifier site.analytics"); } catch (e) {}
+      return;
     }
+    window.dataLayer = window.dataLayer || [];
+    if (typeof window.gtag !== "function") {
+      window.gtag = function () { window.dataLayer.push(arguments); };
+    }
+    window.gtag("event", "conversion", { send_to: sendTo });
+    try { console.info("%c[Naviel] ✅ CONVERSION ENVOYÉE", "color:#c8f24e;font-weight:bold", sendTo); } catch (e) {}
   }
 
   // ── Diagnostic : on logge les événements clés du cycle de vie de l'embed ────
