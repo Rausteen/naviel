@@ -12,6 +12,11 @@ import { site } from "@config";
 const bookingConfigured = /^https?:\/\/[^/]+\/.+/.test(site.contact.bookingUrl);
 // Si une clé Web3Forms est configurée, on privilégie le formulaire de lead.
 const hasForm = Boolean(site.contact.formAccessKey);
+// Slug Cal.com (sans domaine) pour l'embed inline + les boutons popup.
+const calLink = site.contact.bookingUrl.replace(
+  /^https?:\/\/(app\.)?cal\.com\//,
+  "",
+);
 
 const breadcrumb = {
   "@context": "https://schema.org",
@@ -95,26 +100,31 @@ const breadcrumb = {
               <ContactForm />
               <p class="mt-4 text-center text-sm text-muted">
                 Vous préférez réserver directement ?{" "}
-                <a
-                  href={site.contact.bookingUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  data-cal-link={calLink}
+                  data-cal-config='{"layout":"month_view","theme":"dark"}'
                   class="text-accent underline underline-offset-2 hover:text-accent-deep"
                 >
                   Ouvrir l'agenda
-                </a>
+                </button>
               </p>
             </div>
           ) : bookingConfigured ? (
             <div
-              class="overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface"
+              id="cal-inline"
+              class="min-h-[680px] overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface"
             >
-              <iframe
-                src={site.contact.bookingUrl}
-                title="Réserver un appel de découverte"
-                loading="lazy"
-                class="h-[680px] w-full border-0"
-              />
+              <noscript>
+                <a
+                  href={site.contact.bookingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="block p-8 text-accent underline underline-offset-2"
+                >
+                  Ouvrir l'agenda de réservation
+                </a>
+              </noscript>
             </div>
           ) : (
             <div class="flex h-full flex-col items-start justify-center rounded-[var(--radius-card)] border border-line bg-surface p-8">
@@ -130,11 +140,7 @@ const breadcrumb = {
                 vous répond vite.
               </p>
               <div class="mt-6 flex flex-wrap gap-3">
-                <Button
-                  href={site.contact.bookingUrl}
-                  variant="primary"
-                  external
-                >
+                <Button calLink={calLink} variant="primary">
                   Ouvrir l'agenda
                 </Button>
                 <Button href={`mailto:${site.contact.email}`} variant="ghost">
@@ -147,4 +153,26 @@ const breadcrumb = {
       </Reveal>
     </div>
   </Section>
+
+  {/* Embed Cal.com inline (émet bookingSuccessful → conversion via CalEmbed) */}
+  {
+    bookingConfigured && !hasForm && (
+      <script is:inline define:vars={{ calLink }}>
+        (function () {
+          function start() {
+            if (window.Cal) {
+              window.Cal("inline", {
+                elementOrSelector: "#cal-inline",
+                calLink: calLink,
+                config: { layout: "month_view", theme: "dark" },
+              });
+            } else {
+              setTimeout(start, 150);
+            }
+          }
+          start();
+        })();
+      </script>
+    )
+  }
 </Layout>
