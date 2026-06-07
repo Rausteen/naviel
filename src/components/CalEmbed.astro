@@ -33,6 +33,15 @@ const sendTo =
     };
   })(window, "https://app.cal.com/embed/embed.js", "init");
 
+  // Log IMMÉDIAT (avant tout event) : prouve que ce code est bien déployé/chargé.
+  try {
+    console.info(
+      "%c[Naviel] CalEmbed v7 actif",
+      "color:#c8f24e;font-weight:bold",
+      { gtag: !!window.gtag, sendTo: sendTo || "(vide)" }
+    );
+  } catch (e) {}
+
   // ⚠️ origin DOIT être app.cal.com (page d'embed qui émet les événements).
   // Avec cal.com, le popup s'affiche mais n'émet pas bookingSuccessful.
   Cal("init", { origin: "https://app.cal.com" });
