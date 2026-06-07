@@ -125,7 +125,7 @@ export const site: SiteConfig = {
   analytics: {
     ga4Id: "",
     adsId: "AW-18221346331",
-    adsConversionLabel: "", // À coller : libellé de l'action de conversion Google Ads (voir étape 2)
+    adsConversionLabel: "dVi1CNSp1rocEJvczvBD", // action de conversion « Réservation appel »
     gscVerification: "",
   },
 
