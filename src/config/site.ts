@@ -211,11 +211,6 @@ export const site: SiteConfig = {
       desc: "Copilote IA pour Google Ads : il crée les campagnes, traque le budget gaspillé et soumet chaque optimisation à votre validation.",
     },
     {
-      name: "quizace.ai",
-      href: "https://quizace.ai",
-      desc: "Assistant de révision en extension Chrome : une réponse claire et expliquée directement sur la page, sur les principales plateformes.",
-    },
-    {
       name: "revizly.app",
       href: "https://revizly.app",
       desc: "L'IA de révision : un cours déposé devient fiches, flashcards et quiz prêts à apprendre. Plus de 50 000 étudiants.",
