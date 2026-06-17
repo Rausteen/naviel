@@ -120,12 +120,12 @@ export const site: SiteConfig = {
     formAccessKey: "", // clé Web3Forms (https://web3forms.com) — vide = formulaire masqué
   },
 
-  // Tracking — INACTIF tant que les IDs sont vides (aucun script, aucun bandeau).
-  // Quand renseigné : gtag.js + Consent Mode v2 (refus par défaut) + bandeau.
+  // Tracking — INACTIF tant que les IDs sont vides (aucun script chargé).
+  // Pour réactiver le Google tag + la conversion : recoller adsId + label ci-dessous.
   analytics: {
     ga4Id: "",
-    adsId: "AW-18221346331",
-    adsConversionLabel: "dVi1CNSp1rocEJvczvBD", // action de conversion « Réservation appel »
+    adsId: "", // Google Ads : "AW-18221346331" (retiré le temps du réexamen Google)
+    adsConversionLabel: "", // conversion « Réservation appel » : "dVi1CNSp1rocEJvczvBD"
     gscVerification: "",
   },
 
